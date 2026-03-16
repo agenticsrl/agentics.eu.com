@@ -59,7 +59,7 @@ const FiscalIncentives: React.FC = () => {
             viewport={{ once: true }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 px-6 py-3 sm:px-7 sm:py-3.5 bg-aiblue text-white rounded-lg font-semibold text-sm sm:text-[15px] shadow-lg transition-all duration-300 hover:bg-aiblue/90 hover:shadow-xl"
+            className="inline-flex items-center gap-2 px-6 py-3 sm:px-7 sm:py-3.5 bg-aiblue text-white text-[11px] font-semibold uppercase tracking-[.08em] transition-colors duration-200 hover:bg-aiblue/90"
           >
             {t('fiscal.ctaTop')}
             <ArrowRight size={16} strokeWidth={2.5} />
@@ -67,7 +67,7 @@ const FiscalIncentives: React.FC = () => {
         </div>
       </div>
 
-      <section className="py-12 sm:py-20 bg-[#f8f9fb]">
+      <section className="py-12 sm:py-20 bg-neutral/30">
         <div className="container mx-auto px-5 sm:px-6 max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -77,7 +77,7 @@ const FiscalIncentives: React.FC = () => {
             className="mb-8 sm:mb-10"
           >
             <p className="text-aiblue font-semibold text-xs sm:text-sm tracking-wide uppercase mb-2 sm:mb-3">
-              Legge di Bilancio 2026
+              {t('fiscal.badge')}
             </p>
             <h2 className="font-display font-bold text-[22px] sm:text-3xl md:text-[34px] text-graphite leading-tight mb-3 sm:mb-4">
               {t('fiscal.title')}
@@ -97,10 +97,10 @@ const FiscalIncentives: React.FC = () => {
             {tiers.map((tier, i) => (
               <div
                 key={i}
-                className={`rounded-xl px-3 py-4 sm:p-6 text-center transition-all duration-300 ${
+                className={`px-3 py-4 sm:p-6 text-center transition-all duration-300 ${
                   i === 0
-                    ? 'bg-aiblue text-white shadow-lg'
-                    : 'bg-white border border-graphite/8'
+                    ? 'bg-aiblue text-white'
+                    : 'bg-white border border-neutral'
                 }`}
               >
                 <div className={`font-display font-bold text-2xl sm:text-4xl md:text-[42px] leading-none mb-1.5 sm:mb-2 ${
@@ -122,7 +122,7 @@ const FiscalIncentives: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-graphite/65 text-sm sm:text-[15px] leading-relaxed mb-8 sm:mb-10 bg-white rounded-xl p-4 sm:p-5 border border-graphite/8"
+            className="text-graphite/65 text-sm sm:text-[15px] leading-relaxed mb-8 sm:mb-10 bg-white p-4 sm:p-5 border border-neutral"
           >
             {t('fiscal.example')}
           </motion.p>
@@ -179,7 +179,7 @@ const FiscalIncentives: React.FC = () => {
             viewport={{ once: true }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 bg-aiblue text-white rounded-lg font-semibold text-sm sm:text-[15px] shadow-lg transition-all duration-300 hover:bg-aiblue/90 hover:shadow-xl"
+            className="inline-flex items-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 bg-aiblue text-white text-[11px] font-semibold uppercase tracking-[.08em] transition-colors duration-200 hover:bg-aiblue/90"
           >
             {t('fiscal.ctaBottom')}
             <ArrowRight size={16} strokeWidth={2.5} />

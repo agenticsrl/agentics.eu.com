@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import BackHomeButton from '../BackHomeButton';
 import Contact from '../Contact';
@@ -96,7 +96,7 @@ const AIReceptionist: React.FC = () => {
 
             <button
               onClick={scrollToContact}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-aiblue text-white hover:bg-aiblue/90 rounded-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-aiblue text-white hover:bg-aiblue/90 text-[11px] font-semibold uppercase tracking-[.08em] transition-colors duration-200"
             >
               {t('aiReceptionist.cta')}
               <ArrowRight size={18} />
@@ -123,7 +123,7 @@ const AIReceptionist: React.FC = () => {
           </motion.div>
 
           <div className="max-w-3xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-lg border border-graphite/10 overflow-hidden">
+            <div className="bg-white border border-neutral overflow-hidden">
               <div className="aspect-video w-full">
                 <iframe
                   className="w-full h-full"
@@ -161,11 +161,10 @@ const AIReceptionist: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <ul className="space-y-4">
+              <ul className="space-y-3 list-disc pl-5">
                 {capabilities.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <Check size={20} className="text-aiblue mt-0.5 flex-shrink-0" />
-                    <span className="text-graphite/80">{item}</span>
+                  <li key={index} className="text-graphite/80 leading-relaxed">
+                    {item}
                   </li>
                 ))}
               </ul>
@@ -229,7 +228,7 @@ const AIReceptionist: React.FC = () => {
               className="text-center"
             >
               <div className="text-4xl md:text-5xl font-display font-bold text-graphite mb-2">{t('aiReceptionist.stat1.value')}</div>
-              <div className="text-graphite/60">{t('aiReceptionist.stat1.label')}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/60">{t('aiReceptionist.stat1.label')}</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -239,7 +238,7 @@ const AIReceptionist: React.FC = () => {
               className="text-center"
             >
               <div className="text-4xl md:text-5xl font-display font-bold text-graphite mb-2">{t('aiReceptionist.stat2.value')}</div>
-              <div className="text-graphite/60">{t('aiReceptionist.stat2.label')}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/60">{t('aiReceptionist.stat2.label')}</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -249,7 +248,7 @@ const AIReceptionist: React.FC = () => {
               className="text-center"
             >
               <div className="text-4xl md:text-5xl font-display font-bold text-graphite mb-2">{t('aiReceptionist.stat3.value')}</div>
-              <div className="text-graphite/60">{t('aiReceptionist.stat3.label')}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/60">{t('aiReceptionist.stat3.label')}</div>
             </motion.div>
           </div>
         </div>

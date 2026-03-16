@@ -450,14 +450,14 @@ const ConstructionDemo: React.FC = () => {
                 label: language === 'it' ? 'Tasso Conversione' : 'Conversion Rate',
                 value: 34.8,
                 suffix: '%',
-                sub: language === 'it' ? 'lead to cliente' : 'lead to client',
+                sub: language === 'it' ? 'da lead a cliente' : 'lead to client',
                 isDecimal: true
               },
               {
                 label: language === 'it' ? 'Tempo Risposta' : 'Response Time',
                 value: 2.4,
                 suffix: 'min',
-                sub: language === 'it' ? 'media assistita' : 'assisted average',
+                sub: language === 'it' ? 'media assistita' : 'AI-assisted avg.',
                 isDecimal: true
               }
             ].map((stat, index) => (

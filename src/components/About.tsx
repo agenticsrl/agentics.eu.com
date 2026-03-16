@@ -66,7 +66,7 @@ const About: React.FC = () => {
     <div className="min-h-screen bg-white">
       <section className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20">
         <div className="container mx-auto px-4 sm:px-6">
-          <Card className="w-full min-h-[320px] sm:min-h-[380px] lg:min-h-[400px] bg-white relative overflow-hidden border-0 shadow-xl">
+          <Card className="w-full min-h-[320px] sm:min-h-[380px] lg:min-h-[400px] bg-white relative overflow-hidden border border-neutral shadow-none">
             <Spotlight
               className="-top-20 -left-40 md:-left-60 md:-top-10"
               fill="#0163F5"
@@ -92,13 +92,13 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-16 sm:py-20 md:py-24 bg-gray-50">
+      <section className="py-16 sm:py-20 md:py-24 bg-white border-t border-neutral">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
               <div className="py-8 md:py-0 md:px-8 first:pt-0 md:first:pl-0 last:pb-0 md:last:pr-0">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-1 h-8 bg-aiblue rounded-full"></div>
+                  <div className="w-[3px] h-8 bg-aiblue"></div>
                   <h3 className="font-display font-semibold text-lg text-graphite">
                     {t('about.missionTitle')}
                   </h3>
@@ -110,7 +110,7 @@ const About: React.FC = () => {
 
               <div className="py-8 md:py-0 md:px-8">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-1 h-8 bg-aiblue rounded-full"></div>
+                  <div className="w-[3px] h-8 bg-aiblue"></div>
                   <h3 className="font-display font-semibold text-lg text-graphite">
                     {t('about.visionTitle')}
                   </h3>
@@ -122,7 +122,7 @@ const About: React.FC = () => {
 
               <div className="py-8 md:py-0 md:px-8 last:pb-0 md:last:pr-0">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-1 h-8 bg-aiblue rounded-full"></div>
+                  <div className="w-[3px] h-8 bg-aiblue"></div>
                   <h3 className="font-display font-semibold text-lg text-graphite">
                     {t('about.teamTitle')}
                   </h3>

@@ -177,7 +177,7 @@ const CustomGPTs: React.FC = () => {
 
             <button
               onClick={scrollToContact}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-aiblue text-white hover:bg-aiblue/90 rounded-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-aiblue text-white hover:bg-aiblue/90 text-[11px] font-semibold uppercase tracking-[.08em] transition-colors duration-200"
             >
               {t('customGPTs.cta')}
               <ArrowRight size={18} />
@@ -221,7 +221,7 @@ const CustomGPTs: React.FC = () => {
             className="mt-12 md:mt-16"
           >
             <p className="text-center text-graphite/40 text-xs uppercase tracking-widest mb-6 md:mb-8">
-              {language === 'it' ? 'Stack Tecnologico' : 'Tech Stack'}
+              {t('customGPTs.techStack')}
             </p>
             <div className="relative h-16 overflow-hidden">
               <LogoLoop
@@ -233,7 +233,7 @@ const CustomGPTs: React.FC = () => {
                 hoverSpeed={0}
                 fadeOut
                 fadeOutColor="rgba(245, 245, 245, 1)"
-                ariaLabel={language === 'it' ? 'Stack tecnologico' : 'Technology stack'}
+                ariaLabel={t('customGPTs.techStackAria')}
               />
             </div>
           </motion.div>
@@ -295,7 +295,7 @@ const CustomGPTs: React.FC = () => {
               className="text-center"
             >
               <div className="text-4xl md:text-5xl font-display font-bold text-graphite mb-2">{t('customGPTs.stat1.value')}</div>
-              <div className="text-graphite/60">{t('customGPTs.stat1.label')}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/60">{t('customGPTs.stat1.label')}</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -305,7 +305,7 @@ const CustomGPTs: React.FC = () => {
               className="text-center"
             >
               <div className="text-4xl md:text-5xl font-display font-bold text-graphite mb-2">{t('customGPTs.stat2.value')}</div>
-              <div className="text-graphite/60">{t('customGPTs.stat2.label')}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/60">{t('customGPTs.stat2.label')}</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -315,9 +315,118 @@ const CustomGPTs: React.FC = () => {
               className="text-center"
             >
               <div className="text-4xl md:text-5xl font-display font-bold text-graphite mb-2">{t('customGPTs.stat3.value')}</div>
-              <div className="text-graphite/60">{t('customGPTs.stat3.label')}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/60">{t('customGPTs.stat3.label')}</div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Case Study — Idrotec */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4 md:px-6 max-w-5xl">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-10 md:mb-14"
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[.08em] text-aiblue mb-3">
+              {t('customGPTs.clientsTitle')}
+            </p>
+            <div className="w-12 h-[2px] bg-aiblue" />
+          </motion.div>
+
+          {/* Client card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="border border-neutral"
+          >
+            {/* Logo bar */}
+            <div className="px-6 py-5 sm:px-8 sm:py-6 flex items-center gap-5 border-b border-neutral">
+              <div className="flex-shrink-0 w-[3px] h-10 bg-aiblue" />
+              <img
+                src="/idrotec logo 1 (1) 1.png"
+                alt="Idrotec Solution"
+                className="h-8 sm:h-10 w-auto object-contain"
+              />
+            </div>
+
+            {/* Content: text left, image right */}
+            <div className="flex flex-col lg:flex-row lg:items-stretch">
+              {/* Left: text */}
+              <div className="flex-1 px-6 py-6 sm:px-8 sm:py-8 flex flex-col justify-center space-y-3 lg:border-r lg:border-neutral">
+                <h3 className="font-display font-semibold text-lg sm:text-xl text-graphite">
+                  {t('customGPTs.idrotec.name')}
+                </h3>
+                <p className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/50">
+                  {t('customGPTs.idrotec.subtitle')}
+                </p>
+                <p className="text-[13px] sm:text-sm text-graphite/70 leading-relaxed">
+                  {t('customGPTs.idrotec.desc1')}
+                </p>
+                <p className="text-[13px] sm:text-sm text-graphite/70 leading-relaxed">
+                  {t('customGPTs.idrotec.desc2')}
+                </p>
+              </div>
+
+              {/* Right: screenshot */}
+              <div className="lg:w-[52%] flex-shrink-0 border-t border-neutral lg:border-t-0 bg-white">
+                <img
+                  src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Screenshot%202026-03-16%20at%2020.03.11%201.png"
+                  alt="Idrotec Solution — Piattaforma gestionale"
+                  className="w-full h-auto object-contain block"
+                />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Netsin client card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="border border-neutral"
+          >
+            <div className="px-6 py-5 sm:px-8 sm:py-6 flex items-center gap-5 border-b border-neutral">
+              <div className="flex-shrink-0 w-[3px] h-10 bg-aiblue" />
+              <img
+                src="/netsin-logo.png"
+                alt="Netsin"
+                className="h-8 sm:h-10 w-auto object-contain"
+              />
+            </div>
+
+            <div className="flex flex-col lg:flex-row lg:items-stretch">
+              <div className="flex-1 px-6 py-6 sm:px-8 sm:py-8 flex flex-col justify-center space-y-3 lg:border-r lg:border-neutral">
+                <h3 className="font-display font-semibold text-lg sm:text-xl text-graphite">
+                  {t('customGPTs.netsin.name')}
+                </h3>
+                <p className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/50">
+                  {t('customGPTs.netsin.subtitle')}
+                </p>
+                <p className="text-[13px] sm:text-sm text-graphite/70 leading-relaxed">
+                  {t('customGPTs.netsin.desc1')}
+                </p>
+                <p className="text-[13px] sm:text-sm text-graphite/70 leading-relaxed">
+                  {t('customGPTs.netsin.desc2')}
+                </p>
+              </div>
+
+              <div className="lg:w-[52%] flex-shrink-0 border-t border-neutral lg:border-t-0 bg-white">
+                <img
+                  src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Screenshot%202026-03-16%20at%2020.18.03.png"
+                  alt="Netsin Platform — Certificazioni ISO 9001"
+                  className="w-full h-auto object-contain block"
+                />
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 

@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
       transition={{ type: "spring", stiffness: 100, damping: 20 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled || isAboutPage
-          ? 'bg-white/95 backdrop-blur-sm shadow-lg py-2 sm:py-3'
+          ? 'bg-white border-b border-neutral py-2 sm:py-3'
           : 'bg-transparent py-3 sm:py-5'
       }`}
     >
@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
           <Link
             to="/about"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="nav-link font-medium text-base xl:text-lg text-graphite hover:text-aiblue transition-all duration-300"
+            className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200"
           >
             {t('nav.about')}
           </Link>
@@ -103,7 +103,7 @@ const Navbar: React.FC = () => {
                 }
               }
             }}
-            className="nav-link font-medium text-base xl:text-lg text-graphite hover:text-aiblue transition-all duration-300"
+            className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200"
           >
             {t('nav.features')}
           </button>
@@ -124,23 +124,21 @@ const Navbar: React.FC = () => {
                 }
               }
             }}
-            className="nav-link font-medium text-base xl:text-lg text-graphite hover:text-aiblue transition-all duration-300"
+            className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200"
           >
             {t('nav.contact')}
           </button>
           <motion.button
             onClick={scrollToContact}
-            className="modern-button bg-aiblue text-white hover:bg-aiblue/90 px-4 xl:px-6 py-2 rounded-full font-medium text-sm xl:text-base transition-all duration-500 shadow-[0_0_15px_rgba(1,99,245,0.3)] hover:shadow-[0_0_25px_rgba(1,99,245,0.5)]"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="bg-aiblue text-white hover:bg-aiblue/90 px-4 xl:px-6 py-2 text-[11px] font-semibold uppercase tracking-[.08em] transition-colors duration-200"
+            whileTap={{ scale: 0.98 }}
           >
             {t('nav.getStarted')}
           </motion.button>
           <motion.button
             onClick={() => setLanguage(language === 'it' ? 'en' : 'it')}
-            className="px-3 py-2 rounded-full font-semibold text-sm border-2 border-graphite/20 text-graphite hover:border-aiblue hover:text-aiblue transition-all duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="px-3 py-2 text-[11px] font-semibold uppercase tracking-[.06em] border border-graphite/30 text-graphite hover:border-aiblue hover:text-aiblue transition-colors duration-200"
+            whileTap={{ scale: 0.98 }}
           >
             {language === 'it' ? 'EN' : 'IT'}
           </motion.button>
@@ -164,7 +162,7 @@ const Navbar: React.FC = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white/95 backdrop-blur-sm w-full absolute shadow-lg"
+            className="lg:hidden bg-white border-b border-neutral w-full absolute"
           >
             <div className="container mx-auto px-4 py-4 sm:py-6 flex flex-col space-y-4 sm:space-y-6">
               <Link
@@ -173,7 +171,7 @@ const Navbar: React.FC = () => {
                   setIsOpen(false);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="nav-link font-medium text-base sm:text-lg text-graphite hover:text-aiblue transition-all duration-300"
+                className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200"
               >
                 {t('nav.about')}
               </Link>
@@ -197,7 +195,7 @@ const Navbar: React.FC = () => {
                     }
                   }
                 }}
-                className="nav-link font-medium text-base sm:text-lg text-graphite hover:text-aiblue transition-all duration-300 text-left"
+                className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200 text-left"
               >
                 {t('nav.features')}
               </button>
@@ -219,23 +217,21 @@ const Navbar: React.FC = () => {
                     }
                   }
                 }}
-                className="nav-link font-medium text-base sm:text-lg text-graphite hover:text-aiblue transition-all duration-300 text-left"
+                className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200 text-left"
               >
                 {t('nav.contact')}
               </button>
               <div className="flex gap-3">
                 <motion.button
                   onClick={scrollToContact}
-                  className="modern-button bg-aiblue text-white hover:bg-aiblue/90 px-6 py-3 rounded-full font-medium text-base transition-all duration-500 shadow-[0_0_15px_rgba(1,99,245,0.3)] hover:shadow-[0_0_25px_rgba(1,99,245,0.5)] flex-1"
-                  whileHover={{ scale: 1.02 }}
+                  className="bg-aiblue text-white hover:bg-aiblue/90 px-6 py-3 text-[11px] font-semibold uppercase tracking-[.08em] transition-colors duration-200 flex-1"
                   whileTap={{ scale: 0.98 }}
                 >
                   {t('nav.getStarted')}
                 </motion.button>
                 <motion.button
                   onClick={() => setLanguage(language === 'it' ? 'en' : 'it')}
-                  className="px-4 py-3 rounded-full font-semibold text-base border-2 border-graphite/20 text-graphite hover:border-aiblue hover:text-aiblue transition-all duration-300"
-                  whileHover={{ scale: 1.02 }}
+                  className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[.06em] border border-graphite/30 text-graphite hover:border-aiblue hover:text-aiblue transition-colors duration-200"
                   whileTap={{ scale: 0.98 }}
                 >
                   {language === 'it' ? 'EN' : 'IT'}

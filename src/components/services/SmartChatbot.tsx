@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessagesSquare, ArrowRight, Sparkles } from 'lucide-react';
+import { MessagesSquare, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BackHomeButton from '../BackHomeButton';
 import Contact from '../Contact';
@@ -111,7 +111,7 @@ const SmartChatbot: React.FC = () => {
 
             <button
               onClick={scrollToContact}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-aiblue text-white hover:bg-aiblue/90 rounded-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-aiblue text-white hover:bg-aiblue/90 text-[11px] font-semibold uppercase tracking-[.08em] transition-colors duration-200"
             >
               {t('smartChatbot.cta')}
               <ArrowRight size={18} />
@@ -130,7 +130,7 @@ const SmartChatbot: React.FC = () => {
             className="text-center mb-8"
           >
             <h3 className="font-display font-semibold text-lg md:text-xl text-graphite/80">
-              {language === 'it' ? 'Integrabile con' : 'Integrates with'}
+              {t('smartChatbot.integratesWith')}
             </h3>
           </motion.div>
           <LogoLoop
@@ -248,10 +248,10 @@ const SmartChatbot: React.FC = () => {
           </motion.div>
 
           <div className="max-w-3xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-lg border border-graphite/10 overflow-hidden">
+            <div className="bg-white border border-neutral overflow-hidden">
               <div className="bg-aiblue px-6 py-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-white/20 flex items-center justify-center">
                     <MessagesSquare size={20} className="text-white" />
                   </div>
                   <div>
@@ -269,21 +269,14 @@ const SmartChatbot: React.FC = () => {
               <CustomChatInterface />
 
               <div className="p-6 bg-neutral/30 border-t border-graphite/10">
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-aiblue rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Sparkles size={14} className="text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-display font-semibold text-graphite mb-2">
-                      {t('smartChatbot.capabilities.title')}
-                    </h4>
-                    <ul className="text-graphite/70 space-y-1 text-sm">
-                      <li>{t('smartChatbot.capabilities.1')}</li>
-                      <li>{t('smartChatbot.capabilities.2')}</li>
-                      <li>{t('smartChatbot.capabilities.3')}</li>
-                    </ul>
-                  </div>
-                </div>
+                <p className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite mb-2">
+                  {t('smartChatbot.capabilities.title')}
+                </p>
+                <ul className="text-graphite/70 space-y-1 text-sm">
+                  <li>{t('smartChatbot.capabilities.1')}</li>
+                  <li>{t('smartChatbot.capabilities.2')}</li>
+                  <li>{t('smartChatbot.capabilities.3')}</li>
+                </ul>
               </div>
             </div>
           </div>
@@ -345,7 +338,7 @@ const SmartChatbot: React.FC = () => {
               className="text-center"
             >
               <div className="text-4xl md:text-5xl font-display font-bold text-graphite mb-2">{t('smartChatbot.stat1.value')}</div>
-              <div className="text-graphite/60">{t('smartChatbot.stat1.label')}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/60">{t('smartChatbot.stat1.label')}</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -355,7 +348,7 @@ const SmartChatbot: React.FC = () => {
               className="text-center"
             >
               <div className="text-4xl md:text-5xl font-display font-bold text-graphite mb-2">{t('smartChatbot.stat2.value')}</div>
-              <div className="text-graphite/60">{t('smartChatbot.stat2.label')}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/60">{t('smartChatbot.stat2.label')}</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -365,7 +358,7 @@ const SmartChatbot: React.FC = () => {
               className="text-center"
             >
               <div className="text-4xl md:text-5xl font-display font-bold text-graphite mb-2">{t('smartChatbot.stat3.value')}</div>
-              <div className="text-graphite/60">{t('smartChatbot.stat3.label')}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[.08em] text-graphite/60">{t('smartChatbot.stat3.label')}</div>
             </motion.div>
           </div>
         </div>
@@ -464,16 +457,15 @@ const CustomChatInterface: React.FC = () => {
             transition={{ duration: 0.2 }}
             className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
           >
-            <div className={`max-w-[80%] rounded-xl px-4 py-3 ${
+            <div className={`max-w-[80%] px-4 py-3 ${
               message.isBot
-                ? 'bg-white text-graphite border border-graphite/10'
+                ? 'bg-white text-graphite border border-neutral'
                 : 'bg-aiblue text-white'
             }`}>
               {message.isBot && (
-                <div className="flex items-center gap-2 mb-1">
-                  <MessagesSquare size={12} className="text-aiblue" />
-                  <span className="text-xs font-medium text-aiblue">{t('smartChatbot.chatAssistant')}</span>
-                </div>
+                <span className="text-[10px] font-semibold uppercase tracking-[.06em] text-aiblue block mb-1">
+                  {t('smartChatbot.chatAssistant')}
+                </span>
               )}
               <div
                 className="leading-relaxed text-sm"
@@ -499,7 +491,7 @@ const CustomChatInterface: React.FC = () => {
               exit={{ opacity: 0 }}
               className="flex justify-start"
             >
-              <div className="bg-white border border-graphite/10 rounded-xl px-4 py-3">
+              <div className="bg-white border border-neutral px-4 py-3">
                 <div className="flex items-center gap-2">
                   <div className="flex gap-1">
                     <div className="w-2 h-2 bg-aiblue/60 rounded-full animate-bounce"></div>
@@ -523,12 +515,12 @@ const CustomChatInterface: React.FC = () => {
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder={t('smartChatbot.chatPlaceholder')}
-            className="flex-1 border border-graphite/20 rounded-lg px-4 py-2 focus:outline-none focus:border-aiblue text-sm"
+            className="flex-1 border-b-2 border-neutral px-4 py-2 focus:outline-none focus:border-aiblue text-sm bg-transparent"
           />
           <button
             onClick={sendMessage}
             disabled={!inputValue.trim() || isTyping}
-            className="bg-aiblue hover:bg-aiblue/90 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-aiblue hover:bg-aiblue/90 text-white px-4 py-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="22" y1="2" x2="11" y2="13"></line>

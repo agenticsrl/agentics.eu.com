@@ -31,14 +31,16 @@ const Footer: React.FC = () => {
       mainLinks={[
         { href: "/about", label: t('footer.aboutUs') },
         { href: "#contact", label: t('footer.contact') },
+        { href: "/services/smart-chatbot", label: t('footer.chatbot') },
+        { href: "/services/ai-receptionist", label: t('footer.voiceAgent') },
       ]}
       legalLinks={[
         { href: "/privacy-policy", label: t('footer.privacy') },
         { href: "/terms-of-service", label: t('footer.terms') },
       ]}
       copyright={{
-        text: '@2026 Agentics SRL',
-        license: "P.IVA: 03335160598",
+        text: '\u00A9 2026 Agentics SRL',
+        license: t('footer.license'),
       }}
     />
   );

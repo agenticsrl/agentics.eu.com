@@ -81,8 +81,8 @@ const ChatConsentGate = () => {
         width: '380px',
         maxWidth: 'calc(100vw - 40px)',
         backgroundColor: 'white',
-        borderRadius: '24px',
-        boxShadow: '0 25px 80px rgba(0, 0, 0, 0.25)',
+        borderRadius: 0,
+        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.12)',
         zIndex: 10001,
         overflow: 'hidden',
         fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
@@ -91,7 +91,7 @@ const ChatConsentGate = () => {
     >
       <div
         style={{
-          background: 'linear-gradient(135deg, #0163F5, #4d8ef7)',
+          background: '#0163F5',
           padding: '20px',
           color: 'white',
         }}
@@ -120,7 +120,7 @@ const ChatConsentGate = () => {
             gap: '14px',
             padding: '16px',
             backgroundColor: '#f0f7ff',
-            borderRadius: '12px',
+            borderRadius: 0,
             border: '1px solid #c9dff7',
             marginBottom: '20px',
           }}

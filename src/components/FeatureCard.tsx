@@ -29,11 +29,11 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, icon: Ico
         damping: 30
       }}
     >
-      <div className="relative h-full bg-white border border-graphite/10 hover:border-aiblue/30 rounded-xl p-3 sm:p-8 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+      <div className="relative h-full bg-white border border-neutral hover:border-aiblue/40 p-3 sm:p-8 transition-colors duration-200">
         <div className="flex items-center gap-3 mb-2 sm:block">
           <motion.div
             layoutId={`icon-${layoutId}`}
-            className={`w-9 h-9 sm:w-12 sm:h-12 ${color} rounded-lg flex items-center justify-center flex-shrink-0 sm:mb-6`}
+            className={`w-9 h-9 sm:w-12 sm:h-12 ${color} flex items-center justify-center flex-shrink-0 sm:mb-6`}
           >
             <Icon size={18} className="text-white sm:w-6 sm:h-6" strokeWidth={1.5} />
           </motion.div>
@@ -54,7 +54,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, icon: Ico
         </motion.p>
 
         <motion.button
-          className="inline-flex items-center justify-center gap-1.5 text-aiblue text-xs sm:text-sm font-medium min-h-[44px] py-2 -ml-2 pl-2 pr-2.5 rounded-lg hover:bg-aiblue/5 active:bg-aiblue/10 transition-colors duration-200"
+          className="inline-flex items-center justify-center gap-1.5 text-aiblue text-[11px] font-semibold uppercase tracking-[.06em] min-h-[44px] py-2 -ml-2 pl-2 pr-2.5 hover:bg-aiblue/5 active:bg-aiblue/10 transition-colors duration-200"
           initial={{ x: 0 }}
           type="button"
         >
