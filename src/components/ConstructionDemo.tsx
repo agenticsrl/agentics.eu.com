@@ -13,6 +13,20 @@ import {
 } from 'recharts';
 import { useLanguage } from '../contexts/LanguageContext';
 
+const IMPREDO = {
+  primary: '#0A2A66',
+  accent: '#4A90E2',
+  alert: '#D0021B',
+  bg: '#070B16',
+  cardBg: '#0C1222',
+  border: '#1A2640',
+  borderLight: '#253350',
+  textPrimary: '#E2E8F0',
+  textSecondary: '#6C7F94',
+  textMuted: '#3A4E68',
+  accentGlow: 'rgba(74, 144, 226, 0.12)',
+};
+
 const generateSalesData = (variation: number) => [
   { date: 'Gen', vendite: 42000 + variation * 800, obiettivo: 38000 },
   { date: 'Feb', vendite: 48500 + variation * 900, obiettivo: 42000 },
@@ -36,10 +50,10 @@ const generateProductivityData = (variation: number) => [
 ];
 
 const taskCategories = [
-  { category: 'Ordini Elaborati', count: 156, color: '#3b82f6' },
-  { category: 'Preventivi Inviati', count: 89, color: '#60a5fa' },
-  { category: 'Fatture Generate', count: 67, color: '#93c5fd' },
-  { category: 'Email Gestite', count: 234, color: '#bfdbfe' },
+  { category: 'Ordini Elaborati', count: 156, color: IMPREDO.accent },
+  { category: 'Preventivi Inviati', count: 89, color: '#5BA0F0' },
+  { category: 'Fatture Generate', count: 67, color: IMPREDO.primary },
+  { category: 'Email Gestite', count: 234, color: '#2E5CA8' },
 ];
 
 const formatCurrency = (value: number) => {
@@ -160,8 +174,8 @@ const ConstructionDemo: React.FC = () => {
       transition={{ duration: 1 }}
       className="w-full max-w-5xl mx-auto relative"
     >
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-neutral/30 via-neutral/20 to-transparent z-10 pointer-events-none rounded-b-xl" />
-      <div className="demo-container max-h-[520px] overflow-hidden rounded-xl shadow-2xl">
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-neutral/30 via-neutral/20 to-transparent z-10 pointer-events-none" />
+      <div className="demo-container max-h-[520px] overflow-hidden" style={{ fontFamily: "'Montserrat', sans-serif" }}>
         <style>{`
           .demo-container {
             min-width: 900px;
@@ -178,24 +192,41 @@ const ConstructionDemo: React.FC = () => {
             }
           }
         `}</style>
-      <div className="bg-[#0a0a0a] rounded-xl border border-[#1a1a1a] overflow-hidden">
-        <div className="px-6 py-4 border-b border-[#1a1a1a] flex items-center justify-between gap-2">
+
+      <div
+        className="overflow-hidden"
+        style={{ background: IMPREDO.bg, border: `1px solid ${IMPREDO.border}` }}
+      >
+        {/* Top bar */}
+        <div
+          className="px-6 py-3 flex items-center justify-between gap-2"
+          style={{ borderBottom: `1px solid ${IMPREDO.border}` }}
+        >
           <div className="flex items-center gap-3 min-w-0">
-            <div className="flex items-center gap-2 text-[#888] text-sm">
+            <div className="flex items-center gap-3" style={{ color: IMPREDO.textSecondary, fontSize: 11 }}>
               <motion.div
                 key={pulseKey}
                 initial={{ scale: 1, opacity: 1 }}
                 animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
-                className="w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.6)] flex-shrink-0"
+                className="w-1.5 h-1.5 flex-shrink-0"
+                style={{ background: IMPREDO.accent, boxShadow: `0 0 6px ${IMPREDO.accentGlow}` }}
               />
-              <span className="text-white font-medium truncate">
+              <span
+                className="font-semibold tracking-[.08em] uppercase truncate"
+                style={{ color: IMPREDO.textPrimary, fontSize: 11 }}
+              >
                 {language === 'it' ? 'Gestionale Aziendale' : 'Business Management'}
               </span>
               <motion.span
                 animate={{ opacity: [1, 0.5, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="text-blue-400 text-xs px-2 py-0.5 bg-blue-500/10 rounded-full border border-blue-500/30 flex-shrink-0"
+                className="text-[10px] font-semibold uppercase tracking-[.08em] px-2 py-0.5 flex-shrink-0"
+                style={{
+                  color: IMPREDO.accent,
+                  background: 'rgba(74, 144, 226, 0.08)',
+                  border: `1px solid rgba(74, 144, 226, 0.2)`,
+                }}
               >
                 {language === 'it' ? 'AI Assistito' : 'AI Assisted'}
               </motion.span>
@@ -204,23 +235,37 @@ const ConstructionDemo: React.FC = () => {
         </div>
 
         <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6" style={{ borderBottom: `1px solid ${IMPREDO.border}`, paddingBottom: 16 }}>
             <div>
-              <h2 className="text-white text-xl font-medium">
+              <h2
+                className="font-semibold uppercase tracking-[.06em]"
+                style={{ color: IMPREDO.textPrimary, fontSize: 15, letterSpacing: '0.06em' }}
+              >
                 {language === 'it' ? 'Dashboard Operativa' : 'Operations Dashboard'}
               </h2>
-              <p className="text-[#666] text-sm mt-1">
+              <p
+                className="uppercase tracking-[.08em] font-semibold mt-1"
+                style={{ color: IMPREDO.textSecondary, fontSize: 11 }}
+              >
                 {language === 'it' ? 'Monitoraggio in tempo reale' : 'Real-time monitoring'}
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 mb-4">
-            <div className="col-span-2 bg-[#111] rounded-lg border border-[#1a1a1a] p-5 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+          {/* Main grid: Revenue chart + Automated tasks */}
+          <div className="grid grid-cols-3 gap-0 mb-0">
+            {/* Revenue chart */}
+            <div
+              className="col-span-2 p-5 relative overflow-hidden"
+              style={{ background: IMPREDO.cardBg, borderRight: `1px solid ${IMPREDO.border}`, borderTop: `1px solid ${IMPREDO.border}` }}
+            >
               <div className="flex items-start justify-between mb-4 relative z-10">
                 <div>
-                  <p className="text-[#666] text-sm mb-1">
+                  <p
+                    className="uppercase tracking-[.08em] font-semibold mb-1"
+                    style={{ color: IMPREDO.textSecondary, fontSize: 11 }}
+                  >
                     {language === 'it' ? 'Fatturato Mensile' : 'Monthly Revenue'}
                   </p>
                   <div className="flex items-baseline gap-3">
@@ -231,7 +276,8 @@ const ConstructionDemo: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.4 }}
-                        className="text-white text-4xl font-light tracking-tight"
+                        className="font-light tracking-tight"
+                        style={{ color: IMPREDO.textPrimary, fontSize: 32 }}
                       >
                         {currentSales.toFixed(1)}K
                       </motion.span>
@@ -239,62 +285,70 @@ const ConstructionDemo: React.FC = () => {
                     <motion.span
                       animate={{ opacity: [1, 0.5, 1] }}
                       transition={{ duration: 3, repeat: Infinity }}
-                      className="text-blue-400 text-sm font-medium"
+                      className="font-semibold uppercase tracking-[.06em]"
+                      style={{ color: IMPREDO.accent, fontSize: 12 }}
                     >
                       +12.4%
                     </motion.span>
                   </div>
-                  <p className="text-[#444] text-xs mt-1">
+                  <p
+                    className="mt-1 uppercase tracking-[.06em]"
+                    style={{ color: IMPREDO.textMuted, fontSize: 10 }}
+                  >
                     {language === 'it' ? 'vs mese precedente' : 'vs previous month'} (60.3K)
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[#444] text-xs mb-1">
+                  <p
+                    className="uppercase tracking-[.08em] font-semibold mb-1"
+                    style={{ color: IMPREDO.textMuted, fontSize: 10 }}
+                  >
                     {language === 'it' ? 'Obiettivo Q4' : 'Q4 Target'}
                   </p>
-                  <p className="text-white text-lg font-medium">85K</p>
-                  <p className="text-blue-400/60 text-xs">{language === 'it' ? 'in linea' : 'on track'}</p>
+                  <p className="font-medium" style={{ color: IMPREDO.textPrimary, fontSize: 18 }}>85K</p>
+                  <p
+                    className="uppercase tracking-[.06em] font-semibold"
+                    style={{ color: IMPREDO.accent, fontSize: 10, opacity: 0.7 }}
+                  >
+                    {language === 'it' ? 'in linea' : 'on track'}
+                  </p>
                 </div>
               </div>
               <div className="h-[160px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={translatedSalesData}>
                     <defs>
-                      <linearGradient id="salesGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.3} />
-                        <stop offset="50%" stopColor="#3b82f6" stopOpacity={0.1} />
-                        <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                      <linearGradient id="salesGradientImpredo" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={IMPREDO.accent} stopOpacity={0.2} />
+                        <stop offset="50%" stopColor={IMPREDO.accent} stopOpacity={0.06} />
+                        <stop offset="100%" stopColor={IMPREDO.accent} stopOpacity={0} />
                       </linearGradient>
-                      <filter id="glow">
-                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                        <feMerge>
-                          <feMergeNode in="coloredBlur"/>
-                          <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                      </filter>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1a1a1a" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke={IMPREDO.border} vertical={false} />
                     <XAxis
                       dataKey="date"
                       axisLine={false}
                       tickLine={false}
-                      tick={{ fill: '#444', fontSize: 11 }}
+                      tick={{ fill: IMPREDO.textMuted, fontSize: 10, fontFamily: 'Montserrat', fontWeight: 600 }}
                     />
                     <YAxis
                       axisLine={false}
                       tickLine={false}
-                      tick={{ fill: '#444', fontSize: 11 }}
+                      tick={{ fill: IMPREDO.textMuted, fontSize: 10, fontFamily: 'Montserrat', fontWeight: 600 }}
                       tickFormatter={(value) => `${value / 1000}K`}
                     />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#1a1a1a',
-                        border: '1px solid #3b82f6',
-                        borderRadius: '8px',
-                        fontSize: '12px',
-                        boxShadow: '0 4px 20px rgba(59, 130, 246, 0.2)'
+                        backgroundColor: IMPREDO.cardBg,
+                        border: `1px solid ${IMPREDO.accent}`,
+                        borderRadius: 0,
+                        fontSize: 11,
+                        fontFamily: 'Montserrat',
+                        fontWeight: 600,
+                        textTransform: 'uppercase' as const,
+                        letterSpacing: '0.06em',
                       }}
-                      labelStyle={{ color: '#888' }}
+                      labelStyle={{ color: IMPREDO.textSecondary }}
                       formatter={(value: number, name: string) => [
                         `${formatCurrency(value)}`,
                         name === 'vendite' ? (language === 'it' ? 'Vendite' : 'Sales') : (language === 'it' ? 'Obiettivo' : 'Target')
@@ -303,18 +357,17 @@ const ConstructionDemo: React.FC = () => {
                     <Area
                       type="monotone"
                       dataKey="obiettivo"
-                      stroke="#333"
-                      strokeWidth={1.5}
+                      stroke={IMPREDO.textMuted}
+                      strokeWidth={1}
                       fill="transparent"
                       strokeDasharray="4 4"
                     />
                     <Area
                       type="monotone"
                       dataKey="vendite"
-                      stroke="#3b82f6"
-                      strokeWidth={2.5}
-                      fill="url(#salesGradient)"
-                      filter="url(#glow)"
+                      stroke={IMPREDO.accent}
+                      strokeWidth={2}
+                      fill="url(#salesGradientImpredo)"
                       animationDuration={3500}
                       animationEasing="ease-out"
                     />
@@ -323,37 +376,53 @@ const ConstructionDemo: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#111] rounded-lg border border-[#1a1a1a] p-5 relative overflow-hidden">
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
-              <p className="text-[#666] text-sm mb-1">
+            {/* Automated tasks */}
+            <div
+              className="p-5 relative overflow-hidden"
+              style={{ background: IMPREDO.cardBg, borderTop: `1px solid ${IMPREDO.border}` }}
+            >
+              <p
+                className="uppercase tracking-[.08em] font-semibold mb-1"
+                style={{ color: IMPREDO.textSecondary, fontSize: 11 }}
+              >
                 {language === 'it' ? 'Attività Automatizzate' : 'Automated Tasks'}
               </p>
               <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-white text-4xl font-light tracking-tight">
+                <span className="font-light tracking-tight" style={{ color: IMPREDO.textPrimary, fontSize: 32 }}>
                   <AnimatedNumber value={546} duration={3000} />
                 </span>
-                <span className="text-[#666] text-sm">{language === 'it' ? 'oggi' : 'today'}</span>
+                <span
+                  className="uppercase tracking-[.08em] font-semibold"
+                  style={{ color: IMPREDO.textSecondary, fontSize: 10 }}
+                >
+                  {language === 'it' ? 'oggi' : 'today'}
+                </span>
               </div>
               <div className="space-y-3">
                 {taskCategories.map((item, index) => (
                   <div key={index}>
-                    <div className="flex justify-between text-xs mb-1">
-                      <span className="text-[#666]">
+                    <div className="flex justify-between mb-1">
+                      <span
+                        className="uppercase tracking-[.06em] font-semibold"
+                        style={{ color: IMPREDO.textSecondary, fontSize: 10 }}
+                      >
                         {language === 'en' ? item.category.replace('Ordini Elaborati', 'Orders Processed').replace('Preventivi Inviati', 'Quotes Sent').replace('Fatture Generate', 'Invoices Generated').replace('Email Gestite', 'Emails Handled') : item.category}
                       </span>
-                      <span className="text-white">{item.count}</span>
+                      <span
+                        className="font-semibold tabular-nums"
+                        style={{ color: IMPREDO.textPrimary, fontSize: 11 }}
+                      >
+                        {item.count}
+                      </span>
                     </div>
-                    <div className="h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden">
+                    <div className="h-1" style={{ background: IMPREDO.border }}>
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${(item.count / 234) * 100}%` }}
                         viewport={{ once: true }}
                         transition={{ duration: 1.5, delay: index * 0.15, ease: "easeOut" }}
-                        className="h-full rounded-full"
-                        style={{
-                          backgroundColor: item.color,
-                          boxShadow: `0 0 8px ${item.color}40`
-                        }}
+                        className="h-full"
+                        style={{ backgroundColor: item.color }}
                       />
                     </div>
                   </div>
@@ -362,7 +431,8 @@ const ConstructionDemo: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-4 mb-4">
+          {/* KPI row */}
+          <div className="grid grid-cols-4 gap-0 mb-0">
             {[
               {
                 label: language === 'it' ? 'Clienti Attivi' : 'Active Clients',
@@ -397,28 +467,49 @@ const ConstructionDemo: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, borderColor: 'rgba(59, 130, 246, 0.3)' }}
-                className="bg-[#111] rounded-lg border border-[#1a1a1a] p-5 transition-colors duration-300"
+                whileHover={{ borderColor: IMPREDO.accent }}
+                className="p-5 transition-colors duration-300"
+                style={{
+                  background: IMPREDO.cardBg,
+                  borderTop: `1px solid ${IMPREDO.border}`,
+                  borderRight: index < 3 ? `1px solid ${IMPREDO.border}` : 'none',
+                }}
               >
-                <p className="text-[#666] text-sm mb-2">{stat.label}</p>
-                <p className="text-white text-2xl font-light tracking-tight">
+                <p
+                  className="uppercase tracking-[.08em] font-semibold mb-2"
+                  style={{ color: IMPREDO.textSecondary, fontSize: 11 }}
+                >
+                  {stat.label}
+                </p>
+                <p className="font-light tracking-tight" style={{ color: IMPREDO.textPrimary, fontSize: 22 }}>
                   {stat.isDecimal ? (
-                    <>{stat.value}<span className="text-base text-[#666]">{stat.suffix}</span></>
+                    <>{stat.value}<span style={{ color: IMPREDO.textSecondary, fontSize: 14 }}>{stat.suffix}</span></>
                   ) : (
                     <AnimatedNumber value={stat.value} duration={2500} suffix={stat.suffix} />
                   )}
                 </p>
-                <p className="text-[#555] text-xs mt-1">{stat.sub}</p>
+                <p
+                  className="mt-1 uppercase tracking-[.06em] font-medium"
+                  style={{ color: IMPREDO.textMuted, fontSize: 10 }}
+                >
+                  {stat.sub}
+                </p>
               </motion.div>
             ))}
           </div>
 
-          <div className="bg-[#111] rounded-lg border border-[#1a1a1a] p-5 relative overflow-hidden">
-            <div className="absolute top-0 left-1/2 w-40 h-20 bg-blue-500/5 rounded-full blur-3xl pointer-events-none -translate-x-1/2" />
+          {/* Weekly tasks bar chart */}
+          <div
+            className="p-5 relative overflow-hidden"
+            style={{ background: IMPREDO.cardBg, borderTop: `1px solid ${IMPREDO.border}` }}
+          >
             <div className="flex items-center justify-between mb-4 relative z-10">
               <div>
-                <p className="text-[#666] text-sm mb-1">
-                  {language === 'it' ? 'Task Completati - Settimana' : 'Completed Tasks - Week'}
+                <p
+                  className="uppercase tracking-[.08em] font-semibold mb-1"
+                  style={{ color: IMPREDO.textSecondary, fontSize: 11 }}
+                >
+                  {language === 'it' ? 'Task Completati — Settimana' : 'Completed Tasks — Week'}
                 </p>
                 <div className="flex items-baseline gap-3">
                   <AnimatePresence mode="wait">
@@ -426,48 +517,67 @@ const ConstructionDemo: React.FC = () => {
                       key={totalTasks}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="text-white text-2xl font-light tracking-tight"
+                      className="font-light tracking-tight"
+                      style={{ color: IMPREDO.textPrimary, fontSize: 22 }}
                     >
                       {totalTasks}
                     </motion.span>
                   </AnimatePresence>
-                  <span className="text-blue-400 text-sm">+18% {language === 'it' ? 'vs settimana scorsa' : 'vs last week'}</span>
+                  <span
+                    className="font-semibold uppercase tracking-[.06em]"
+                    style={{ color: IMPREDO.accent, fontSize: 12 }}
+                  >
+                    +18% {language === 'it' ? 'vs settimana scorsa' : 'vs last week'}
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-2 bg-blue-500 rounded-sm" />
-                  <span className="text-[#666] text-xs">{language === 'it' ? 'Completati' : 'Completed'}</span>
+                  <div className="w-3 h-2" style={{ background: IMPREDO.accent }} />
+                  <span
+                    className="uppercase tracking-[.06em] font-semibold"
+                    style={{ color: IMPREDO.textSecondary, fontSize: 10 }}
+                  >
+                    {language === 'it' ? 'Completati' : 'Completed'}
+                  </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-2 bg-[#333] rounded-sm" />
-                  <span className="text-[#666] text-xs">{language === 'it' ? 'In Corso' : 'In Progress'}</span>
+                  <div className="w-3 h-2" style={{ background: IMPREDO.border }} />
+                  <span
+                    className="uppercase tracking-[.06em] font-semibold"
+                    style={{ color: IMPREDO.textSecondary, fontSize: 10 }}
+                  >
+                    {language === 'it' ? 'In Corso' : 'In Progress'}
+                  </span>
                 </div>
               </div>
             </div>
             <div className="h-[120px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={translatedProductivityData} barGap={4}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1a1a1a" vertical={false} />
+                <BarChart data={translatedProductivityData} barGap={2}>
+                  <CartesianGrid strokeDasharray="3 3" stroke={IMPREDO.border} vertical={false} />
                   <XAxis
                     dataKey="name"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fill: '#444', fontSize: 11 }}
+                    tick={{ fill: IMPREDO.textMuted, fontSize: 10, fontFamily: 'Montserrat', fontWeight: 600 }}
                   />
                   <YAxis
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fill: '#444', fontSize: 11 }}
+                    tick={{ fill: IMPREDO.textMuted, fontSize: 10, fontFamily: 'Montserrat', fontWeight: 600 }}
                     domain={[0, 50]}
                   />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#1a1a1a',
-                      border: '1px solid #3b82f6',
-                      borderRadius: '8px',
-                      fontSize: '12px',
-                      boxShadow: '0 4px 20px rgba(59, 130, 246, 0.2)'
+                      backgroundColor: IMPREDO.cardBg,
+                      border: `1px solid ${IMPREDO.accent}`,
+                      borderRadius: 0,
+                      fontSize: 11,
+                      fontFamily: 'Montserrat',
+                      fontWeight: 600,
+                      textTransform: 'uppercase' as const,
+                      letterSpacing: '0.06em',
                     }}
                     formatter={(value: number, name: string) => [
                       value,
@@ -476,14 +586,14 @@ const ConstructionDemo: React.FC = () => {
                   />
                   <Bar
                     dataKey="inCorso"
-                    fill="#222"
-                    radius={[3, 3, 0, 0]}
+                    fill={IMPREDO.border}
+                    radius={[0, 0, 0, 0]}
                     animationDuration={1200}
                   />
                   <Bar
                     dataKey="completati"
-                    fill="#3b82f6"
-                    radius={[3, 3, 0, 0]}
+                    fill={IMPREDO.accent}
+                    radius={[0, 0, 0, 0]}
                     animationDuration={1500}
                     animationEasing="ease-out"
                   />

@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
         { href: "/terms-of-service", label: t('footer.terms') },
       ]}
       copyright={{
-        text: `© ${new Date().getFullYear()} Agentics`,
+        text: '@2026 Agentics SRL',
         license: "P.IVA: 03335160598",
       }}
     />

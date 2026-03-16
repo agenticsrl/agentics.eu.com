@@ -53,7 +53,7 @@ const PrivacyPolicy: React.FC = () => {
             <p className="text-lg font-semibold text-graphite/80 mb-2">Agentics SRL</p>
             <div className="text-sm text-graphite/60 space-y-1">
               <p>Data di entrata in vigore: 21 maggio 2025</p>
-              <p>Ultimo aggiornamento: 5 dicembre 2025</p>
+              <p>Ultimo aggiornamento: 16 marzo 2026</p>
             </div>
           </div>
 
@@ -65,6 +65,7 @@ const PrivacyPolicy: React.FC = () => {
               <li>Regolamento (UE) 2016/679 ("GDPR")</li>
               <li>Direttiva 2002/58/CE ("Direttiva ePrivacy")</li>
               <li>D.Lgs. 196/2003 (Codice Privacy italiano, come modificato dal D.Lgs. 101/2018)</li>
+              <li>Regolamento (UE) 2024/1689 ("AI Act") – per i trattamenti connessi a sistemi di intelligenza artificiale</li>
             </ul>
           </div>
 
@@ -94,10 +95,16 @@ const PrivacyPolicy: React.FC = () => {
                   <p className="leading-relaxed pl-4"><em>Ruolo GDPR: Agentics è Titolare del Trattamento</em></p>
                 </div>
                 <div>
-                  <p className="leading-relaxed mb-2"><strong>2.2 Dati trattati nei Servizi AI/Automazione (clienti B2B)</strong></p>
-                  <p className="leading-relaxed pl-4 mb-1">Quando Agentics fornisce servizi di intelligenza artificiale, automazione, receptionist virtuali o integrazioni tecnologiche ai clienti business</p>
+                  <p className="leading-relaxed mb-2"><strong>2.2 Dati trattati nei Servizi AI/Automazione SaaS (clienti B2B)</strong></p>
+                  <p className="leading-relaxed pl-4 mb-1">Quando Agentics fornisce servizi di intelligenza artificiale in modalità managed (chatbot, receptionist vocale, automazioni cloud) ai clienti business</p>
                   <p className="leading-relaxed pl-4"><em>Ruolo GDPR: Agentics agisce come Responsabile del Trattamento (Art. 28 GDPR)</em></p>
                   <p className="leading-relaxed pl-4 mt-2">Il trattamento è regolato da un Data Processing Agreement (DPA) specifico allegato al contratto di servizio.</p>
+                </div>
+                <div>
+                  <p className="leading-relaxed mb-2"><strong>2.3 Dati trattati nell'ambito di contratti di Sviluppo Software su Commessa (clienti B2B)</strong></p>
+                  <p className="leading-relaxed pl-4 mb-1">Quando Agentics sviluppa software personalizzato, agenti AI, applicativi o sistemi su misura per conto del Cliente, potrebbe venire a contatto con dati personali forniti dal Cliente per finalità di sviluppo, test e integrazione</p>
+                  <p className="leading-relaxed pl-4"><em>Ruolo GDPR: Agentics agisce come Responsabile del Trattamento (Art. 28 GDPR). Il Cliente rimane Titolare dei dati.</em></p>
+                  <p className="leading-relaxed pl-4 mt-2">Il trattamento è regolato da un Data Processing Agreement (DPA) specifico allegato al Contratto di Servizio. Agentics tratta i dati esclusivamente per l'esecuzione del contratto di sviluppo e non per finalità proprie.</p>
                 </div>
               </div>
             </section>
@@ -116,8 +123,8 @@ const PrivacyPolicy: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="leading-relaxed mb-2"><strong>3.2 Dati trattati nei Servizi AI (per conto dei clienti)</strong></p>
-                  <p className="leading-relaxed pl-4 mb-2">Quando forniamo servizi di automazione ai nostri clienti business, possiamo trattare per loro conto:</p>
+                  <p className="leading-relaxed mb-2"><strong>3.2 Dati trattati nei Servizi AI SaaS (per conto dei clienti)</strong></p>
+                  <p className="leading-relaxed pl-4 mb-2">Quando forniamo servizi di automazione AI in modalità managed ai nostri clienti business, possiamo trattare per loro conto:</p>
                   <ul className="list-disc pl-8 space-y-2">
                     <li>Conversazioni AI: testi, messaggi, trascrizioni di interazioni con chatbot/receptionist virtuali</li>
                     <li>Registrazioni vocali: audio delle chiamate gestite da Voice AI</li>
@@ -127,6 +134,17 @@ const PrivacyPolicy: React.FC = () => {
                     <li>Metadati operativi: informazioni tecniche sulle sessioni AI</li>
                   </ul>
                   <p className="leading-relaxed pl-4 mt-3 italic">Attenzione: In questo contesto, il Cliente rimane Titolare del trattamento. Agentics è Responsabile (Art. 28 GDPR) e opera secondo le istruzioni documentate nel DPA.</p>
+                </div>
+                <div>
+                  <p className="leading-relaxed mb-2"><strong>3.3 Dati trattati nello Sviluppo Software su Commessa (per conto dei clienti)</strong></p>
+                  <p className="leading-relaxed pl-4 mb-2">Nell'ambito di contratti di sviluppo software personalizzato, Agentics può trattare per conto del Cliente:</p>
+                  <ul className="list-disc pl-8 space-y-2">
+                    <li>Dati tecnici forniti per lo sviluppo: dataset di training, dati di test, esempi di utilizzo</li>
+                    <li>Dati di integrazione: strutture di database, schemi API, dati campione anonimi o pseudonimizzati</li>
+                    <li>Dati degli utenti finali del Cliente utilizzati esclusivamente in ambienti di test e staging</li>
+                    <li>Log e metriche di utilizzo nelle fasi di collaudo</li>
+                  </ul>
+                  <p className="leading-relaxed pl-4 mt-3 italic">Attenzione: I dati forniti per lo sviluppo devono essere preferibilmente anonimi o pseudonimizzati. Se contengono dati personali, il Cliente è responsabile di informarne preventivamente Agentics e di regolare il trattamento tramite DPA. Agentics non utilizza tali dati per finalità proprie.</p>
                 </div>
                 <div>
                   <p className="leading-relaxed mb-2"><strong>3.3 Categorie particolari di dati (Art. 9 GDPR)</strong></p>
@@ -283,6 +301,11 @@ const PrivacyPolicy: React.FC = () => {
                           <td className="border border-gray-300 px-4 py-3">Difesa diritti in sede giudiziaria</td>
                           <td className="border border-gray-300 px-4 py-3">Art. 6(1)(f) GDPR - Legittimo interesse</td>
                           <td className="border border-gray-300 px-4 py-3">Tutti i dati pertinenti</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-gray-300 px-4 py-3">Esecuzione contratti di sviluppo software su commessa</td>
+                          <td className="border border-gray-300 px-4 py-3">Art. 6(1)(b) GDPR - Esecuzione contratto</td>
+                          <td className="border border-gray-300 px-4 py-3">Dati tecnici, dati di test, comunicazioni di progetto</td>
                         </tr>
                       </tbody>
                     </table>
@@ -993,23 +1016,45 @@ const PrivacyPolicy: React.FC = () => {
 
             <section className="space-y-6">
               <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">19. Informazioni Supplementari per Clienti B2B</h2>
-              <p className="leading-relaxed mb-3">Se sei un cliente business che utilizza i nostri servizi di AI/automazione:</p>
-              <div className="space-y-4">
+              <p className="leading-relaxed mb-3">Se sei un cliente business che utilizza i nostri servizi di AI/automazione o sviluppo software su commessa:</p>
+              <div className="space-y-6">
                 <div>
-                  <p className="leading-relaxed mb-3"><strong>19.1 Data Processing Agreement (DPA)</strong></p>
-                  <p className="leading-relaxed pl-4 mb-2">Il trattamento dei dati che ci affidi è regolato da un DPA separato (Art. 28 GDPR) che definisce:</p>
+                  <p className="leading-relaxed mb-3"><strong>19.1 Data Processing Agreement (DPA) – Servizi AI SaaS</strong></p>
+                  <p className="leading-relaxed pl-4 mb-2">Il trattamento dei dati nei servizi di AI in modalità managed è regolato da un DPA separato (Art. 28 GDPR) che definisce:</p>
                   <ul className="list-disc pl-8 space-y-2">
                     <li>Ruoli e responsabilità (Tu Titolare, Noi Responsabile)</li>
                     <li>Istruzioni documentate sul trattamento</li>
                     <li>Misure di sicurezza tecniche e organizzative</li>
-                    <li>Gestione sub-responsabili</li>
-                    <li>Assistenza per data breach e diritti interessati</li>
+                    <li>Gestione sub-responsabili (OpenAI, n8n e altri fornitori)</li>
+                    <li>Assistenza per data breach e diritti degli interessati</li>
                     <li>Audit e ispezioni</li>
                   </ul>
                 </div>
                 <div>
-                  <p className="leading-relaxed mb-2"><strong>19.2 Richiedi il DPA</strong></p>
-                  <p className="leading-relaxed pl-4">Puoi richiedere copia del DPA firmato a: <a href="mailto:info@agentics.eu.com" className="text-aiblue hover:underline">info@agentics.eu.com</a></p>
+                  <p className="leading-relaxed mb-3"><strong>19.2 Data Processing Agreement (DPA) – Sviluppo Software su Commessa</strong></p>
+                  <p className="leading-relaxed pl-4 mb-2">Anche nei contratti di sviluppo software personalizzato, qualora il Cliente fornisca dati personali per lo sviluppo, il test o l'integrazione, il trattamento è regolato da un DPA separato (Art. 28 GDPR) che definisce:</p>
+                  <ul className="list-disc pl-8 space-y-2">
+                    <li>Tipologie di dati personali forniti per lo sviluppo</li>
+                    <li>Finalità del trattamento (esclusivamente esecuzione del contratto di sviluppo)</li>
+                    <li>Misure di sicurezza per ambienti di sviluppo e test</li>
+                    <li>Obbligo di utilizzo di dati anonimi o pseudonimizzati ove possibile</li>
+                    <li>Cancellazione dei dati di sviluppo al completamento del progetto</li>
+                    <li>Divieto assoluto di utilizzo dei dati del Cliente per finalità proprie di Agentics</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="leading-relaxed mb-3"><strong>19.3 Conformità EU AI Act per soluzioni sviluppate su commessa</strong></p>
+                  <p className="leading-relaxed pl-4 mb-2">Per i sistemi AI sviluppati su commessa soggetti al Regolamento (UE) 2024/1689, Agentics fornisce:</p>
+                  <ul className="list-disc pl-8 space-y-2">
+                    <li>Documentazione tecnica del sistema AI ai sensi dell'AI Act</li>
+                    <li>Istruzioni d'uso e informazioni sui limiti del sistema</li>
+                    <li>Dichiarazione di conformità per i sistemi ad alto rischio (ove applicabile)</li>
+                    <li>Supporto per la valutazione della conformità del deployer (Cliente)</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="leading-relaxed mb-2"><strong>19.4 Richiedi il DPA</strong></p>
+                  <p className="leading-relaxed pl-4">Puoi richiedere copia del DPA (per servizi AI SaaS o sviluppo software) firmato a: <a href="mailto:info@agentics.eu.com" className="text-aiblue hover:underline">info@agentics.eu.com</a></p>
                 </div>
               </div>
             </section>
@@ -1038,10 +1083,10 @@ const PrivacyPolicy: React.FC = () => {
             </section>
 
             <div className="mt-16 pt-8 border-t-2 border-gray-300 text-center space-y-2">
-              <p className="text-sm text-graphite/60">Ultimo aggiornamento: 5 dicembre 2025</p>
-              <p className="text-sm text-graphite/60">Versione: 2.0</p>
-              <p className="text-sm text-graphite/60">Prossima revisione prevista: Maggio 2026</p>
-              <p className="text-sm text-graphite/60 mt-4">© 2025 Agentics SRL – Tutti i diritti riservati</p>
+              <p className="text-sm text-graphite/60">Ultimo aggiornamento: 16 marzo 2026</p>
+              <p className="text-sm text-graphite/60">Versione: 2.1</p>
+              <p className="text-sm text-graphite/60">Prossima revisione prevista: Marzo 2027</p>
+              <p className="text-sm text-graphite/60 mt-4">© 2025–2026 Agentics SRL – Tutti i diritti riservati</p>
               <p className="text-sm text-graphite/60">P.IVA: 03335160598</p>
             </div>
           </div>
