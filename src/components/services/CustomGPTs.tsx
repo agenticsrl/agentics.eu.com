@@ -101,8 +101,8 @@ const CustomGPTs: React.FC = () => {
 
   useSEO({
     title: language === 'it'
-      ? 'Software AI Personalizzato | Agentics - Sviluppo Soluzioni su Misura'
-      : 'Custom AI Software | Agentics - Tailored Solutions Development',
+      ? 'Software Personalizzato con AI | Agentics - Sviluppo Software su Misura'
+      : 'Custom Software with AI | Agentics - Tailored Software Development',
     description: language === 'it'
       ? 'Sviluppiamo software AI personalizzato per la tua azienda: assistenti HR, sistemi legali, CRM intelligenti, automazione contabilita. Machine learning su misura per le tue esigenze.'
       : 'We develop custom AI software for your business: HR assistants, legal systems, intelligent CRM, accounting automation. Machine learning tailored to your needs.',
@@ -379,6 +379,36 @@ const CustomGPTs: React.FC = () => {
           >
             {t('customGPTs.auditNote')}
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-14 md:mt-18"
+          >
+            <p className="text-center text-graphite/50 text-xs uppercase tracking-widest mb-6 md:mb-8">
+              {t('customGPTs.cyberPartners')}
+            </p>
+            <div className="relative h-20 overflow-hidden flex items-center">
+              <LogoLoop
+                logos={[
+                  { node: <img src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Palo_Alto_logo_PNG_(3).png" alt="Palo Alto Networks" className="h-12 w-auto object-contain" />, title: 'Palo Alto Networks' },
+                  { node: <img src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Okta_(3).png" alt="Okta" className="h-10 w-auto object-contain" />, title: 'Okta' },
+                  { node: <img src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/CrowdStrike_logo.svg.png" alt="CrowdStrike" className="h-8 w-auto object-contain" />, title: 'CrowdStrike' },
+                  { node: <img src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Cloudflare-Logo.wine.png" alt="Cloudflare" className="h-20 w-auto object-contain" />, title: 'Cloudflare' },
+                ]}
+                speed={25}
+                direction="left"
+                logoHeight={80}
+                gap={100}
+                hoverSpeed={0}
+                fadeOut
+                fadeOutColor="rgb(248, 248, 248)"
+                ariaLabel="Cybersecurity platform logos"
+              />
+            </div>
+          </motion.div>
         </div>
       </section>
 

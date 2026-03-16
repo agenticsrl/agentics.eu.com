@@ -30,7 +30,7 @@ export const translations = {
     'features.customerInsights.title': 'Analisi clienti',
     'features.customerInsights.description': 'Analizza il comportamento dei clienti e prevede le esigenze usando algoritmi AI avanzati.',
 
-    'features.customGPTs.title': 'Software su misura',
+    'features.customGPTs.title': 'Software Personalizzato',
     'features.customGPTs.description': 'Soluzioni AI personalizzate per Vendite, HR, Legale e altro per soddisfare le tue esigenze specifiche.',
     'features.customGPTs.extendedDesc1': 'Progettiamo software gestionali, piattaforme digitali e agenti AI costruiti sulle tue esigenze operative. Ogni soluzione viene sviluppata su misura per integrarsi con i sistemi esistenti e generare valore misurabile.',
     'features.customGPTs.extendedDesc2': 'Dal prototipo al deploy in produzione: il codice è tuo al 100%, con documentazione completa e supporto continuativo.',
@@ -136,6 +136,7 @@ export const translations = {
     'customGPTs.audit3.title': 'Sicurezza dell\'infrastruttura cloud',
     'customGPTs.audit3.desc': 'Review delle configurazioni, gestione degli accessi IAM, rilevamento di secrets esposti e hardening dell\'infrastruttura.',
     'customGPTs.auditNote': 'Documentazione leggibile da non-tecnici. Pronta per audit esterni, investitori e DPO.',
+    'customGPTs.cyberPartners': 'Integriamo le piattaforme leader nella sicurezza informatica',
 
     'smartChatbot.pageTitle': 'Chatbot intelligente sempre attivo per la tua azienda',
     'smartChatbot.pageDescription': "Un assistente virtuale che gestisce le conversazioni 24/7, risponde alle domande frequenti e passa agli operatori umani quando necessario, migliorando l'esperienza cliente.",
@@ -299,7 +300,7 @@ export const translations = {
     'features.customerInsights.title': 'Customer Analytics',
     'features.customerInsights.description': 'Analyzes customer behavior and predicts needs using advanced AI algorithms.',
 
-    'features.customGPTs.title': 'Intelligent Software',
+    'features.customGPTs.title': 'Custom Software',
     'features.customGPTs.description': 'Custom AI solutions for Sales, HR, Legal, and more to meet your specific needs.',
     'features.customGPTs.extendedDesc1': 'We design management software, digital platforms and AI agents built around your operational needs. Each solution is custom-developed to integrate with existing systems and deliver measurable value.',
     'features.customGPTs.extendedDesc2': 'From prototype to production deployment: the code is 100% yours, with full documentation and ongoing support.',
@@ -405,6 +406,7 @@ export const translations = {
     'customGPTs.audit3.title': 'Cloud infrastructure security',
     'customGPTs.audit3.desc': 'Configuration review, IAM access management, exposed secrets detection and infrastructure hardening.',
     'customGPTs.auditNote': 'Human-readable documentation. Ready for external audits, investors and DPO.',
+    'customGPTs.cyberPartners': 'We integrate leading cybersecurity platforms',
 
     'smartChatbot.pageTitle': 'Smart chatbot always active for your business',
     'smartChatbot.pageDescription': 'A virtual assistant that handles conversations 24/7, answers frequently asked questions, and escalates to human operators when needed, improving customer experience.',
