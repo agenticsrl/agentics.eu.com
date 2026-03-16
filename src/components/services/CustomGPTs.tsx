@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ShieldCheck, FileCheck2, Cloud } from 'lucide-react';
 import { motion } from 'framer-motion';
 import BackHomeButton from '../BackHomeButton';
 import Contact from '../Contact';
@@ -321,6 +321,66 @@ const CustomGPTs: React.FC = () => {
         </div>
       </section>
 
+      {/* Audit section */}
+      <section className="py-16 md:py-24 bg-neutral/30 border-t border-neutral">
+        <div className="container mx-auto px-4 md:px-6 max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-10 md:mb-14"
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[.08em] text-aiblue mb-3">
+              {t('customGPTs.auditTitle')}
+            </p>
+            <h2 className="font-display font-semibold text-2xl md:text-3xl text-graphite mb-4">
+              {t('customGPTs.auditSubtitle')}
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-px bg-neutral border border-neutral">
+            {[
+              { icon: ShieldCheck, labelKey: 'customGPTs.audit1.label', titleKey: 'customGPTs.audit1.title', descKey: 'customGPTs.audit1.desc' },
+              { icon: FileCheck2,  labelKey: 'customGPTs.audit2.label', titleKey: 'customGPTs.audit2.title', descKey: 'customGPTs.audit2.desc' },
+              { icon: Cloud,       labelKey: 'customGPTs.audit3.label', titleKey: 'customGPTs.audit3.title', descKey: 'customGPTs.audit3.desc' },
+            ].map(({ icon: Icon, labelKey, titleKey, descKey }, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="bg-white p-6 sm:p-8 flex flex-col gap-4"
+              >
+                <div className="flex items-center gap-3">
+                  <Icon size={20} className="text-aiblue flex-shrink-0" strokeWidth={1.5} />
+                  <span className="text-[11px] font-semibold uppercase tracking-[.08em] text-aiblue">
+                    {t(labelKey as any)}
+                  </span>
+                </div>
+                <h3 className="font-display font-semibold text-base text-graphite leading-snug">
+                  {t(titleKey as any)}
+                </h3>
+                <p className="text-sm text-graphite/60 leading-relaxed flex-1">
+                  {t(descKey as any)}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-6 text-center text-graphite/40 text-xs sm:text-sm"
+          >
+            {t('customGPTs.auditNote')}
+          </motion.p>
+        </div>
+      </section>
+
       {/* Case Study — Idrotec */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6 max-w-5xl">
@@ -347,13 +407,17 @@ const CustomGPTs: React.FC = () => {
             className="border border-neutral"
           >
             {/* Logo bar */}
-            <div className="px-6 py-5 sm:px-8 sm:py-6 flex items-center gap-5 border-b border-neutral">
+            <div className="px-6 py-5 sm:px-8 sm:py-6 flex items-center gap-5 border-b border-neutral bg-neutral/20">
               <div className="flex-shrink-0 w-[3px] h-10 bg-aiblue" />
-              <img
-                src="/idrotec logo 1 (1) 1.png"
-                alt="Idrotec Solution"
-                className="h-8 sm:h-10 w-auto object-contain"
-              />
+              <div className="bg-white border border-neutral/60 px-3 py-2">
+                <img
+                  src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/idrotec%20logo%201%20(1).png"
+                  alt="Idrotec Solution"
+                  className="h-8 sm:h-10 w-auto object-contain drop-shadow-[0_1px_1px_rgba(0,0,0,0.18)]"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
             </div>
 
             {/* Content: text left, image right */}
@@ -393,13 +457,17 @@ const CustomGPTs: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="border border-neutral"
           >
-            <div className="px-6 py-5 sm:px-8 sm:py-6 flex items-center gap-5 border-b border-neutral">
+            <div className="px-6 py-5 sm:px-8 sm:py-6 flex items-center gap-5 border-b border-neutral bg-neutral/20">
               <div className="flex-shrink-0 w-[3px] h-10 bg-aiblue" />
-              <img
-                src="/netsin-logo.png"
-                alt="Netsin"
-                className="h-8 sm:h-10 w-auto object-contain"
-              />
+              <div className="bg-white border border-neutral/60 px-3 py-2">
+                <img
+                  src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/netsin%20logo.png"
+                  alt="Netsin"
+                  className="h-8 sm:h-10 w-auto object-contain drop-shadow-[0_1px_1px_rgba(0,0,0,0.18)]"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
             </div>
 
             <div className="flex flex-col lg:flex-row lg:items-stretch">
@@ -420,7 +488,7 @@ const CustomGPTs: React.FC = () => {
 
               <div className="lg:w-[52%] flex-shrink-0 border-t border-neutral lg:border-t-0 bg-white">
                 <img
-                  src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Screenshot%202026-03-16%20at%2020.18.03.png"
+                  src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Screenshot%202026-03-16%20at%2020.30.14.png"
                   alt="Netsin Platform — Certificazioni ISO 9001"
                   className="w-full h-auto object-contain block"
                 />
