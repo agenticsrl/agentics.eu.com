@@ -19,7 +19,8 @@ const AIReceptionist: React.FC = () => {
     keywords: language === 'it'
       ? 'receptionist AI, agente vocale AI, chiamate automatiche AI, prenotazione appuntamenti AI, assistente telefonico virtuale, AI per call center, receptionist virtuale 24/7, automazione telefonica'
       : 'AI receptionist, AI voice agent, automatic AI calls, AI appointment booking, virtual phone assistant, AI for call center, 24/7 virtual receptionist, phone automation',
-    canonicalUrl: 'https://agentics.eu.com/services/ai-receptionist'
+    canonicalUrl: 'https://agentics.eu.com/services/ai-receptionist',
+    language
   });
 
   const scrollToContact = () => {

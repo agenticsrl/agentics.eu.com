@@ -33,7 +33,8 @@ const SmartChatbot: React.FC = () => {
     keywords: language === 'it'
       ? 'chatbot AI, assistente virtuale intelligente, chatbot 24/7, supporto clienti automatico, chatbot linguaggio naturale, integrazione WhatsApp AI, chatbot italiano, automazione customer service'
       : 'AI chatbot, intelligent virtual assistant, 24/7 chatbot, automatic customer support, natural language chatbot, WhatsApp AI integration, customer service automation',
-    canonicalUrl: 'https://agentics.eu.com/services/smart-chatbot'
+    canonicalUrl: 'https://agentics.eu.com/services/smart-chatbot',
+    language
   });
 
   useEffect(() => {

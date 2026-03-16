@@ -109,7 +109,8 @@ const CustomGPTs: React.FC = () => {
     keywords: language === 'it'
       ? 'software AI personalizzato, sviluppo AI custom, applicazioni intelligenza artificiale, assistente AI aziendale, CRM AI, HR AI, software machine learning, soluzioni AI su misura, automazione processi AI'
       : 'custom AI software, custom AI development, artificial intelligence applications, business AI assistant, AI CRM, HR AI, machine learning software, tailored AI solutions, AI process automation',
-    canonicalUrl: 'https://agentics.eu.com/services/custom-gpts'
+    canonicalUrl: 'https://agentics.eu.com/services/custom-gpts',
+    language
   });
 
   const scrollToContact = () => {
@@ -232,7 +233,7 @@ const CustomGPTs: React.FC = () => {
                 gap={80}
                 hoverSpeed={0}
                 fadeOut
-                fadeOutColor="rgba(245, 245, 245, 1)"
+                fadeOutColor="rgb(248, 248, 248)"
                 ariaLabel={t('customGPTs.techStackAria')}
               />
             </div>

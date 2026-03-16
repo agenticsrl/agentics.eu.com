@@ -20,7 +20,8 @@ const About: React.FC = () => {
       ? 'chi siamo Agentics, azienda AI Italia, esperti intelligenza artificiale, consulenza AI aziendale, team sviluppo AI, storia Agentics, missione AI, about Agentics, azienda automazione AI italiana'
       : 'about Agentics, AI company, artificial intelligence experts, AI business consulting, AI development team, Agentics history, AI mission, AI automation company',
     canonicalUrl: 'https://agentics.eu.com/about',
-    ogImage: 'https://agentics.eu.com/foliofox-preview-dark (1) 1.png'
+    language,
+    ogImage: 'https://agentics.eu.com/web-app-manifest-512x512.png?v=2025'
   });
 
   useEffect(() => {

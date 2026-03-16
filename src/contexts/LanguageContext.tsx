@@ -74,6 +74,14 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     initLanguage();
   }, []);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('lang', language);
+    const languageMeta = document.querySelector('meta[name="language"]');
+    if (languageMeta) {
+      languageMeta.setAttribute('content', language === 'it' ? 'Italian' : 'English');
+    }
+  }, [language]);
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem('preferred-language', lang);

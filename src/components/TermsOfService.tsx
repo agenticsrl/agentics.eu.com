@@ -1,36 +1,24 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSEO } from '../hooks/useSEO';
 
 const TermsOfService: React.FC = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
-  useEffect(() => {
-    const metaRobots = document.createElement('meta');
-    metaRobots.name = 'robots';
-    metaRobots.content = 'noindex, nofollow';
-    document.head.appendChild(metaRobots);
-
-    document.title = language === 'it'
-      ? 'Termini di Servizio - Agentics'
-      : 'Terms of Service - Agentics';
-
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', language === 'it'
-        ? 'Termini e condizioni di utilizzo del servizio Agentics SRL.'
-        : 'Terms and conditions of use for Agentics SRL services.');
-    }
-
-    return () => {
-      if (metaRobots.parentNode) {
-        document.head.removeChild(metaRobots);
-      }
-    };
-  }, [language]);
+  useSEO({
+    title: language === 'it' ? 'Termini di Servizio - Agentics' : 'Terms of Service - Agentics',
+    description: language === 'it'
+      ? 'Termini e condizioni di utilizzo del servizio Agentics SRL.'
+      : 'Terms and conditions of use for Agentics SRL services.',
+    canonicalUrl: 'https://agentics.eu.com/terms-of-service',
+    robots: 'noindex, nofollow',
+    language,
+    ogType: 'article',
+  });
 
   return (
     <div className="min-h-screen bg-white pt-32 pb-20">

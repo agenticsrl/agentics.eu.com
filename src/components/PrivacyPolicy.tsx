@@ -1,32 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSEO } from '../hooks/useSEO';
 
 const PrivacyPolicy: React.FC = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
-  useEffect(() => {
-    const metaRobots = document.createElement('meta');
-    metaRobots.name = 'robots';
-    metaRobots.content = 'noindex, nofollow';
-    document.head.appendChild(metaRobots);
-
-    document.title = language === 'it' ? 'Privacy e Cookie Policy - Agentics' : 'Privacy and Cookie Policy - Agentics';
-
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', language === 'it' ? 'Privacy e Cookie Policy di Agentics SRL.' : 'Privacy and Cookie Policy of Agentics SRL.');
-    }
-
-    return () => {
-      if (metaRobots.parentNode) {
-        document.head.removeChild(metaRobots);
-      }
-    };
-  }, [language]);
+  useSEO({
+    title: language === 'it' ? 'Privacy e Cookie Policy - Agentics' : 'Privacy and Cookie Policy - Agentics',
+    description: language === 'it' ? 'Privacy e Cookie Policy di Agentics SRL.' : 'Privacy and Cookie Policy of Agentics SRL.',
+    canonicalUrl: 'https://agentics.eu.com/privacy-policy',
+    robots: 'noindex, nofollow',
+    language,
+    ogType: 'article',
+  });
 
   return (
     <div className="min-h-screen bg-white pt-32 pb-20">

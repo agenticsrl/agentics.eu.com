@@ -189,6 +189,8 @@ const ConstructionDemo: React.FC = () => {
               margin-left: 50%;
               position: relative;
               left: -180px;
+              user-select: none;
+              -webkit-user-select: none;
             }
           }
         `}</style>
