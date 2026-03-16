@@ -37,11 +37,10 @@ const Features: React.FC = () => {
           <div className="relative">
             <div className="relative bg-white overflow-hidden border border-neutral">
               <div className="aspect-video w-full overflow-hidden bg-graphite/5 relative">
-                <iframe
-                  src="https://www.foliofox.com/"
-                  title="FolioFox AI Portfolio Analysis Platform"
-                  className="w-full h-full border-0 scale-100 origin-top-left"
-                  style={{ pointerEvents: 'none' }}
+                <img
+                  src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Screenshot%202026-03-17%20at%2000.01.45.png"
+                  alt="FolioFox AI Portfolio Analysis Platform"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
               <div className="p-8 sm:p-10 bg-white border-t border-neutral">
