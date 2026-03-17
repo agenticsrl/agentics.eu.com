@@ -27,14 +27,14 @@ const HomePage: React.FC = () => {
 
   useSEO({
     title: language === 'it'
-      ? 'Agentics - Software AI Personalizzato per Aziende | Automazione Intelligente'
-      : 'Agentics - Custom AI Software for Businesses | Intelligent Automation',
+      ? 'Agentics - Software personalizzato potenziato con AI per aziende | Automazione intelligente'
+      : 'Agentics - Custom software powered by AI for businesses | Intelligent automation',
     description: language === 'it'
-      ? 'Agentics sviluppa soluzioni AI personalizzate per aziende: chatbot intelligenti, receptionist vocali, software su misura e automazioni operative.'
-      : 'Agentics builds custom AI solutions for businesses: smart chatbots, voice receptionists, tailored software, and operational automations.',
+      ? 'Agentics sviluppa software personalizzato potenziato con AI per aziende: chatbot intelligenti, receptionist vocali, soluzioni su misura e automazioni operative.'
+      : 'Agentics builds custom software powered by AI for businesses: smart chatbots, voice receptionists, tailored solutions, and operational automations.',
     keywords: language === 'it'
-      ? 'software AI personalizzato, automazione aziendale, chatbot AI, receptionist vocale AI, sviluppo software su misura'
-      : 'custom AI software, business automation, AI chatbot, AI voice receptionist, bespoke software development',
+      ? 'software personalizzato potenziato con AI, automazione aziendale, chatbot AI, receptionist vocale AI, sviluppo software su misura'
+      : 'custom software powered by AI, business automation, AI chatbot, AI voice receptionist, bespoke software development',
     canonicalUrl: 'https://agentics.eu.com/',
     language,
     ogImageAlt: language === 'it'
@@ -72,6 +72,7 @@ function AnimatedRoutes() {
         <Route path="/services/smart-chatbot" element={<SmartChatbot />} />
         <Route path="/services/ai-receptionist" element={<AIReceptionist />} />
         <Route path="/services/custom-gpts" element={<CustomGPTs />} />
+        <Route path="/services/software-personalizzato" element={<CustomGPTs />} />
       </Routes>
     </AnimatePresence>
   );

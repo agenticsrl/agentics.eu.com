@@ -1,10 +1,12 @@
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Features: React.FC = () => {
   const { t, language } = useLanguage();
+  const navigate = useNavigate();
 
   return (
     <section className="py-16 sm:py-24 md:py-32 bg-white">
@@ -44,24 +46,19 @@ const Features: React.FC = () => {
                 />
               </div>
               <div className="p-8 sm:p-10 bg-white border-t border-neutral">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                  <div className="flex-1">
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-graphite mb-3">
-                      {t('features.folioFoxTitle')}
-                    </h3>
-                    <p className="text-base text-graphite/60">
-                      {t('features.folioFoxSubtitle')}
-                    </p>
+                <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                  <div className="flex-1 space-y-3">
+                    <p className="text-base text-graphite/70 leading-relaxed">{t('features.folioFoxDescription')}</p>
+                    <p className="text-base text-graphite/70 leading-relaxed">{t('features.folioFoxDesc2')}</p>
+                    <p className="text-base text-graphite/70 leading-relaxed">{t('features.folioFoxDesc3')}</p>
                   </div>
-                  <a
-                    href="https://www.foliofox.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-graphite text-white hover:bg-aiblue text-[11px] font-semibold uppercase tracking-[.08em] transition-colors duration-200 whitespace-nowrap group/button"
+                  <button
+                    onClick={() => { navigate('/services/software-personalizzato'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-graphite text-white hover:bg-aiblue text-[11px] font-semibold tracking-[.08em] transition-colors duration-200 whitespace-nowrap group/button normal-case"
                   >
                     {t('features.visitFolioFox')}
-                    <ExternalLink size={18} className="group-hover/button:translate-x-1 group-hover/button:-translate-y-1 transition-transform" />
-                  </a>
+                    <ArrowRight size={18} className="group-hover/button:translate-x-1 transition-transform" />
+                  </button>
                 </div>
               </div>
             </div>

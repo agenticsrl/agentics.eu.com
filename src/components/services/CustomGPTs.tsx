@@ -101,15 +101,15 @@ const CustomGPTs: React.FC = () => {
 
   useSEO({
     title: language === 'it'
-      ? 'Software Personalizzato con AI | Agentics - Sviluppo Software su Misura'
-      : 'Custom Software with AI | Agentics - Tailored Software Development',
+      ? 'Software personalizzato potenziato con AI | Agentics - Sviluppo su misura'
+      : 'Custom software powered by AI | Agentics - Tailored development',
     description: language === 'it'
-      ? 'Sviluppiamo software AI personalizzato per la tua azienda: assistenti HR, sistemi legali, CRM intelligenti, automazione contabilita. Machine learning su misura per le tue esigenze.'
-      : 'We develop custom AI software for your business: HR assistants, legal systems, intelligent CRM, accounting automation. Machine learning tailored to your needs.',
+      ? 'Sviluppiamo software personalizzato potenziato con AI per la tua azienda: assistenti HR, sistemi legali, CRM intelligenti e automazioni su misura.'
+      : 'We develop custom software powered by AI for your business: HR assistants, legal systems, intelligent CRM, and tailored automations.',
     keywords: language === 'it'
-      ? 'software AI personalizzato, sviluppo AI custom, applicazioni intelligenza artificiale, assistente AI aziendale, CRM AI, HR AI, software machine learning, soluzioni AI su misura, automazione processi AI'
-      : 'custom AI software, custom AI development, artificial intelligence applications, business AI assistant, AI CRM, HR AI, machine learning software, tailored AI solutions, AI process automation',
-    canonicalUrl: 'https://agentics.eu.com/services/custom-gpts',
+      ? 'software personalizzato potenziato con AI, sviluppo software custom, applicazioni intelligenza artificiale, assistente AI aziendale, CRM AI, HR AI, soluzioni AI su misura, automazione processi'
+      : 'custom software powered by AI, custom software development, artificial intelligence applications, business AI assistant, AI CRM, HR AI, tailored AI solutions, process automation',
+    canonicalUrl: 'https://agentics.eu.com/services/software-personalizzato',
     language
   });
 

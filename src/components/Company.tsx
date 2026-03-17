@@ -122,22 +122,22 @@ const Company: React.FC = () => {
         >
           <div
             className="group cursor-pointer border border-graphite/10 hover:border-aiblue/40 active:scale-[0.99] transition-all duration-300"
-            onClick={() => handleNavigation('/services/custom-gpts')}
+            onClick={() => handleNavigation('/services/software-personalizzato')}
           >
             <div className="p-6 sm:p-10">
               <div className="mb-5 sm:mb-6">
-                <h3 className="font-display font-semibold text-xl sm:text-2xl text-graphite mb-1 group-hover:text-aiblue transition-colors duration-300">
+                <h3 className="font-display font-semibold text-xl sm:text-2xl text-graphite mb-1 group-hover:text-aiblue transition-colors duration-300 normal-case">
                   {t('features.customGPTs.title')}
                 </h3>
-                <p className="text-sm sm:text-base text-graphite/50">
-                  {t('features.customGPTs.description')}
-                </p>
               </div>
               <p className="text-sm sm:text-base text-graphite/60 leading-relaxed mb-3">
                 {t('features.customGPTs.extendedDesc1')}
               </p>
-              <p className="text-sm sm:text-base text-graphite/60 leading-relaxed mb-6">
+              <p className="text-sm sm:text-base text-graphite/60 leading-relaxed mb-3">
                 {t('features.customGPTs.extendedDesc2')}
+              </p>
+              <p className="text-sm sm:text-base text-graphite/60 leading-relaxed mb-6">
+                {t('features.customGPTs.extendedDesc3')}
               </p>
               <span className="inline-flex items-center gap-2 text-aiblue text-sm sm:text-base font-semibold uppercase tracking-[.06em] group-hover:gap-3 transition-all duration-300">
                 {t('company.learnMore')}
