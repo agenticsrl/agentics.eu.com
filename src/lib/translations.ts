@@ -216,10 +216,10 @@ export const translations = {
     'cookie.save': 'Salva preferenze',
 
     'features.caseStudy': 'Case Study',
-    'features.folioFoxDescription': 'Software gestionali, piattaforme digitali e sistemi basati su intelligenza artificiale sviluppati intorno ai processi reali della tua azienda.',
-    'features.folioFoxDesc2': 'Ogni soluzione è costruita su misura, progettata per integrarsi e migliorare efficienza, automazione e controllo dei processi.',
-    'features.folioFoxDesc3': 'Dal prototipo al rilascio in produzione, sviluppiamo soluzioni scalabili, documentazione completa e supporto continuo.',
-    'features.visitFolioFox': 'Software personalizzato',
+    'features.folioFoxDescription': 'FolioFox è una piattaforma di portfolio intelligence che aiuta gli investitori a monitorare patrimonio, dividendi e performance in tempo reale.',
+    'features.folioFoxDesc2': 'Abbiamo progettato e sviluppato gli agenti AI integrati nella piattaforma: un advisor finanziario intelligente capace di analizzare il portafoglio, importare dati da spreadsheet e PDF, e fornire consulenza personalizzata basata sul profilo dell\'utente.',
+    'features.folioFoxDesc3': 'Dall\'architettura degli agenti al rilascio in produzione, abbiamo costruito un sistema scalabile che evolve con la piattaforma: scenario planning, monitoraggio ticker e analisi avanzata delle performance.',
+    'features.visitFolioFox': 'Scopri FolioFox',
     'features.aiVisionTitle': "Visione artificiale per l'efficientamento industriale",
     'features.aiVisionDescription': 'Soluzioni di AI Vision che riescono a trovare, contare, osservare e comprendere situazioni e oggetti in tempo reale. Tecnologie avanzate per automatizzare processi di controllo qualità, monitoraggio produzione e ottimizzazione operativa.',
 
@@ -487,10 +487,10 @@ export const translations = {
     'cookie.save': 'Save preferences',
 
     'features.caseStudy': 'Case Study',
-    'features.folioFoxDescription': 'Management software, digital platforms and AI-based systems built around your real business processes.',
-    'features.folioFoxDesc2': 'Every solution is custom-built, designed to integrate and improve efficiency, automation and process control.',
-    'features.folioFoxDesc3': 'From prototype to production release, we develop scalable solutions with full documentation and ongoing support.',
-    'features.visitFolioFox': 'Custom Software',
+    'features.folioFoxDescription': 'FolioFox is a portfolio intelligence platform that helps investors monitor wealth, dividends and performance in real time.',
+    'features.folioFoxDesc2': 'We designed and built the AI agents integrated into the platform: an intelligent financial advisor that analyzes portfolios, imports data from spreadsheets and PDFs, and provides personalized guidance based on the user\'s financial profile.',
+    'features.folioFoxDesc3': 'From agent architecture to production deployment, we built a scalable system that evolves with the platform: scenario planning, ticker monitoring and advanced performance analytics.',
+    'features.visitFolioFox': 'Discover FolioFox',
     'features.aiVisionTitle': 'Computer vision for industrial efficiency',
     'features.aiVisionDescription': 'AI Vision solutions that can find, count, observe, and understand situations and objects in real time. Advanced technologies to automate quality control processes, production monitoring, and operational optimization.',
 
