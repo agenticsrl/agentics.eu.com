@@ -100,8 +100,7 @@ export const translations = {
     'footer.contact': 'Contatti',
     'footer.privacy': 'Privacy Policy',
     'footer.terms': 'Termini di Servizio',
-    'footer.chatbot': 'Chatbot AI',
-    'footer.voiceAgent': 'Agente Vocale AI',
+    'footer.software': 'Software AI',
 
     'featureCard.learnMore': 'Scopri di più',
 
@@ -371,8 +370,7 @@ export const translations = {
     'footer.contact': 'Contact',
     'footer.privacy': 'Privacy Policy',
     'footer.terms': 'Terms of Service',
-    'footer.chatbot': 'AI Chatbot',
-    'footer.voiceAgent': 'AI Voice Agent',
+    'footer.software': 'AI Software',
 
     'featureCard.learnMore': 'Learn more',
 

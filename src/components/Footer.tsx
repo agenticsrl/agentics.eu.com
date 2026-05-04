@@ -31,8 +31,7 @@ const Footer: React.FC = () => {
       mainLinks={[
         { href: "/about", label: t('footer.aboutUs') },
         { href: "#contact", label: t('footer.contact') },
-        { href: "/services/smart-chatbot", label: t('footer.chatbot') },
-        { href: "/services/ai-receptionist", label: t('footer.voiceAgent') },
+        { href: "/services/software-personalizzato", label: t('footer.software') },
       ]}
       legalLinks={[
         { href: "/privacy-policy", label: t('footer.privacy') },

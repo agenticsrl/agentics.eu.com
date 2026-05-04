@@ -32,8 +32,8 @@ const About: React.FC = () => {
       "url": "https://agentics.eu.com",
       "logo": "https://agentics.eu.com/BASE.svg",
       "description": language === 'it'
-        ? "Agentics sviluppa soluzioni AI personalizzate per automatizzare la tua azienda: chatbot intelligenti, receptionist vocali, qualificazione lead"
-        : "Agentics develops custom AI solutions to automate your business: smart chatbots, voice receptionists, lead qualification",
+        ? "Agentics sviluppa software personalizzato potenziato con AI per automatizzare la tua azienda"
+        : "Agentics develops custom software powered by AI to automate your business",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Via Vincenzo Monti 16",
@@ -48,8 +48,8 @@ const About: React.FC = () => {
         "https://www.linkedin.com/company/agentics-srl/"
       ],
       "knowsAbout": language === 'it'
-        ? ["Intelligenza Artificiale", "Automazione AI", "Chatbot", "Machine Learning", "AI per PMI"]
-        : ["Artificial Intelligence", "AI Automation", "Chatbot", "Machine Learning", "AI for SMB"],
+        ? ["Intelligenza Artificiale", "Automazione AI", "Software Personalizzato", "Machine Learning", "AI per PMI"]
+        : ["Artificial Intelligence", "AI Automation", "Custom Software", "Machine Learning", "AI for SMB"],
       "areaServed": "IT"
     };
 
