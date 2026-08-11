@@ -29,8 +29,8 @@ const ALWAYS_LABELLED: readonly NodeKind[] = ['core', 'hub'];
 /**
  * Su tela stretta anche le sole sei etichette di nucleo e hub si accavallano
  * («Comunicazioni» finiva sopra «Company Brain») e quelle a destra sbordano
- * dal riquadro. Sotto questa larghezza nel grafo resta il solo nucleo e i nomi
- * dei gruppi passano nella legenda sotto, dove si leggono in ordine.
+ * dal riquadro. Sotto questa larghezza nel grafo resta il solo nucleo: i nomi
+ * dei gruppi restano comunque disponibili nell'elenco per i lettori di schermo.
  */
 const COMPACT_WIDTH = 520;
 const COMPACT_LABELLED: readonly NodeKind[] = ['core'];
@@ -174,9 +174,6 @@ const CompanyBrainGraph: React.FC = () => {
 
   const isCompact = width > 0 && width < COMPACT_WIDTH;
   const labelledKinds = isCompact ? COMPACT_LABELLED : ALWAYS_LABELLED;
-  const hubs = nodes
-    .map((node, index) => ({ node, index }))
-    .filter(({ node }) => node.kind === 'hub');
 
   return (
     <div ref={wrapRef} className="company-brain">
@@ -249,17 +246,6 @@ const CompanyBrainGraph: React.FC = () => {
             })}
           </g>
         </svg>
-      )}
-
-      {/* Legenda per schermi stretti. aria-hidden: gli stessi nomi sono già
-          nell'elenco per i lettori di schermo qui sotto. */}
-      {isCompact && (
-        <ul className="company-brain__legend" aria-hidden="true">
-          {hubs.map(({ node, index }) => (
-            <li key={node.id}>{labelFor(index)}</li>
-          ))}
-          {hubs.length % 2 === 1 && <li aria-hidden="true" />}
-        </ul>
       )}
 
       {/* Lo stesso contenuto in testo: il grafo è un'immagine, e chi usa un

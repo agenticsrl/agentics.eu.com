@@ -66,8 +66,11 @@ const buildDirectionsUrl = (office: Office) =>
 const Offices: React.FC = () => {
   const { t } = useLanguage();
 
+  /* Le sedi chiudono il blocco dei contatti, non aprono un argomento nuovo:
+     seguono sempre il modulo, in home come in Chi siamo. Da qui `tight` e
+     nessun filetto in testa. */
   return (
-    <Section id="offices" labelledBy="offices-title">
+    <Section id="offices" labelledBy="offices-title" tight divided={false}>
       <SectionHeader
         label={t('offices.label')}
         title={t('offices.title')}
@@ -77,8 +80,10 @@ const Offices: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-lg">
         {OFFICES.map((office) => (
           <article key={office.city} className="panel">
-            {/* Rapporto d'aspetto dichiarato: nessuno spostamento al caricamento */}
-            <div className="aspect-[16/10] w-full overflow-hidden border-b border-line bg-surface2">
+            {/* Rapporto d'aspetto dichiarato: nessuno spostamento al caricamento.
+                Più basso su telefono: a tutta larghezza in colonna singola la
+                mappa prendeva più spazio dell'indirizzo che deve accompagnare. */}
+            <div className="aspect-[16/7] sm:aspect-[16/10] w-full overflow-hidden border-b border-line bg-surface2">
               <img
                 src={buildMapUrl(office)}
                 alt={t(

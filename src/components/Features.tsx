@@ -1,9 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import Section from './layout/Section';
 import SectionHeader from './layout/SectionHeader';
-import ScrollableX from './layout/ScrollableX';
 
 const FOLIOFOX_SCREENSHOT =
   'https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Screenshot%202026-03-17%20at%2000.01.45.png';
@@ -11,12 +9,6 @@ const FOLIOFOX_URL = 'https://foliofox.com';
 
 const Features: React.FC = () => {
   const { t } = useLanguage();
-  const navigate = useNavigate();
-
-  const goToSoftwarePage = () => {
-    navigate('/services/software-personalizzato');
-    window.scrollTo({ top: 0 });
-  };
 
   return (
     <>
@@ -29,24 +21,19 @@ const Features: React.FC = () => {
         />
 
         <figure className="panel">
-          {/* Il cruscotto è un'interfaccia da scrivania: schiacciato a 375px
-              il suo testo era alto due pixel, cioè rumore. Su telefono lo si
-              scorre alla larghezza a cui si legge; da lg in su ci sta intero
-              e ScrollableX non mostra né nota né sfumatura. */}
-          <ScrollableX
-            label={t('features.folioFoxImageAlt')}
-            fadeFrom="from-surface"
-            className="border-b border-line"
-          >
+          {/* Il cruscotto si vede per intero a ogni larghezza: su telefono
+              resta minuto, ma tagliarlo dietro uno scorrimento laterale
+              nascondeva metà del lavoro a chi arriva da lì. */}
+          <div className="border-b border-line">
             <img
               src={FOLIOFOX_SCREENSHOT}
               alt={t('features.folioFoxImageAlt')}
               width={1600}
               height={900}
               loading="lazy"
-              className="block w-[900px] max-w-none lg:w-full h-auto"
+              className="block w-full h-auto"
             />
-          </ScrollableX>
+          </div>
           <figcaption className="p-lg grid grid-cols-1 lg:grid-cols-[1.6fr_auto] gap-lg lg:items-end">
             <div className="space-y-md">
               <p className="text-body-muted">{t('features.folioFoxDescription')}</p>
@@ -67,7 +54,11 @@ const Features: React.FC = () => {
       </Section>
 
       {/* Tipologia: testo su colonna singola con media */}
-      <Section labelledBy="ai-vision-title">
+      {/* Secondo caso di fila: continua il discorso del precedente, quindi
+          niente filetto e ritmo ridotto. Su telefono, dove ogni impianto a
+          colonne collassa in una sola, il raggruppamento è l'unica cosa che
+          distingue un blocco nuovo dalla prosecuzione di quello sopra. */}
+      <Section labelledBy="ai-vision-title" tight divided={false}>
         <SectionHeader
           label={t('features.aiVisionLabel')}
           title={t('features.aiVisionTitle')}

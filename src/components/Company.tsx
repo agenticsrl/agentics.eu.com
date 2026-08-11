@@ -29,10 +29,25 @@ const Company: React.FC = () => {
     { term: t('company.offering5.title'), description: t('company.offering5.description') },
   ];
 
+  /* Su telefono resta la sola voce sui sistemi AI e LLM, che è quella che
+     regge il blocco Company brain qui sotto: le altre tre sono approfondimento
+     da scrivania e allungavano la sezione senza aggiungere il punto. */
   const capabilities: readonly SpecItem[] = [
-    { term: t('hero.capability1'), description: t('company.capability1.description') },
-    { term: t('hero.capability2'), description: t('company.capability2.description') },
-    { term: t('hero.capability3'), description: t('company.capability3.description') },
+    {
+      term: t('hero.capability1'),
+      description: t('company.capability1.description'),
+      desktopOnly: true,
+    },
+    {
+      term: t('hero.capability2'),
+      description: t('company.capability2.description'),
+      desktopOnly: true,
+    },
+    {
+      term: t('hero.capability3'),
+      description: t('company.capability3.description'),
+      desktopOnly: true,
+    },
     { term: t('hero.capability4'), description: t('company.capability4.description') },
   ];
 
@@ -43,17 +58,16 @@ const Company: React.FC = () => {
 
   return (
     <>
-      {/* Tipologia: blocco di testo su fondo fotografico.
-          La sagoma sta dietro al testo a tutta pagina invece che in una
-          colonna accanto: su telefono la colonna la schiacciava a un
-          francobollo, e a fianco del testo rubava metà larghezza di lettura.
-          La velatura è direzionale, non uniforme — copre dove sta la scrittura
-          e si apre dove sta l'edificio, così il testo resta leggibile e il
-          grattacielo si vede. */}
+      {/* Tipologia: blocco di testo con l'edificio accanto.
+          Due trattamenti, uno per famiglia di schermi. Fino a tablet la
+          sagoma sta dietro al testo a tutta pagina: in colonna si riduceva a
+          un francobollo. Da lg torna in colonna propria, piena e senza
+          velatura sopra — lì la larghezza c'è, e il grattacielo si deve
+          vedere per quello che è. */}
       <Section
         labelledBy="company-title"
         background={
-          <div className="absolute inset-0" aria-hidden="true">
+          <div className="absolute inset-0 lg:hidden" aria-hidden="true">
             <img
               src={TOWER_IMAGE_SRC}
               alt=""
@@ -61,41 +75,52 @@ const Company: React.FC = () => {
               height={TOWER_HEIGHT}
               loading="lazy"
               decoding="async"
-              /* Più scuro su telefono, dove il testo gli passa sopra per
-                 tutta la larghezza; più presente da lg, dove il testo sta
-                 nella metà sinistra e l'edificio ha la sua. */
-              className="w-full h-full object-cover object-[50%_30%] grayscale brightness-[0.55] lg:object-[78%_30%] lg:brightness-[0.68]"
+              className="w-full h-full object-cover object-[50%_30%] grayscale brightness-[0.55]"
             />
             {/* Scrim a più fermate, non lineare: resta quasi pieno per tutta
                 l'altezza del testo e si apre solo dove il testo è finito.
                 Con una sfumatura lineare il paragrafo cadeva sulle vetrate
                 chiare e non si leggeva. */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0A0A0A_0%,rgba(10,10,10,0.95)_52%,rgba(10,10,10,0.68)_78%,rgba(10,10,10,0.28)_100%)] lg:bg-[linear-gradient(to_right,#0A0A0A_0%,rgba(10,10,10,0.93)_42%,rgba(10,10,10,0.55)_68%,rgba(10,10,10,0.14)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0A0A0A_0%,rgba(10,10,10,0.95)_52%,rgba(10,10,10,0.68)_78%,rgba(10,10,10,0.28)_100%)]" />
           </div>
         }
       >
-        <div className="lg:max-w-[62%]">
-          <SectionHeader
-            label={t('company.label')}
-            title={t('company.heroTitle')}
-            titleId="company-title"
+        <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-lg lg:gap-xl lg:items-center">
+          <div>
+            <SectionHeader
+              label={t('company.label')}
+              title={t('company.heroTitle')}
+              titleId="company-title"
+            />
+            <div className="max-w-[62ch] space-y-md">
+              <p className="text-body-muted">{t('company.heroText1')}</p>
+              <p className="text-body-muted">{t('company.heroText2')}</p>
+            </div>
+            <div className="mt-xl">
+              <button type="button" onClick={scrollToContact} className="btn-primary">
+                {t('company.cta')}
+              </button>
+            </div>
+          </div>
+
+          {/* Solo da lg: sotto quel breakpoint l'edificio è già lo sfondo
+              della sezione, e mostrarlo due volte lo raddoppierebbe. */}
+          <img
+            src={TOWER_IMAGE_SRC}
+            alt=""
+            width={TOWER_WIDTH}
+            height={TOWER_HEIGHT}
+            loading="lazy"
+            decoding="async"
+            className="hidden lg:block w-full h-auto grayscale"
           />
-          <div className="max-w-[62ch] space-y-md">
-            <p className="text-body-muted">{t('company.heroText1')}</p>
-            <p className="text-body-muted">{t('company.heroText2')}</p>
-          </div>
-          <div className="mt-xl">
-            <button type="button" onClick={scrollToContact} className="btn-primary">
-              {t('company.cta')}
-            </button>
-          </div>
         </div>
       </Section>
 
       {/* Tipologia: elenco descrittivo. Ritmo ridotto come la griglia che
           segue: i due blocchi si leggono in sequenza e a ritmo pieno fra i
           due restavano 224px di vuoto. */}
-      <Section id="solutions" labelledBy="solutions-title" tight>
+      <Section id="solutions" labelledBy="solutions-title" tight divided={false}>
         <SectionHeader title={t('company.solutionsTitle')} titleId="solutions-title" />
         <SpecList items={offerings} />
       </Section>
@@ -104,7 +129,7 @@ const Company: React.FC = () => {
           dall'elenco a righe della sezione precedente: due elenchi identici
           di fila si leggevano come una ripetizione. Ritmo ridotto, perché i
           due blocchi vanno letti insieme. */}
-      <Section labelledBy="capabilities-title" tight>
+      <Section labelledBy="capabilities-title" tight divided={false}>
         <SectionHeader
           label={t('company.capabilitiesLabel')}
           title={t('company.capabilitiesTitle')}
@@ -133,7 +158,7 @@ const Company: React.FC = () => {
       <Section labelledBy="custom-software-title">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-lg lg:gap-xl">
           <SectionHeader
-            label={t('company.label')}
+            label={t('company.softwareLabel')}
             title={t('features.customGPTs.title')}
             titleId="custom-software-title"
           />

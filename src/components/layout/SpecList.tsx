@@ -3,6 +3,11 @@ import React from 'react';
 export interface SpecItem {
   term: string;
   description: string;
+  /**
+   * Voce di approfondimento: resta nel documento ma non viene mostrata sotto
+   * il breakpoint desktop. Onorata da SpecGrid; SpecList la ignora.
+   */
+  desktopOnly?: boolean;
 }
 
 interface SpecListProps {

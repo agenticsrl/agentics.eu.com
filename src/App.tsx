@@ -47,7 +47,12 @@ const HomePage: React.FC = () => {
       <Hero />
       <Company />
       <Features />
-      <FiscalIncentives />
+      {/* Approfondimento da scrivania: su telefono allungava la home di una
+          schermata e mezza senza essere ciò che si cerca da lì. Resta nel
+          documento — è contenuto, non decorazione — ma non viene mostrato. */}
+      <div className="hidden lg:block">
+        <FiscalIncentives />
+      </div>
       <Contact />
       <Offices />
     </>
