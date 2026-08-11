@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import Section from './layout/Section';
 import SectionHeader from './layout/SectionHeader';
+import ScrollableX from './layout/ScrollableX';
 
 const FOLIOFOX_SCREENSHOT =
   'https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Screenshot%202026-03-17%20at%2000.01.45.png';
@@ -28,17 +29,24 @@ const Features: React.FC = () => {
         />
 
         <figure className="panel">
-          {/* Rapporto d'aspetto dichiarato: nessuno spostamento al caricamento */}
-          <div className="aspect-video w-full overflow-hidden border-b border-line">
+          {/* Il cruscotto è un'interfaccia da scrivania: schiacciato a 375px
+              il suo testo era alto due pixel, cioè rumore. Su telefono lo si
+              scorre alla larghezza a cui si legge; da lg in su ci sta intero
+              e ScrollableX non mostra né nota né sfumatura. */}
+          <ScrollableX
+            label={t('features.folioFoxImageAlt')}
+            fadeFrom="from-surface"
+            className="border-b border-line"
+          >
             <img
               src={FOLIOFOX_SCREENSHOT}
               alt={t('features.folioFoxImageAlt')}
               width={1600}
               height={900}
               loading="lazy"
-              className="w-full h-full object-cover object-top"
+              className="block w-[900px] max-w-none lg:w-full h-auto"
             />
-          </div>
+          </ScrollableX>
           <figcaption className="p-lg grid grid-cols-1 lg:grid-cols-[1.6fr_auto] gap-lg lg:items-end">
             <div className="space-y-md">
               <p className="text-body-muted">{t('features.folioFoxDescription')}</p>

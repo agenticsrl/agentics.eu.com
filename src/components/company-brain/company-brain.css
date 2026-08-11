@@ -114,6 +114,40 @@
   user-select: none;
 }
 
+/* ---- Legenda per schermi stretti ---- */
+
+/* Due colonne divise da un filetto, come gli elenchi del resto del sito: i
+   nomi dei gruppi si leggono in ordine invece di accavallarsi sul grafo. */
+.company-brain__legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #242424;
+}
+
+.company-brain__legend li {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #242424;
+}
+
+.company-brain__legend li:nth-child(odd) {
+  padding-right: 1rem;
+}
+
+/* Filetto centrale: senza, i filetti orizzontali si interromperebbero a metà. */
+.company-brain__legend li:nth-child(even) {
+  padding-left: 1rem;
+  border-left: 1px solid #242424;
+}
+
 /* ---- Alternativa testuale ---- */
 
 /* Fuori dallo schermo ma leggibile dai lettori di schermo: il grafo è

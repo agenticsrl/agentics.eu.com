@@ -9,6 +9,12 @@ interface SectionProps {
   divided?: boolean;
   /** Ritmo verticale ridotto, per una sezione da leggere insieme alla precedente. */
   tight?: boolean;
+  /**
+   * Livello grafico a tutta larghezza dietro il contenuto: immagine di fondo,
+   * velatura. Sta qui e non nei figli perché deve uscire dal contenitore di
+   * testo e arrivare ai bordi della pagina.
+   */
+  background?: React.ReactNode;
 }
 
 /**
@@ -22,13 +28,17 @@ const Section: React.FC<SectionProps> = ({
   labelledBy,
   divided = true,
   tight = false,
+  background,
 }) => (
   <section
     id={id}
     aria-labelledby={labelledBy}
-    className={`${tight ? 'section-tight' : 'section'} ${divided ? 'section-divided' : ''}`}
+    className={`${tight ? 'section-tight' : 'section'} ${divided ? 'section-divided' : ''} ${
+      background ? 'relative overflow-hidden' : ''
+    }`}
   >
-    <div className="container-content">{children}</div>
+    {background}
+    <div className={`container-content ${background ? 'relative' : ''}`}>{children}</div>
   </section>
 );
 

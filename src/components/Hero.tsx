@@ -1,81 +1,58 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-import { useMediaQuery } from '../hooks/useMediaQuery';
+import { useLightTracking } from '../hooks/useLightTracking';
 import RotatingFoldText from './ui/RotatingFoldText';
 import Section from './layout/Section';
 
-/** Girato originale in orizzontale: il velivolo è ripreso di profilo e occupa
- *  il 93% della larghezza del quadro. */
-const LANDSCAPE = {
-  video: '/hero-jet.mp4',
-  poster: '/hero-jet-poster.jpg',
-  width: 1920,
-  height: 1082,
-} as const;
-
-/** Montaggio per il telefono, ricavato dalla sola inquadratura frontale e
- *  ritagliato stretto sul velivolo. È il massimo ottenibile tenendo l'aereo
- *  intero: in tutte e tre le inquadrature del girato l'apertura alare copre
- *  l'89-93% del quadro, quindi oltre il +13% si taglierebbero le ali.
- *  Andata e ritorno, così l'anello non ha stacco. */
-const PORTRAIT = {
-  video: '/hero-jet-mobile.mp4',
-  poster: '/hero-jet-mobile-poster.jpg',
-  width: 720,
-  height: 452,
-} as const;
-
-/** Stesso valore del breakpoint md di Tailwind. */
-const LANDSCAPE_QUERY = '(min-width: 768px)';
+const VIDEO_SRC = '/hero-jet.mp4';
+const POSTER_SRC = '/hero-jet-poster.jpg';
+const VIDEO_WIDTH = 1920;
+const VIDEO_HEIGHT = 1082;
 
 const scrollToId = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 };
 
 /**
- * Intestazione della home: sul video resta solo il logotipo con la parola
- * che ruota; titolo, testo e pulsanti stanno nella sezione sotto, così il
- * filmato non è coperto da altro testo.
+ * Intestazione della home: il filmato occupa tutto lo schermo e porta solo il
+ * logotipo con la parola che ruota. Titolo, testo e pulsanti stanno nella
+ * sezione sotto, così il filmato non è coperto da altro testo.
  *
- * Altezza dichiarata in pixel e non in unità di viewport: evita il salto
- * di layout causato dalla barra del browser su mobile.
+ * A tutto schermo il quadro 16:9 viene per forza ritagliato, in verticale
+ * parecchio: il ritaglio non è fisso ma insegue il baricentro della luce,
+ * misurato in anticipo sul filmato, così il velivolo resta sempre inquadrato
+ * anche quando la ripresa cambia.
  */
 const Hero: React.FC = () => {
   const { t } = useLanguage();
   const prefersReducedMotion = usePrefersReducedMotion();
-  const isLandscapeViewport = useMediaQuery(LANDSCAPE_QUERY);
-  const source = isLandscapeViewport ? LANDSCAPE : PORTRAIT;
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useLightTracking(videoRef, !prefersReducedMotion);
 
   return (
     <>
-      <section className="relative overflow-hidden bg-black pt-header md:pt-0 md:min-h-[620px] lg:min-h-[700px]">
-        {/* Su telefono il filmato sta nel flusso al rapporto del suo ritaglio,
-            così si vede per intero. Lo spazio in alto è esattamente l'altezza
-            dell'header, che lo copre. Da md in su il filmato orizzontale torna
-            a riempire la sezione. */}
-        <div
-          className="relative w-full aspect-[720/452] md:aspect-auto md:absolute md:inset-0"
-          aria-hidden="true"
-        >
+      {/* svh e non vh: con l'unità classica la barra del browser che compare e
+          scompare cambierebbe l'altezza e farebbe sobbalzare la pagina. */}
+      <section className="relative h-[100svh] min-h-[480px] overflow-hidden bg-black md:h-auto md:min-h-[620px] lg:min-h-[700px]">
+        <div className="absolute inset-0" aria-hidden="true">
           {prefersReducedMotion ? (
             <img
-              src={source.poster}
+              src={POSTER_SRC}
               alt=""
-              width={source.width}
-              height={source.height}
+              width={VIDEO_WIDTH}
+              height={VIDEO_HEIGHT}
               className="w-full h-full object-cover"
             />
           ) : (
             <video
-              /* La chiave rimonta l'elemento al cambio di sorgente: senza,
-                 il browser tiene il filmato già caricato. */
-              key={source.video}
+              ref={videoRef}
               className="w-full h-full object-cover"
-              src={source.video}
-              poster={source.poster}
-              width={source.width}
-              height={source.height}
+              src={VIDEO_SRC}
+              poster={POSTER_SRC}
+              width={VIDEO_WIDTH}
+              height={VIDEO_HEIGHT}
               autoPlay
               muted
               loop
@@ -84,10 +61,8 @@ const Hero: React.FC = () => {
               disablePictureInPicture
             />
           )}
-          {/* Velatura per la scritta. Sul quadro verticale è più leggera: lì il
-              filmato è già scurito ai bordi e una velatura piena spegnerebbe
-              il velivolo. */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.42)_0%,rgba(0,0,0,0.24)_45%,rgba(0,0,0,0.1)_100%)] md:bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.68)_0%,rgba(0,0,0,0.4)_45%,rgba(0,0,0,0.22)_100%)]" />
+          {/* Velatura: più marcata al centro, dove sta la scritta */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.38)_45%,rgba(0,0,0,0.2)_100%)]" />
         </div>
 
         {/* Unica scritta sul video: parte fissa e competenza che ruota.
