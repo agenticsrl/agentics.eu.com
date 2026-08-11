@@ -27,8 +27,17 @@ const Hero: React.FC = () => {
 
   return (
     <>
-      <section className="relative min-h-[560px] md:min-h-[620px] lg:min-h-[700px] overflow-hidden bg-black">
-        <div className="absolute inset-0" aria-hidden="true">
+      <section className="relative overflow-hidden bg-black pt-header md:pt-0 md:min-h-[620px] lg:min-h-[700px]">
+        {/* Su telefono il filmato sta nel flusso al suo rapporto naturale, così
+            si vede per intero: a 375px di larghezza un riquadro alto 560px
+            ritagliava quasi due terzi del fotogramma. Lo spazio in alto è
+            esattamente l'altezza dell'header, che lo copre per intero.
+            Da md in su c'è larghezza a sufficienza e il video torna a riempire
+            la sezione. */}
+        <div
+          className="relative aspect-[1920/1082] md:aspect-auto md:absolute md:inset-0"
+          aria-hidden="true"
+        >
           {prefersReducedMotion ? (
             <img
               src={POSTER_SRC}
