@@ -1,10 +1,9 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { useCookieConsent } from '../contexts/CookieConsentContext';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const CookieBanner: React.FC = () => {
-  const { showBanner, setShowModal, updateConsent, savePreferences } = useCookieConsent();
+  const { showBanner, setShowModal, savePreferences } = useCookieConsent();
   const { language } = useLanguage();
 
   if (!showBanner) return null;
@@ -29,18 +28,16 @@ const CookieBanner: React.FC = () => {
   const t = content[language];
 
   return (
-    <motion.div
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: 100, opacity: 0 }}
-      className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-neutral z-50 px-4 py-5 md:px-8 md:py-6"
+    <div
+
+      className="fixed bottom-0 left-0 right-0 bg-canvas border-t-2 border-line z-50 px-4 py-5 md:px-8 md:py-6"
     >
       <div className="container mx-auto max-w-5xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
         <div className="flex-1">
-          <h3 className="font-display font-semibold text-[11px] uppercase tracking-[.08em] text-aiblue mb-1.5">
+          <h3 className="font-display font-semibold text-[11px] uppercase tracking-[.08em] text-ink mb-1.5">
             {t.title}
           </h3>
-          <p className="text-graphite/70 text-sm leading-relaxed">
+          <p className="text-ink/70 text-sm leading-relaxed">
             {t.description}
           </p>
         </div>
@@ -49,35 +46,29 @@ const CookieBanner: React.FC = () => {
           {/* Settings — ghost */}
           <button
             onClick={() => setShowModal(true)}
-            className="px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[.08em] text-graphite border border-neutral bg-transparent hover:border-aiblue hover:text-aiblue transition-colors duration-200"
+            className="px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[.08em] text-ink border border-line bg-transparent hover:border-ink hover:text-ink transition-colors duration-200"
           >
             {t.settings}
           </button>
 
           {/* Reject — secondary */}
           <button
-            onClick={() => {
-              updateConsent({ analytics: false, marketing: false });
-              savePreferences();
-            }}
-            className="px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[.08em] text-graphite border border-graphite/30 bg-transparent hover:border-graphite transition-colors duration-200"
+            onClick={() => savePreferences({ analytics: false, marketing: false })}
+            className="px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[.08em] text-ink border border-line/30 bg-transparent hover:border-ink transition-colors duration-200"
           >
             {t.reject}
           </button>
 
           {/* Accept — primary */}
           <button
-            onClick={() => {
-              updateConsent({ analytics: true, marketing: true });
-              savePreferences();
-            }}
-            className="px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[.08em] text-white bg-aiblue hover:bg-aiblue/90 transition-colors duration-200"
+            onClick={() => savePreferences({ analytics: true, marketing: true })}
+            className="px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[.08em] text-white bg-ink hover:bg-inkMuted transition-colors duration-200"
           >
             {t.accept}
           </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

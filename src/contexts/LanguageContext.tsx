@@ -89,8 +89,10 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   const t = (key: string): string => {
-    const trans = translations[language];
-    return (trans as Record<string, string>)[key] || key;
+    const trans = translations[language] as Record<string, string>;
+    // `??` e non `||`: una traduzione volutamente vuota deve restare vuota,
+    // altrimenti ricade sulla chiave e la stampa a schermo.
+    return trans[key] ?? key;
   };
 
   return (

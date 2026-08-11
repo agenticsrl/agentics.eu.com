@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useMemo } from 'react';
 import {
   BarChart,
   Bar,
@@ -12,19 +11,25 @@ import {
   Area,
 } from 'recharts';
 import { useLanguage } from '../contexts/LanguageContext';
+import ScrollableX from './layout/ScrollableX';
 
+/**
+ * Palette del cruscotto d'esempio: fondo bianco e dettagli neri, incorniciato
+ * dal bordo scuro della pagina. Resta monocromatica come il resto del sito.
+ */
 const IMPREDO = {
-  primary: '#0A2A66',
-  accent: '#4A90E2',
-  alert: '#D0021B',
-  bg: '#070B16',
-  cardBg: '#0C1222',
-  border: '#1A2640',
-  borderLight: '#253350',
-  textPrimary: '#E2E8F0',
-  textSecondary: '#6C7F94',
-  textMuted: '#3A4E68',
-  accentGlow: 'rgba(74, 144, 226, 0.12)',
+  accent: '#0A0A0A',
+  bg: '#FFFFFF',
+  cardBg: '#FFFFFF',
+  /* Filetti, griglia dei grafici e binario delle barre di avanzamento: deve
+     restare più chiaro di ogni grigio della rampa, o le barre spariscono. */
+  border: '#E5E5E5',
+  /* Ruolo dato, non filetto: la serie "in corso" accanto alle barre nere.
+     Serve più contrasto di un filetto per restare leggibile sul bianco. */
+  dataMuted: '#C9C9C9',
+  textPrimary: '#0A0A0A',
+  textSecondary: '#525252',
+  textMuted: '#737373',
 };
 
 const generateSalesData = (variation: number) => [
@@ -49,12 +54,16 @@ const generateProductivityData = (variation: number) => [
   { name: 'Dom', completati: 8 + Math.floor(variation * 0.1), inCorso: 2 },
 ];
 
+/* Grigi in ordine di rilievo: la prima voce è la più marcata. */
 const taskCategories = [
-  { category: 'Ordini Elaborati', count: 156, color: IMPREDO.accent },
-  { category: 'Preventivi Inviati', count: 89, color: '#5BA0F0' },
-  { category: 'Fatture Generate', count: 67, color: IMPREDO.primary },
-  { category: 'Email Gestite', count: 234, color: '#2E5CA8' },
+  { category: 'Ordini Elaborati', count: 156, color: '#0A0A0A' },
+  { category: 'Preventivi Inviati', count: 89, color: '#454545' },
+  { category: 'Fatture Generate', count: 67, color: '#7A7A7A' },
+  { category: 'Email Gestite', count: 234, color: '#ABABAB' },
 ];
+
+/* Le barre di avanzamento sono in scala sul valore più alto dell'elenco. */
+const MAX_TASK_COUNT = Math.max(...taskCategories.map((item) => item.count));
 
 const formatCurrency = (value: number) => {
   if (value >= 1000) {
@@ -63,68 +72,43 @@ const formatCurrency = (value: number) => {
   return value.toString();
 };
 
-const AnimatedNumber: React.FC<{ value: number; duration?: number; suffix?: string; prefix?: string; decimals?: number }> = ({
-  value,
-  duration = 2000,
-  suffix = '',
-  prefix = '',
-  decimals = 0
-}) => {
-  const [displayValue, setDisplayValue] = useState(0);
-  const startTime = useRef<number | null>(null);
-  const animationRef = useRef<number>();
+/**
+ * Valore numerico statico e formattato.
+ * Sostituisce il contatore che si incrementava all'ingresso: i numeri
+ * vengono mostrati subito nel loro valore finale.
+ */
+const StaticNumber: React.FC<{
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  decimals?: number;
+}> = ({ value, suffix = '', prefix = '', decimals = 0 }) => {
+  const formatted = decimals > 0 ? value.toFixed(decimals) : Math.round(value).toLocaleString();
 
-  useEffect(() => {
-    const animate = (timestamp: number) => {
-      if (!startTime.current) startTime.current = timestamp;
-      const progress = Math.min((timestamp - startTime.current) / duration, 1);
-      const easeOut = 1 - Math.pow(1 - progress, 3);
-      setDisplayValue(value * easeOut);
-
-      if (progress < 1) {
-        animationRef.current = requestAnimationFrame(animate);
-      }
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
-    };
-  }, [value, duration]);
-
-  const formatted = decimals > 0
-    ? displayValue.toFixed(decimals)
-    : Math.round(displayValue).toLocaleString();
-
-  return <>{prefix}{formatted}{suffix}</>;
+  return (
+    <>
+      {prefix}
+      {formatted}
+      {suffix}
+    </>
+  );
 };
+
+/* Dati del cruscotto: valori fissi, nessuna variazione nel tempo. */
+const SALES_VARIATION = 0;
+const CURRENT_SALES = 67.8;
+const TARGET_CLIENTS = 847;
+const TARGET_ORDERS = 1243;
 
 const ConstructionDemo: React.FC = () => {
   const { language } = useLanguage();
-  const [dataVariation, setDataVariation] = useState(0);
-  const [currentSales, setCurrentSales] = useState(67.8);
-  const [pulseKey, setPulseKey] = useState(0);
 
-  const targetClients = 847;
-  const targetOrders = 1243;
+  const currentSales = CURRENT_SALES;
+  const targetClients = TARGET_CLIENTS;
+  const targetOrders = TARGET_ORDERS;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDataVariation(prev => {
-        const change = (Math.random() - 0.5) * 2;
-        return Math.max(-3, Math.min(3, prev + change));
-      });
-      setCurrentSales(prev => {
-        const change = (Math.random() - 0.4) * 0.3;
-        return Math.max(66.5, Math.min(69.2, prev + change));
-      });
-      setPulseKey(prev => prev + 1);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
-
-  const salesData = useMemo(() => generateSalesData(dataVariation), [dataVariation]);
-  const productivityData = useMemo(() => generateProductivityData(dataVariation), [dataVariation]);
+  const salesData = useMemo(() => generateSalesData(SALES_VARIATION), []);
+  const productivityData = useMemo(() => generateProductivityData(SALES_VARIATION), []);
 
   const translatedSalesData = useMemo(() => {
     if (language === 'en') {
@@ -167,38 +151,16 @@ const ConstructionDemo: React.FC = () => {
   }, [productivityData]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 1 }}
-      className="w-full max-w-5xl mx-auto relative"
+    /* Il cruscotto ha una larghezza minima propria: scorre nel suo
+       contenitore invece di essere rimpicciolito con una scala. Su telefono
+       resta fuori vista quasi due terzi, quindi serve dirlo. */
+    <ScrollableX
+      label={language === 'it' ? 'Dashboard operativa' : 'Operations dashboard'}
+      className="w-full border border-line"
+      fadeFrom="from-white"
     >
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-neutral/30 via-neutral/20 to-transparent z-10 pointer-events-none" />
-      <div className="demo-container max-h-[520px] overflow-hidden" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-        <style>{`
-          .demo-container {
-            min-width: 900px;
-          }
-          @media (max-width: 940px) {
-            .demo-container {
-              transform: scale(0.4);
-              transform-origin: top left;
-              min-width: 900px;
-              margin-bottom: -330px;
-              margin-left: 50%;
-              position: relative;
-              left: -180px;
-              user-select: none;
-              -webkit-user-select: none;
-            }
-          }
-        `}</style>
-
-      <div
-        className="overflow-hidden"
-        style={{ background: IMPREDO.bg, border: `1px solid ${IMPREDO.border}` }}
-      >
+      <div className="min-w-[900px]" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+        <div style={{ background: IMPREDO.bg }}>
         {/* Top bar */}
         <div
           className="px-6 py-3 flex items-center justify-between gap-2"
@@ -206,13 +168,9 @@ const ConstructionDemo: React.FC = () => {
         >
           <div className="flex items-center gap-3 min-w-0">
             <div className="flex items-center gap-3" style={{ color: IMPREDO.textSecondary, fontSize: 11 }}>
-              <motion.div
-                key={pulseKey}
-                initial={{ scale: 1, opacity: 1 }}
-                animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
+              <div
                 className="w-1.5 h-1.5 flex-shrink-0"
-                style={{ background: IMPREDO.accent, boxShadow: `0 0 6px ${IMPREDO.accentGlow}` }}
+                style={{ background: IMPREDO.accent }}
               />
               <span
                 className="font-semibold tracking-[.08em] uppercase truncate"
@@ -220,18 +178,17 @@ const ConstructionDemo: React.FC = () => {
               >
                 {language === 'it' ? 'Gestionale Aziendale' : 'Business Management'}
               </span>
-              <motion.span
-                animate={{ opacity: [1, 0.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
+              <span
+
                 className="text-[10px] font-semibold uppercase tracking-[.08em] px-2 py-0.5 flex-shrink-0"
                 style={{
                   color: IMPREDO.accent,
-                  background: 'rgba(74, 144, 226, 0.08)',
-                  border: `1px solid rgba(74, 144, 226, 0.2)`,
+                  background: 'rgba(10, 10, 10, 0.05)',
+                  border: `1px solid rgba(10, 10, 10, 0.18)`,
                 }}
               >
                 {language === 'it' ? 'AI Assistito' : 'AI Assisted'}
-              </motion.span>
+              </span>
             </div>
           </div>
         </div>
@@ -271,27 +228,21 @@ const ConstructionDemo: React.FC = () => {
                     {language === 'it' ? 'Fatturato Mensile' : 'Monthly Revenue'}
                   </p>
                   <div className="flex items-baseline gap-3">
-                    <AnimatePresence mode="wait">
-                      <motion.span
+                    <span
                         key={Math.floor(currentSales * 10)}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.4 }}
+
                         className="font-light tracking-tight"
                         style={{ color: IMPREDO.textPrimary, fontSize: 32 }}
                       >
                         {currentSales.toFixed(1)}K
-                      </motion.span>
-                    </AnimatePresence>
-                    <motion.span
-                      animate={{ opacity: [1, 0.5, 1] }}
-                      transition={{ duration: 3, repeat: Infinity }}
+                      </span>
+                    <span
+
                       className="font-semibold uppercase tracking-[.06em]"
                       style={{ color: IMPREDO.accent, fontSize: 12 }}
                     >
                       +12.4%
-                    </motion.span>
+                    </span>
                   </div>
                   <p
                     className="mt-1 uppercase tracking-[.06em]"
@@ -356,7 +307,7 @@ const ConstructionDemo: React.FC = () => {
                         name === 'vendite' ? (language === 'it' ? 'Vendite' : 'Sales') : (language === 'it' ? 'Obiettivo' : 'Target')
                       ]}
                     />
-                    <Area
+                    <Area isAnimationActive={false}
                       type="monotone"
                       dataKey="obiettivo"
                       stroke={IMPREDO.textMuted}
@@ -364,14 +315,12 @@ const ConstructionDemo: React.FC = () => {
                       fill="transparent"
                       strokeDasharray="4 4"
                     />
-                    <Area
+                    <Area isAnimationActive={false}
                       type="monotone"
                       dataKey="vendite"
                       stroke={IMPREDO.accent}
                       strokeWidth={2}
                       fill="url(#salesGradientImpredo)"
-                      animationDuration={3500}
-                      animationEasing="ease-out"
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -391,7 +340,7 @@ const ConstructionDemo: React.FC = () => {
               </p>
               <div className="flex items-baseline gap-2 mb-4">
                 <span className="font-light tracking-tight" style={{ color: IMPREDO.textPrimary, fontSize: 32 }}>
-                  <AnimatedNumber value={546} duration={3000} />
+                  <StaticNumber value={546} />
                 </span>
                 <span
                   className="uppercase tracking-[.08em] font-semibold"
@@ -418,13 +367,12 @@ const ConstructionDemo: React.FC = () => {
                       </span>
                     </div>
                     <div className="h-1" style={{ background: IMPREDO.border }}>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${(item.count / 234) * 100}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.5, delay: index * 0.15, ease: "easeOut" }}
+                      <div
                         className="h-full"
-                        style={{ backgroundColor: item.color }}
+                        style={{
+                          backgroundColor: item.color,
+                          width: `${(item.count / MAX_TASK_COUNT) * 100}%`,
+                        }}
                       />
                     </div>
                   </div>
@@ -463,13 +411,9 @@ const ConstructionDemo: React.FC = () => {
                 isDecimal: true
               }
             ].map((stat, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ borderColor: IMPREDO.accent }}
+
                 className="p-5 transition-colors duration-300"
                 style={{
                   background: IMPREDO.cardBg,
@@ -487,7 +431,7 @@ const ConstructionDemo: React.FC = () => {
                   {stat.isDecimal ? (
                     <>{stat.value}<span style={{ color: IMPREDO.textSecondary, fontSize: 14 }}>{stat.suffix}</span></>
                   ) : (
-                    <AnimatedNumber value={stat.value} duration={2500} suffix={stat.suffix} />
+                    <StaticNumber value={stat.value} suffix={stat.suffix} />
                   )}
                 </p>
                 <p
@@ -496,7 +440,7 @@ const ConstructionDemo: React.FC = () => {
                 >
                   {stat.sub}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
 
@@ -514,17 +458,14 @@ const ConstructionDemo: React.FC = () => {
                   {language === 'it' ? 'Task Completati — Settimana' : 'Completed Tasks — Week'}
                 </p>
                 <div className="flex items-baseline gap-3">
-                  <AnimatePresence mode="wait">
-                    <motion.span
+                  <span
                       key={totalTasks}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
+
                       className="font-light tracking-tight"
                       style={{ color: IMPREDO.textPrimary, fontSize: 22 }}
                     >
                       {totalTasks}
-                    </motion.span>
-                  </AnimatePresence>
+                    </span>
                   <span
                     className="font-semibold uppercase tracking-[.06em]"
                     style={{ color: IMPREDO.accent, fontSize: 12 }}
@@ -544,7 +485,7 @@ const ConstructionDemo: React.FC = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-2" style={{ background: IMPREDO.border }} />
+                  <div className="w-3 h-2" style={{ background: IMPREDO.dataMuted }} />
                   <span
                     className="uppercase tracking-[.06em] font-semibold"
                     style={{ color: IMPREDO.textSecondary, fontSize: 10 }}
@@ -586,18 +527,15 @@ const ConstructionDemo: React.FC = () => {
                       name === 'completati' ? (language === 'it' ? 'Completati' : 'Completed') : (language === 'it' ? 'In Corso' : 'In Progress')
                     ]}
                   />
-                  <Bar
+                  <Bar isAnimationActive={false}
                     dataKey="inCorso"
-                    fill={IMPREDO.border}
+                    fill={IMPREDO.dataMuted}
                     radius={[0, 0, 0, 0]}
-                    animationDuration={1200}
                   />
-                  <Bar
+                  <Bar isAnimationActive={false}
                     dataKey="completati"
                     fill={IMPREDO.accent}
                     radius={[0, 0, 0, 0]}
-                    animationDuration={1500}
-                    animationEasing="ease-out"
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -606,7 +544,7 @@ const ConstructionDemo: React.FC = () => {
         </div>
       </div>
       </div>
-    </motion.div>
+    </ScrollableX>
   );
 };
 

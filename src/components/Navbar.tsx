@@ -1,247 +1,143 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { useLanguage } from '../contexts/LanguageContext';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../contexts/LanguageContext';
 
+/** Ritardo minimo per far montare la home prima di cercare l'ancora. */
+const ROUTE_CHANGE_DELAY_MS = 120;
+
+interface NavItem {
+  label: string;
+  to?: string;
+  sectionId?: string;
+}
+
+/**
+ * Header strutturale: altezza fissa, fondo e filetto sempre identici.
+ * Non reagisce allo scroll, così non introduce spostamenti di layout.
+ */
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t, language, setLanguage } = useLanguage();
   const location = useLocation();
   const navigate = useNavigate();
-  const isAboutPage = location.pathname === '/about';
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+  /**
+   * Porta a una sezione della home da qualunque pagina.
+   * Unico punto in cui vive questa logica: prima era ripetuta per ogni voce.
+   */
+  const goToHomeSection = (id: string) => {
+    setIsMenuOpen(false);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const scrollToTarget = () =>
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
-
-  const scrollToContact = () => {
-    if (location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => {
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-          contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }
+    if (location.pathname === '/') {
+      scrollToTarget();
+      return;
     }
-    setIsOpen(false);
+
+    navigate('/');
+    window.setTimeout(scrollToTarget, ROUTE_CHANGE_DELAY_MS);
   };
 
+  /* Nessuna voce "Contatti": il pulsante "Contattaci" porta già alla stessa sezione. */
+  const navItems: readonly NavItem[] = [
+    { label: t('nav.about'), to: '/about' },
+    { label: t('nav.features'), sectionId: 'solutions' },
+  ];
+
+  const renderNavItem = (item: NavItem, className: string) =>
+    item.to ? (
+      <Link key={item.label} to={item.to} onClick={() => setIsMenuOpen(false)} className={className}>
+        {item.label}
+      </Link>
+    ) : (
+      <button
+        key={item.label}
+        type="button"
+        onClick={() => goToHomeSection(item.sectionId as string)}
+        className={className}
+      >
+        {item.label}
+      </button>
+    );
+
   return (
-    <motion.nav 
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 100, damping: 20 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled || isAboutPage
-          ? 'bg-white border-b border-neutral py-2 sm:py-3'
-          : 'bg-transparent py-3 sm:py-5'
-      }`}
-    >
-      <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+    <header className="fixed top-0 left-0 right-0 z-50 h-header bg-canvas border-b border-line">
+      <div className="container-content h-full flex items-center justify-between gap-md">
+        {/* Logotipo ricavato dal logo di marca, ritagliato sulla sola scritta */}
         <Link
           to="/"
-          onClick={() => {
-            if (location.pathname === '/') {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-          }}
-          className="flex items-center gap-2 group"
+          className="shrink-0 flex items-center min-h-11"
+          onClick={() => setIsMenuOpen(false)}
         >
-          <div className="logo-glow">
-            <img
-              src="/BIANCO.svg"
-              alt="Agentics"
-              className="h-12 sm:h-14 md:h-16"
-              style={{ filter: 'brightness(0) saturate(100%) invert(22%) sepia(98%) saturate(6952%) hue-rotate(217deg) brightness(101%) contrast(107%)' }}
-            />
-          </div>
+          <img
+            src="/agentics-wordmark.svg"
+            alt="Agentics"
+            width={373}
+            height={61}
+            className="h-5 sm:h-6 lg:h-7 w-auto"
+          />
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-          <Link
-            to="/about"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200"
-          >
-            {t('nav.about')}
-          </Link>
+        <nav aria-label="Navigazione principale" className="hidden lg:flex items-center gap-lg">
+          {navItems.map((item) => renderNavItem(item, 'label hover:text-ink'))}
           <button
-            onClick={() => {
-              if (location.pathname !== '/') {
-                navigate('/');
-                setTimeout(() => {
-                  const solutionsSection = document.getElementById('solutions');
-                  if (solutionsSection) {
-                    const offsetTop = solutionsSection.offsetTop - 100;
-                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                  }
-                }, 300);
-              } else {
-                const solutionsSection = document.getElementById('solutions');
-                if (solutionsSection) {
-                  const offsetTop = solutionsSection.offsetTop - 100;
-                  window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                }
-              }
-            }}
-            className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200"
-          >
-            {t('nav.features')}
-          </button>
-          <button
-            onClick={() => {
-              if (location.pathname !== '/') {
-                navigate('/');
-                setTimeout(() => {
-                  const contactSection = document.getElementById('contact');
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }, 100);
-              } else {
-                const contactSection = document.getElementById('contact');
-                if (contactSection) {
-                  contactSection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }
-            }}
-            className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200"
-          >
-            {t('nav.contact')}
-          </button>
-          <motion.button
-            onClick={scrollToContact}
-            className="bg-aiblue text-white hover:bg-aiblue/90 px-4 xl:px-6 py-2 text-[11px] font-semibold uppercase tracking-[.08em] transition-colors duration-200"
-            whileTap={{ scale: 0.98 }}
+            type="button"
+            onClick={() => goToHomeSection('contact')}
+            className="btn-primary py-2"
           >
             {t('nav.getStarted')}
-          </motion.button>
-          <motion.button
+          </button>
+          <button
+            type="button"
             onClick={() => setLanguage(language === 'it' ? 'en' : 'it')}
-            className="px-3 py-2 text-[11px] font-semibold uppercase tracking-[.06em] border border-graphite/30 text-graphite hover:border-aiblue hover:text-aiblue transition-colors duration-200"
-            whileTap={{ scale: 0.98 }}
+            className="btn-secondary py-2 px-sm"
           >
             {language === 'it' ? 'EN' : 'IT'}
-          </motion.button>
-        </div>
+          </button>
+        </nav>
 
-        {/* Mobile Navigation Toggle */}
-        <motion.button
-          className="lg:hidden p-1 text-graphite"
-          onClick={() => setIsOpen(!isOpen)}
-          whileTap={{ scale: 0.9 }}
+        {/* Comando di navigazione principale su telefono: area di almeno 44px.
+            Il margine negativo riassorbe il padding, così la scritta resta
+            allineata al bordo del contenitore come prima. */}
+        <button
+          type="button"
+          className="lg:hidden label text-ink inline-flex items-center justify-end min-h-11 min-w-11 -mr-sm pl-sm pr-sm"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </motion.button>
+          {isMenuOpen ? t('nav.menuClose') : t('nav.menuOpen')}
+        </button>
       </div>
 
-      {/* Mobile Navigation Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white border-b border-neutral w-full absolute"
-          >
-            <div className="container mx-auto px-4 py-4 sm:py-6 flex flex-col space-y-4 sm:space-y-6">
-              <Link
-                to="/about"
-                onClick={() => {
-                  setIsOpen(false);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200"
-              >
-                {t('nav.about')}
-              </Link>
+      {isMenuOpen && (
+        <div id="mobile-menu" className="lg:hidden bg-canvas border-b border-line">
+          <div className="container-content py-md flex flex-col">
+            {navItems.map((item) =>
+              renderNavItem(item, 'label py-sm border-b border-line text-left hover:text-ink')
+            )}
+            <div className="flex gap-sm pt-md">
               <button
-                onClick={() => {
-                  setIsOpen(false);
-                  if (location.pathname !== '/') {
-                    navigate('/');
-                    setTimeout(() => {
-                      const solutionsSection = document.getElementById('solutions');
-                      if (solutionsSection) {
-                        const offsetTop = solutionsSection.offsetTop - 100;
-                        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                      }
-                    }, 300);
-                  } else {
-                    const solutionsSection = document.getElementById('solutions');
-                    if (solutionsSection) {
-                      const offsetTop = solutionsSection.offsetTop - 100;
-                      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                    }
-                  }
-                }}
-                className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200 text-left"
+                type="button"
+                onClick={() => goToHomeSection('contact')}
+                className="btn-primary flex-1"
               >
-                {t('nav.features')}
+                {t('nav.getStarted')}
               </button>
               <button
-                onClick={() => {
-                  setIsOpen(false);
-                  if (location.pathname !== '/') {
-                    navigate('/');
-                    setTimeout(() => {
-                      const contactSection = document.getElementById('contact');
-                      if (contactSection) {
-                        contactSection.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }, 100);
-                  } else {
-                    const contactSection = document.getElementById('contact');
-                    if (contactSection) {
-                      contactSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }
-                }}
-                className="nav-link font-semibold text-[11px] uppercase tracking-[.08em] text-graphite hover:text-aiblue transition-colors duration-200 text-left"
+                type="button"
+                onClick={() => setLanguage(language === 'it' ? 'en' : 'it')}
+                className="btn-secondary"
               >
-                {t('nav.contact')}
+                {language === 'it' ? 'EN' : 'IT'}
               </button>
-              <div className="flex gap-3">
-                <motion.button
-                  onClick={scrollToContact}
-                  className="bg-aiblue text-white hover:bg-aiblue/90 px-6 py-3 text-[11px] font-semibold uppercase tracking-[.08em] transition-colors duration-200 flex-1"
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {t('nav.getStarted')}
-                </motion.button>
-                <motion.button
-                  onClick={() => setLanguage(language === 'it' ? 'en' : 'it')}
-                  className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[.06em] border border-graphite/30 text-graphite hover:border-aiblue hover:text-aiblue transition-colors duration-200"
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {language === 'it' ? 'EN' : 'IT'}
-                </motion.button>
-              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+          </div>
+        </div>
+      )}
+    </header>
   );
 };
 

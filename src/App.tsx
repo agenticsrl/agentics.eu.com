@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { useLanguage } from './contexts/LanguageContext';
 import { CookieConsentProvider } from './contexts/CookieConsentContext';
@@ -11,13 +10,17 @@ import Company from './components/Company';
 import Features from './components/Features';
 import FiscalIncentives from './components/FiscalIncentives';
 import Contact from './components/Contact';
+import Offices from './components/Offices';
 import Footer from './components/Footer';
-import CustomGPTs from './components/services/CustomGPTs';
-import PrivacyPolicy from './components/PrivacyPolicy';
-import TermsOfService from './components/TermsOfService';
-import About from './components/About';
 import CookieBanner from './components/CookieBanner';
 import CookieModal from './components/CookieModal';
+
+/* Rotte interne caricate su richiesta: la home non scarica il 3D di
+   "Chi siamo", i grafici della pagina software né i testi legali. */
+const CustomGPTs = lazy(() => import('./components/services/CustomGPTs'));
+const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./components/TermsOfService'));
+const About = lazy(() => import('./components/About'));
 
 const HomePage: React.FC = () => {
   const { language } = useLanguage();
@@ -40,17 +43,18 @@ const HomePage: React.FC = () => {
   });
 
   return (
-    <main>
+    <>
       <Hero />
       <Company />
       <Features />
       <FiscalIncentives />
       <Contact />
-    </main>
+      <Offices />
+    </>
   );
 };
 
-function AnimatedRoutes() {
+function AppRoutes() {
   const location = useLocation();
 
   useEffect(() => {
@@ -60,8 +64,10 @@ function AnimatedRoutes() {
   }, [location.pathname]);
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
+    /* Riserva l'altezza della finestra durante il caricamento della rotta,
+       così il passaggio non fa saltare il layout. */
+    <Suspense fallback={<div className="min-h-screen" />}>
+      <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<About />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -69,7 +75,7 @@ function AnimatedRoutes() {
         <Route path="/services/custom-gpts" element={<CustomGPTs />} />
         <Route path="/services/software-personalizzato" element={<CustomGPTs />} />
       </Routes>
-    </AnimatePresence>
+    </Suspense>
   );
 }
 
@@ -78,9 +84,11 @@ function App() {
     <LanguageProvider>
       <CookieConsentProvider>
         <Router>
-          <div className="min-h-screen bg-white font-body text-graphite">
+          <div className="min-h-screen bg-canvas font-body text-ink">
             <Navbar />
-            <AnimatedRoutes />
+            <main>
+              <AppRoutes />
+            </main>
             <Footer />
             <CookieBanner />
             <CookieModal />

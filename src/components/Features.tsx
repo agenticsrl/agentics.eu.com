@@ -1,98 +1,83 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+
+const FOLIOFOX_SCREENSHOT =
+  'https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Screenshot%202026-03-17%20at%2000.01.45.png';
+const FOLIOFOX_URL = 'https://foliofox.com';
 
 const Features: React.FC = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
+  const goToSoftwarePage = () => {
+    navigate('/services/software-personalizzato');
+    window.scrollTo({ top: 0 });
+  };
+
   return (
-    <section className="py-16 sm:py-24 md:py-32 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
+    <>
+      {/* Tipologia: blocco con media e testo */}
+      <Section labelledBy="case-study-title">
+        <SectionHeader
+          label={t('features.caseStudy')}
+          title={t('features.folioFoxTitle')}
+          titleId="case-study-title"
+        />
 
-        {/* Case Study FolioFox */}
-        <motion.div
-          className="max-w-6xl mx-auto mb-20 sm:mb-32"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="text-center mb-12">
-            <span className="inline-block text-[11px] font-semibold text-aiblue tracking-[.12em] uppercase mb-4">
-              {t('features.caseStudy')}
-            </span>
-            <div className="flex items-center justify-center mb-6">
-              <img
-                src="/Frame.svg"
-                alt="FolioFox Logo"
-                className="h-8 sm:h-10 md:h-12 w-auto"
-              />
-            </div>
-            <p className="text-lg sm:text-xl text-graphite/70 max-w-3xl mx-auto leading-relaxed">
-              {t('features.folioFoxDescription')}
-            </p>
-          </div>
-
-          <div className="relative">
-            <div className="relative bg-white overflow-hidden border border-neutral">
-              <div className="aspect-video w-full overflow-hidden bg-graphite/5 relative">
-                <img
-                  src="https://tfrkdvnboioqufwgszpi.supabase.co/storage/v1/object/public/email%20foto/Screenshot%202026-03-17%20at%2000.01.45.png"
-                  alt="FolioFox AI Portfolio Analysis Platform"
-                  className="w-full h-full object-cover object-top"
-                />
-              </div>
-              <div className="p-8 sm:p-10 bg-white border-t border-neutral">
-                <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-                  <div className="flex-1 space-y-3">
-                    <p className="text-base text-graphite/70 leading-relaxed">{t('features.folioFoxDescription')}</p>
-                    <p className="text-base text-graphite/70 leading-relaxed">{t('features.folioFoxDesc2')}</p>
-                    <p className="text-base text-graphite/70 leading-relaxed">{t('features.folioFoxDesc3')}</p>
-                  </div>
-                  <button
-                    onClick={() => { navigate('/services/software-personalizzato'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-graphite text-white hover:bg-aiblue text-[11px] font-semibold tracking-[.08em] transition-colors duration-200 whitespace-nowrap group/button normal-case"
-                  >
-                    {t('features.visitFolioFox')}
-                    <ArrowRight size={18} className="group-hover/button:translate-x-1 transition-transform" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Applicazioni Industriali Section */}
-        <motion.div
-          className="text-center max-w-4xl mx-auto mb-16 sm:mb-24"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-graphite mb-8 tracking-tight leading-tight">
-            {t('features.aiVisionTitle')}
-          </h2>
-          <p className="text-lg sm:text-xl text-graphite/70 leading-relaxed mb-12 max-w-3xl mx-auto">
-            {t('features.aiVisionDescription')}
-          </p>
-
-          <div className="relative w-full max-w-4xl mx-auto aspect-video overflow-hidden border border-neutral">
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/4PhEJSdK_gQ?autoplay=1&mute=1&loop=1&playlist=4PhEJSdK_gQ"
-              title={language === 'en' ? 'Industrial AI Vision' : 'AI Vision Industriale'}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+        <figure className="panel">
+          {/* Rapporto d'aspetto dichiarato: nessuno spostamento al caricamento */}
+          <div className="aspect-video w-full overflow-hidden border-b border-line">
+            <img
+              src={FOLIOFOX_SCREENSHOT}
+              alt={t('features.folioFoxImageAlt')}
+              width={1600}
+              height={900}
+              loading="lazy"
+              className="w-full h-full object-cover object-top"
             />
           </div>
-        </motion.div>
+          <figcaption className="p-lg grid grid-cols-1 lg:grid-cols-[1.6fr_auto] gap-lg lg:items-end">
+            <div className="space-y-md">
+              <p className="text-body-muted">{t('features.folioFoxDescription')}</p>
+              <p className="text-body-muted">{t('features.folioFoxDesc2')}</p>
+              <p className="text-body-muted">{t('features.folioFoxDesc3')}</p>
+            </div>
+            {/* Porta al prodotto vero, non alla pagina servizi del sito. */}
+            <a
+              href={FOLIOFOX_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary justify-self-start"
+            >
+              {t('features.visitFolioFox')}
+            </a>
+          </figcaption>
+        </figure>
+      </Section>
 
-      </div>
-    </section>
+      {/* Tipologia: testo su colonna singola con media */}
+      <Section labelledBy="ai-vision-title">
+        <SectionHeader
+          label={t('features.aiVisionLabel')}
+          title={t('features.aiVisionTitle')}
+          titleId="ai-vision-title"
+          lead={t('features.aiVisionDescription')}
+        />
+        <div className="aspect-video w-full border border-line">
+          <iframe
+            className="w-full h-full"
+            src="https://www.youtube.com/embed/4PhEJSdK_gQ?mute=1&loop=1&playlist=4PhEJSdK_gQ"
+            title={t('features.aiVisionTitle')}
+            loading="lazy"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </Section>
+    </>
   );
 };
 

@@ -1,56 +1,88 @@
 import React, { useEffect } from 'react';
 import Contact from './Contact';
-import { useSEO } from '../hooks/useSEO';
+import Offices from './Offices';
 import { SplineScene } from './ui/splite';
-import { Card } from './ui/card';
-import { Spotlight } from './ui/spotlight';
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+import SpecList, { type SpecItem } from './layout/SpecList';
+import { useSEO } from '../hooks/useSEO';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const About: React.FC = () => {
   const { t, language } = useLanguage();
 
   useSEO({
-    title: language === 'it'
-      ? 'Chi Siamo - Agentics | Leader Italiani nell\'Automazione AI per Aziende'
-      : 'About Us - Agentics | AI Automation Leaders for Business',
-    description: language === 'it'
-      ? 'Agentics: la tua azienda partner per l\'intelligenza artificiale in Italia. Scopri chi siamo, la nostra missione e come trasformiamo le PMI italiane con AI accessibile e personalizzata. Soluzioni AI su misura dal 2024.'
-      : 'Agentics: your AI partner company. Discover who we are, our mission, and how we transform businesses with accessible and customized AI. Custom AI solutions since 2024.',
-    keywords: language === 'it'
-      ? 'chi siamo Agentics, azienda AI Italia, esperti intelligenza artificiale, consulenza AI aziendale, team sviluppo AI, storia Agentics, missione AI, about Agentics, azienda automazione AI italiana'
-      : 'about Agentics, AI company, artificial intelligence experts, AI business consulting, AI development team, Agentics history, AI mission, AI automation company',
+    title:
+      language === 'it'
+        ? 'Chi Siamo - Agentics | Software su misura potenziato con AI'
+        : 'About Us - Agentics | AI-Powered Custom Software',
+    description:
+      language === 'it'
+        ? "Agentics: la tua azienda partner per l'intelligenza artificiale in Italia. Scopri chi siamo, la nostra missione e come trasformiamo le PMI italiane con AI accessibile e personalizzata. Soluzioni AI su misura dal 2024."
+        : 'Agentics: your AI partner company. Discover who we are, our mission, and how we transform businesses with accessible and customized AI. Custom AI solutions since 2024.',
+    keywords:
+      language === 'it'
+        ? 'chi siamo Agentics, azienda AI Italia, esperti intelligenza artificiale, consulenza AI aziendale, team sviluppo AI, storia Agentics, missione AI, about Agentics, azienda automazione AI italiana'
+        : 'about Agentics, AI company, artificial intelligence experts, AI business consulting, AI development team, Agentics history, AI mission, AI automation company',
     canonicalUrl: 'https://agentics.eu.com/about',
     language,
-    ogImage: 'https://agentics.eu.com/web-app-manifest-512x512.png?v=2025'
+    ogImage: 'https://agentics.eu.com/web-app-manifest-512x512.png?v=2026',
   });
 
   useEffect(() => {
     const schema = {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Agentics SRL",
-      "url": "https://agentics.eu.com",
-      "logo": "https://agentics.eu.com/BASE.svg",
-      "description": language === 'it'
-        ? "Agentics sviluppa software personalizzato potenziato con AI per automatizzare la tua azienda"
-        : "Agentics develops custom software powered by AI to automate your business",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Via Vincenzo Monti 16",
-        "addressLocality": "Latina",
-        "addressRegion": "LT",
-        "addressCountry": "IT"
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Agentics SRL',
+      url: 'https://agentics.eu.com',
+      logo: 'https://agentics.eu.com/BASE.svg',
+      description:
+        language === 'it'
+          ? 'Agentics sviluppa software personalizzato potenziato con AI per automatizzare la tua azienda'
+          : 'Agentics develops custom software powered by AI to automate your business',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Viale Bruno Buozzi 77',
+        postalCode: '00197',
+        addressLocality: 'Roma',
+        addressRegion: 'RM',
+        addressCountry: 'IT',
       },
-      "email": "info@agentics.eu.com",
-      "taxID": "03335160598",
-      "foundingDate": "2024",
-      "sameAs": [
-        "https://www.linkedin.com/company/agentics-srl/"
+      location: [
+        {
+          '@type': 'Place',
+          name: 'Sede legale',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Viale Bruno Buozzi 77',
+            postalCode: '00197',
+            addressLocality: 'Roma',
+            addressRegion: 'RM',
+            addressCountry: 'IT',
+          },
+        },
+        {
+          '@type': 'Place',
+          name: 'Sede operativa',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Via Vincenzo Monti 16',
+            postalCode: '04100',
+            addressLocality: 'Latina',
+            addressRegion: 'LT',
+            addressCountry: 'IT',
+          },
+        },
       ],
-      "knowsAbout": language === 'it'
-        ? ["Intelligenza Artificiale", "Automazione AI", "Software Personalizzato", "Machine Learning", "AI per PMI"]
-        : ["Artificial Intelligence", "AI Automation", "Custom Software", "Machine Learning", "AI for SMB"],
-      "areaServed": "IT"
+      email: 'info@agentics.eu.com',
+      taxID: '03335160598',
+      foundingDate: '2024',
+      sameAs: ['https://www.linkedin.com/company/agentics-srl/'],
+      knowsAbout:
+        language === 'it'
+          ? ['Intelligenza Artificiale', 'Automazione AI', 'Software Personalizzato', 'Machine Learning', 'AI per PMI']
+          : ['Artificial Intelligence', 'AI Automation', 'Custom Software', 'Machine Learning', 'AI for SMB'],
+      areaServed: 'IT',
     };
 
     const script = document.createElement('script');
@@ -63,82 +95,48 @@ const About: React.FC = () => {
     };
   }, [language]);
 
+  const principles: readonly SpecItem[] = [
+    { term: t('about.missionTitle'), description: t('about.missionText') },
+    { term: t('about.visionTitle'), description: t('about.visionText') },
+    { term: t('about.teamTitle'), description: t('about.teamText') },
+  ];
+
   return (
-    <div className="min-h-screen bg-white">
-      <section className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <Card className="w-full min-h-[320px] sm:min-h-[380px] lg:min-h-[400px] bg-white relative overflow-hidden border border-neutral shadow-none">
-            <Spotlight
-              className="-top-20 -left-40 md:-left-60 md:-top-10"
-              fill="#0163F5"
+    <>
+      {/* Spazio per l'header a posizione fissa */}
+      <div className="pt-header" />
+
+      {/* Tipologia: blocco a due colonne con media */}
+      <Section labelledBy="about-title" divided={false}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-lg lg:gap-xl lg:items-center">
+          <SectionHeader
+            as="h1"
+            label={t('about.label')}
+            title={`${t('about.heroTitle1')} ${t('about.heroTitle2')}`}
+            titleId="about-title"
+            lead={t('about.lead')}
+          />
+          {/* Altezza dichiarata: la scena 3D si carica senza spostare il layout */}
+          <div className="h-[280px] sm:h-[340px] lg:h-[400px] border border-line bg-plateSoft">
+            <SplineScene
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="w-full h-full"
+              /* Stesso valore di bg-plateSoft: il canvas Spline è opaco e non erediterebbe il fondo */
+              backgroundColor="#D4D4D4"
             />
-
-            <div className="flex flex-col lg:flex-row h-full">
-              <div className="flex-1 p-4 sm:p-8 lg:p-12 relative z-10 flex flex-col justify-center items-center lg:items-start order-2 lg:order-1">
-                <h1 className="font-display font-bold text-graphite leading-tight text-center lg:text-left">
-                  <span className="text-lg xs:text-xl sm:text-2xl md:text-3xl">{t('about.heroTitle1')}</span>
-                  <br />
-                  <span className="logo-text-glow text-2xl xs:text-3xl sm:text-4xl md:text-5xl">{t('about.heroTitle2')}</span>
-                </h1>
-              </div>
-
-              <div className="flex-1 relative min-h-[220px] sm:min-h-[280px] lg:min-h-[350px] order-1 lg:order-2">
-                <SplineScene
-                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                  className="absolute inset-0 w-full h-full"
-                />
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
-
-      <section className="py-16 sm:py-20 md:py-24 bg-white border-t border-neutral">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
-              <div className="py-8 md:py-0 md:px-8 first:pt-0 md:first:pl-0 last:pb-0 md:last:pr-0">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-[3px] h-8 bg-aiblue"></div>
-                  <h3 className="font-display font-semibold text-lg text-graphite">
-                    {t('about.missionTitle')}
-                  </h3>
-                </div>
-                <p className="text-graphite/70 leading-relaxed pl-4">
-                  {t('about.missionText')}
-                </p>
-              </div>
-
-              <div className="py-8 md:py-0 md:px-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-[3px] h-8 bg-aiblue"></div>
-                  <h3 className="font-display font-semibold text-lg text-graphite">
-                    {t('about.visionTitle')}
-                  </h3>
-                </div>
-                <p className="text-graphite/70 leading-relaxed pl-4">
-                  {t('about.visionText')}
-                </p>
-              </div>
-
-              <div className="py-8 md:py-0 md:px-8 last:pb-0 md:last:pr-0">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-[3px] h-8 bg-aiblue"></div>
-                  <h3 className="font-display font-semibold text-lg text-graphite">
-                    {t('about.teamTitle')}
-                  </h3>
-                </div>
-                <p className="text-graphite/70 leading-relaxed pl-4">
-                  {t('about.teamText')}
-                </p>
-              </div>
-            </div>
           </div>
         </div>
-      </section>
+      </Section>
+
+      {/* Tipologia: elenco descrittivo */}
+      <Section labelledBy="principles-title">
+        <SectionHeader title={t('about.principlesTitle')} titleId="principles-title" />
+        <SpecList items={principles} numbered={false} />
+      </Section>
 
       <Contact />
-    </div>
+      <Offices />
+    </>
   );
 };
 

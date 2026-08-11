@@ -15,7 +15,7 @@ interface SEOProps {
   twitterSite?: string;
 }
 
-const DEFAULT_OG_IMAGE = 'https://agentics.eu.com/web-app-manifest-512x512.png?v=2025';
+const DEFAULT_OG_IMAGE = 'https://agentics.eu.com/web-app-manifest-512x512.png?v=2026';
 const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 const DEFAULT_TWITTER_CARD = 'summary_large_image';
 const DEFAULT_OG_TYPE = 'website';

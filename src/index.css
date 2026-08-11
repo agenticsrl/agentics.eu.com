@@ -4,195 +4,204 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 17%;
-    --primary: 215 100% 48%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 90%;
-    --secondary-foreground: 0 0% 17%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 17%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 215 100% 48%;
+    /* Monocromatico — allineato a tailwind.config.js */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 96%;
+    --primary: 0 0% 96%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 9%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 9%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 0 0% 9%;
+    --accent-foreground: 0 0% 96%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 96%;
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 0 0% 64%;
+
+    color-scheme: dark;
   }
 
+  /* Nessuno scorrimento orizzontale del documento. Va dichiarato su html
+     e su body: sul solo body i browser lo propagano alla viewport e
+     l'elemento radice resta scorrevole. I contenuti larghi (tabelle,
+     cruscotti) scorrono dentro il proprio contenitore. */
   html {
-    scroll-behavior: smooth;
+    background-color: #0a0a0a;
+    overflow-x: hidden;
   }
 
   body {
-    @apply font-body text-graphite bg-white;
+    @apply font-body text-body text-ink bg-canvas;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-semibold text-ink;
+    text-wrap: balance;
+  }
+
+  /* Angoli vivi su tutta l'interfaccia */
+  * {
+    border-radius: 0;
+  }
+
+  ::selection {
+    background-color: #f5f5f5;
+    color: #0a0a0a;
+  }
+
+  :focus-visible {
+    outline: 2px solid #f5f5f5;
+    outline-offset: 2px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #333333 #0a0a0a;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #333333;
+    border: 3px solid #0a0a0a;
   }
 }
 
 @layer components {
+  /* ---------------------------------------------------------------
+     Impianto: container unico e ritmo verticale unico.
+     Ogni sezione del sito passa da qui, così nessuna può divergere.
+     --------------------------------------------------------------- */
+
+  .container-content {
+    @apply w-full max-w-content mx-auto px-sm sm:px-md lg:px-lg;
+  }
+
+  .section {
+    @apply py-section lg:py-section-lg;
+  }
+
+  /* Ritmo ridotto per una sezione strettamente legata a quella che la
+     precede. Fra due sezioni a ritmo pieno restano 224px di vuoto: troppi
+     quando i due blocchi vanno letti insieme. */
+  .section-tight {
+    @apply py-xl lg:py-2xl;
+  }
+
+  /* Separatore strutturale fra sezioni */
+  .section-divided {
+    @apply border-t border-line;
+  }
+
+  /* ---------------------------------------------------------------
+     Tipografia
+     --------------------------------------------------------------- */
+
+  .label {
+    @apply font-body text-label font-semibold uppercase tracking-[0.1em] text-inkMuted;
+  }
+
+  .title-page {
+    @apply font-display font-semibold text-h1 lg:text-h1-lg tracking-[0.01em];
+  }
+
+  .title-section {
+    @apply font-display font-semibold text-h2 tracking-[0.01em];
+  }
+
+  .title-block {
+    @apply font-display font-semibold text-h3 tracking-[0.01em];
+  }
+
+  .text-lead {
+    @apply text-body-lg text-inkMuted;
+  }
+
+  .text-body-muted {
+    @apply text-body text-inkMuted;
+  }
+
+  /* ---------------------------------------------------------------
+     Controlli — solo micro-stati funzionali su hover e focus
+     --------------------------------------------------------------- */
+
+  /* min-h-11 = 44px: soglia minima per un bersaglio tattile. Senza, i pulsanti
+     restano a 39px e su telefono si sbaglia il tocco. */
   .btn {
-    @apply px-6 py-3 rounded-full font-medium transition-all duration-500;
+    @apply inline-flex items-center justify-center min-h-11 px-md py-3 text-label font-semibold uppercase tracking-[0.1em] border;
   }
-  
+
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white shadow-sm hover:shadow;
+    @apply btn bg-ink text-canvas border-ink hover:bg-inkMuted hover:border-inkMuted;
   }
-  
-  .btn-outline {
-    @apply bg-white border-2 border-primary-600 text-primary-600 hover:bg-primary-50;
+
+  .btn-secondary {
+    @apply btn bg-transparent text-ink border-lineStrong hover:border-ink;
   }
-  
-  .card {
-    @apply bg-white rounded-2xl shadow-sm hover:shadow-md transition-all p-6;
+
+  .link-inline {
+    @apply text-ink underline underline-offset-4 decoration-lineStrong hover:decoration-ink;
   }
-}
 
-/* LED Logo Effect */
-.logo-glow {
-  /* Removed glow effect */
-}
-
-.logo-text {
-  background: linear-gradient(90deg, #0163F5, #4d8ef7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  position: relative;
-}
-
-.logo-text-glow {
-  background: linear-gradient(90deg, #0163F5, #4d8ef7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: relative;
-  animation: textGlow 2s ease-in-out infinite;
-}
-
-@keyframes textGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 4px rgba(1, 99, 245, 0.25)) drop-shadow(0 0 10px rgba(1, 99, 245, 0.15));
+  /* Bersaglio tattile per i link di testo piccolo, che da soli sono alti
+     13-20px. Vale fino al breakpoint desktop: col puntatore non serve, e così
+     il ritmo verticale fitto delle colonne resta quello di prima.
+     Non si applica ai link dentro un periodo di testo: lì la regola sulle
+     dimensioni non vale e spezzerebbe l'interlinea. */
+  .tap-target {
+    @apply inline-flex items-center min-h-11 lg:min-h-0;
   }
-  50% {
-    filter: drop-shadow(0 0 6px rgba(1, 99, 245, 0.35)) drop-shadow(0 0 15px rgba(1, 99, 245, 0.2));
+
+  /* ---------------------------------------------------------------
+     Superfici
+     --------------------------------------------------------------- */
+
+  .panel {
+    @apply bg-surface border border-line;
   }
-}
 
-.logo-text::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, #0163F5, #4d8ef7);
-  filter: blur(20px);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.logo-text:hover::after {
-  opacity: 0.5;
-}
-
-@keyframes logoGlow {
-  0% {
-    filter: drop-shadow(0 0 8px rgba(1, 99, 245, 0.6));
+  .panel-padded {
+    @apply panel p-lg;
   }
-  100% {
-    filter: drop-shadow(0 0 15px rgba(1, 99, 245, 0.8));
+
+  /* Pannello in evidenza. `surface` su `canvas` stacca di un solo punto di
+     luminanza: da solo un pannello non si legge come blocco a sé. Bordo pieno
+     e filetto superiore spesso lo ancorano, senza uscire dalla palette.
+     `border-top-color` esplicito perché `border-lineStrong` di @apply imposta
+     `border-color` su tutti i lati. */
+  .panel-feature {
+    @apply bg-surface border border-lineStrong border-t-2 p-lg lg:p-xl;
+    border-top-color: theme('colors.ink');
   }
-}
 
-/* Modern button animations */
-.modern-button {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.modern-button::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300%;
-  height: 300%;
-  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  transition: transform 0.6s ease-out, opacity 0.4s ease-out;
-}
-
-.modern-button:hover::after {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-}
-
-/* Navbar animations */
-.nav-link {
-  position: relative;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #0163F5, #4d8ef7);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.nav-link:hover::after {
-  width: 100%;
-}
-
-/* Smooth fade-in animation */
-.fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-  opacity: 0;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  /* Tabella dati: usata dalle pagine legali e dalle schede tecniche */
+  .table-data {
+    @apply w-full border-collapse text-meta;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-/* Arrow animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateX(0);
+  .table-data th {
+    @apply bg-surface2 text-ink font-semibold text-left align-top px-sm py-sm border border-line;
   }
-  50% {
-    transform: translateX(5px);
-  }
-}
 
-.arrow-float {
-  animation: float 1.5s ease-in-out infinite;
-}
-
-/* Spotlight animation */
-@keyframes spotlight {
-  0% {
-    opacity: 0;
-    transform: translate(-72%, -62%) scale(0.5);
+  .table-data td {
+    @apply text-inkMuted align-top px-sm py-sm border border-line;
   }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -40%) scale(1);
-  }
-}
-
-.animate-spotlight {
-  animation: spotlight 2s ease-in-out forwards;
 }

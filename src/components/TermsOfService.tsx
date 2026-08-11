@@ -1,12 +1,9 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import BackHomeButton from './BackHomeButton';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useSEO } from '../hooks/useSEO';
 
 const TermsOfService: React.FC = () => {
-  const navigate = useNavigate();
   const { language } = useLanguage();
 
   useSEO({
@@ -21,40 +18,24 @@ const TermsOfService: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen bg-white pt-32 pb-20">
-      <div className="container mx-auto px-4 md:px-6">
-        <motion.button
-          onClick={() => navigate('/')}
-          className="mb-8 inline-flex items-center gap-2 text-graphite hover:text-aiblue transition-colors duration-300"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          whileHover={{ x: -5 }}
-        >
-          <ArrowLeft size={20} />
-          {language === 'it' ? 'Torna alla Home' : 'Back to Home'}
-        </motion.button>
-
-        <motion.div
-          className="max-w-5xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="text-center mb-12">
-            <p className="text-[11px] font-semibold uppercase tracking-[.12em] text-aiblue mb-4">
-              Agentics SRL — Legal
-            </p>
-            <h1 className="font-display font-bold text-4xl md:text-5xl text-graphite mb-4 uppercase tracking-[.04em]">
+    <>
+      <div className="pt-header" />
+      <BackHomeButton />
+      <div className="section container-content">
+        <div>
+          <header className="mb-xl">
+            <p className="label mb-md">Agentics SRL — Legal</p>
+            <h1 className="title-page mb-md">
               {language === 'it' ? 'Termini di Servizio' : 'Terms of Service'}
             </h1>
-            <div className="text-sm text-graphite/60 space-y-1">
+            <div className="text-meta text-inkMuted space-y-1">
               <p>{language === 'it' ? 'Versione 3.0' : 'Version 3.0'}</p>
               <p>{language === 'it' ? 'Data di entrata in vigore: 16 marzo 2026' : 'Effective date: March 16, 2026'}</p>
               <p>{language === 'it' ? 'Ultimo aggiornamento: 16 marzo 2026' : 'Last updated: March 16, 2026'}</p>
             </div>
-          </div>
+          </header>
 
-          <div className="text-graphite/80 mb-12">
+          <div className="text-ink/80 mb-12">
             <p className="leading-relaxed text-lg">
               {language === 'it'
                 ? <>I presenti Termini di Servizio regolano il rapporto contrattuale tra Agentics SRL e i propri clienti, con particolare riferimento ai servizi di intelligenza artificiale, automazione e <strong>sviluppo software su commessa</strong>. Si applicano in conformità a:</>
@@ -70,29 +51,29 @@ const TermsOfService: React.FC = () => {
             </ul>
           </div>
 
-          <div className="text-graphite/80 space-y-12">
+          <div className="text-ink/80 space-y-12">
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '1. Definizioni' : '1. Definitions'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '1. Definizioni' : '1. Definitions'}</h2>
               <p className="leading-relaxed">{language === 'it' ? 'Ai fini dei presenti Termini:' : 'For the purposes of these Terms:'}</p>
               <div className="space-y-4 pl-4">
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Servizi":' : '"Services":'}</strong> {language === 'it' ? 'l\'insieme delle soluzioni di intelligenza artificiale, automazione, sistemi vocali, API, consulenza e ogni altro servizio erogato da Agentics, ivi incluso lo sviluppo software su commessa' : 'the set of artificial intelligence solutions, automation, voice systems, APIs, consulting, and any other service provided by Agentics, including bespoke software development'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Servizi SaaS / Piattaforma":' : '"SaaS Services / Platform":'}</strong> {language === 'it' ? 'servizi forniti in modalità Software-as-a-Service tramite l\'infrastruttura cloud di Agentics (chatbot gestiti, receptionist vocale, automazioni ricorrenti, dashboard), per i quali Agentics mantiene la titolarità dell\'infrastruttura software' : 'services provided as Software-as-a-Service through Agentics\' cloud infrastructure (managed chatbots, voice receptionist, recurring automations, dashboards), for which Agentics retains ownership of the software infrastructure'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Software su Commessa":' : '"Bespoke Software":'}</strong> {language === 'it' ? 'software, applicativi, sistemi, agenti AI, modelli personalizzati, workflow e ogni altro prodotto digitale sviluppato da Agentics appositamente e su specifiche istruzioni del Cliente, nell\'ambito di un Contratto di Servizio dedicato' : 'software, applications, systems, AI agents, custom models, workflows, and any other digital product developed by Agentics specifically and according to Client instructions, under a dedicated Service Agreement'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Deliverable":' : '"Deliverable":'}</strong> {language === 'it' ? 'il risultato finale del Software su Commessa consegnato al Cliente, comprensivo di codice sorgente, documentazione tecnica e manuale d\'uso, come specificato nel Contratto di Servizio' : 'the final result of the Bespoke Software delivered to the Client, including source code, technical documentation, and user manual, as specified in the Service Agreement'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Componenti Preesistenti":' : '"Pre-existing Components":'}</strong> {language === 'it' ? 'framework, librerie, moduli, strumenti e know-how tecnico sviluppati da Agentics anteriormente o indipendentemente dal rapporto con il Cliente, incorporati nel Deliverable' : 'frameworks, libraries, modules, tools, and technical know-how developed by Agentics prior to or independently of the relationship with the Client, incorporated into the Deliverable'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Componenti Open Source":' : '"Open Source Components":'}</strong> {language === 'it' ? 'librerie, framework o strumenti distribuiti sotto licenze open source (MIT, Apache 2.0, GPL, LGPL, AGPL ecc.) eventualmente inclusi nel Deliverable' : 'libraries, frameworks, or tools distributed under open source licenses (MIT, Apache 2.0, GPL, LGPL, AGPL, etc.) potentially included in the Deliverable'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Cliente":' : '"Client":'}</strong> {language === 'it' ? 'persona fisica o giuridica che accede o utilizza i Servizi' : 'natural or legal person who accesses or uses the Services'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Piattaforma":' : '"Platform":'}</strong> {language === 'it' ? 'infrastrutture tecnologiche, software, dashboard e interfacce web/mobile di Agentics' : 'technological infrastructure, software, dashboards, and web/mobile interfaces of Agentics'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Dati del Cliente":' : '"Client Data":'}</strong> {language === 'it' ? 'informazioni, contenuti e dati inseriti o generati dal Cliente nell\'uso dei Servizi' : 'information, content, and data entered or generated by the Client while using the Services'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Documentazione":' : '"Documentation":'}</strong> {language === 'it' ? 'manuali tecnici, API reference, guide fornite da Agentics' : 'technical manuals, API references, and guides provided by Agentics'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Contratto di Servizio":' : '"Service Agreement":'}</strong> {language === 'it' ? 'accordo commerciale specifico stipulato per iscritto tra le parti, che prevale sui presenti Termini in caso di conflitto' : 'specific commercial agreement entered into in writing between the parties, which prevails over these Terms in case of conflict'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Diritti Patrimoniali d\'Autore":' : '"Economic Copyright":'}</strong> {language === 'it' ? 'i diritti di sfruttamento economico dell\'opera dell\'ingegno di cui agli artt. 12-18 e 64-bis L. 633/1941 (riproduzione, distribuzione, comunicazione al pubblico, modifica, traduzione, ecc.)' : 'the economic exploitation rights over intellectual works pursuant to Articles 12-18 and 64-bis of Law 633/1941 (reproduction, distribution, communication to the public, modification, translation, etc.)'}</p>
-                <p className="leading-relaxed"><strong className="text-graphite">{language === 'it' ? '"Diritti Morali":' : '"Moral Rights":'}</strong> {language === 'it' ? 'i diritti inalienabili di paternità intellettuale e integrità dell\'opera di cui agli artt. 20-24 L. 633/1941, che rimangono in capo agli autori persone fisiche che hanno materialmente creato il software' : 'the inalienable rights of authorship attribution and integrity of the work pursuant to Articles 20-24 of Law 633/1941, which remain with the individual authors who materially created the software'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Servizi":' : '"Services":'}</strong> {language === 'it' ? 'l\'insieme delle soluzioni di intelligenza artificiale, automazione, sistemi vocali, API, consulenza e ogni altro servizio erogato da Agentics, ivi incluso lo sviluppo software su commessa' : 'the set of artificial intelligence solutions, automation, voice systems, APIs, consulting, and any other service provided by Agentics, including bespoke software development'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Servizi SaaS / Piattaforma":' : '"SaaS Services / Platform":'}</strong> {language === 'it' ? 'servizi forniti in modalità Software-as-a-Service tramite l\'infrastruttura cloud di Agentics (chatbot gestiti, receptionist vocale, automazioni ricorrenti, dashboard), per i quali Agentics mantiene la titolarità dell\'infrastruttura software' : 'services provided as Software-as-a-Service through Agentics\' cloud infrastructure (managed chatbots, voice receptionist, recurring automations, dashboards), for which Agentics retains ownership of the software infrastructure'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Software su Commessa":' : '"Bespoke Software":'}</strong> {language === 'it' ? 'software, applicativi, sistemi, agenti AI, modelli personalizzati, workflow e ogni altro prodotto digitale sviluppato da Agentics appositamente e su specifiche istruzioni del Cliente, nell\'ambito di un Contratto di Servizio dedicato' : 'software, applications, systems, AI agents, custom models, workflows, and any other digital product developed by Agentics specifically and according to Client instructions, under a dedicated Service Agreement'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Deliverable":' : '"Deliverable":'}</strong> {language === 'it' ? 'il risultato finale del Software su Commessa consegnato al Cliente, comprensivo di codice sorgente, documentazione tecnica e manuale d\'uso, come specificato nel Contratto di Servizio' : 'the final result of the Bespoke Software delivered to the Client, including source code, technical documentation, and user manual, as specified in the Service Agreement'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Componenti Preesistenti":' : '"Pre-existing Components":'}</strong> {language === 'it' ? 'framework, librerie, moduli, strumenti e know-how tecnico sviluppati da Agentics anteriormente o indipendentemente dal rapporto con il Cliente, incorporati nel Deliverable' : 'frameworks, libraries, modules, tools, and technical know-how developed by Agentics prior to or independently of the relationship with the Client, incorporated into the Deliverable'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Componenti Open Source":' : '"Open Source Components":'}</strong> {language === 'it' ? 'librerie, framework o strumenti distribuiti sotto licenze open source (MIT, Apache 2.0, GPL, LGPL, AGPL ecc.) eventualmente inclusi nel Deliverable' : 'libraries, frameworks, or tools distributed under open source licenses (MIT, Apache 2.0, GPL, LGPL, AGPL, etc.) potentially included in the Deliverable'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Cliente":' : '"Client":'}</strong> {language === 'it' ? 'persona fisica o giuridica che accede o utilizza i Servizi' : 'natural or legal person who accesses or uses the Services'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Piattaforma":' : '"Platform":'}</strong> {language === 'it' ? 'infrastrutture tecnologiche, software, dashboard e interfacce web/mobile di Agentics' : 'technological infrastructure, software, dashboards, and web/mobile interfaces of Agentics'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Dati del Cliente":' : '"Client Data":'}</strong> {language === 'it' ? 'informazioni, contenuti e dati inseriti o generati dal Cliente nell\'uso dei Servizi' : 'information, content, and data entered or generated by the Client while using the Services'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Documentazione":' : '"Documentation":'}</strong> {language === 'it' ? 'manuali tecnici, API reference, guide fornite da Agentics' : 'technical manuals, API references, and guides provided by Agentics'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Contratto di Servizio":' : '"Service Agreement":'}</strong> {language === 'it' ? 'accordo commerciale specifico stipulato per iscritto tra le parti, che prevale sui presenti Termini in caso di conflitto' : 'specific commercial agreement entered into in writing between the parties, which prevails over these Terms in case of conflict'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Diritti Patrimoniali d\'Autore":' : '"Economic Copyright":'}</strong> {language === 'it' ? 'i diritti di sfruttamento economico dell\'opera dell\'ingegno di cui agli artt. 12-18 e 64-bis L. 633/1941 (riproduzione, distribuzione, comunicazione al pubblico, modifica, traduzione, ecc.)' : 'the economic exploitation rights over intellectual works pursuant to Articles 12-18 and 64-bis of Law 633/1941 (reproduction, distribution, communication to the public, modification, translation, etc.)'}</p>
+                <p className="leading-relaxed"><strong className="text-ink">{language === 'it' ? '"Diritti Morali":' : '"Moral Rights":'}</strong> {language === 'it' ? 'i diritti inalienabili di paternità intellettuale e integrità dell\'opera di cui agli artt. 20-24 L. 633/1941, che rimangono in capo agli autori persone fisiche che hanno materialmente creato il software' : 'the inalienable rights of authorship attribution and integrity of the work pursuant to Articles 20-24 of Law 633/1941, which remain with the individual authors who materially created the software'}</p>
               </div>
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '2. Accettazione e Ambito' : '2. Acceptance and Scope'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '2. Accettazione e Ambito' : '2. Acceptance and Scope'}</h2>
               <div className="space-y-4">
                 <p className="leading-relaxed"><strong>2.1.</strong> {language === 'it' ? 'L\'accesso al sito web e l\'utilizzo dei Servizi implica accettazione integrale dei presenti Termini.' : 'Accessing the website and using the Services implies full acceptance of these Terms.'}</p>
                 <p className="leading-relaxed"><strong>2.2.</strong> {language === 'it' ? 'I presenti Termini si applicano in via generale. Eventuali Contratti di Servizio specifici prevalgono su questi Termini in caso di conflitto.' : 'These Terms apply generally. Any specific Service Agreements shall prevail over these Terms in case of conflict.'}</p>
@@ -107,7 +88,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '3. Servizi Offerti' : '3. Services Offered'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '3. Servizi Offerti' : '3. Services Offered'}</h2>
               <div className="space-y-4">
                 <div>
                   <p className="leading-relaxed mb-3"><strong>{language === 'it' ? '3.1. Servizi SaaS e Piattaforma:' : '3.1. SaaS Services and Platform:'}</strong></p>
@@ -153,7 +134,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '4. Obblighi del Cliente' : '4. Client Obligations'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '4. Obblighi del Cliente' : '4. Client Obligations'}</h2>
               <p className="leading-relaxed">{language === 'it' ? 'Il Cliente si impegna a:' : 'The Client agrees to:'}</p>
               <div className="space-y-4">
                 <p className="leading-relaxed"><strong>{language === 'it' ? '4.1. Utilizzo lecito:' : '4.1. Lawful use:'}</strong> {language === 'it' ? 'non utilizzare i Servizi per finalità illegali, fraudolente o lesive di diritti terzi' : 'not use the Services for illegal, fraudulent, or harmful purposes that infringe third-party rights'}</p>
@@ -175,12 +156,12 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '5. Proprietà Intellettuale' : '5. Intellectual Property'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '5. Proprietà Intellettuale' : '5. Intellectual Property'}</h2>
               <div className="space-y-6">
 
-                <div className="bg-blue-50 border-l-4 border-aiblue p-4 rounded">
-                  <p className="font-semibold text-graphite mb-2">{language === 'it' ? 'Distinzione fondamentale' : 'Fundamental distinction'}</p>
-                  <p className="leading-relaxed text-graphite/80">
+                <div className="bg-surface border-l-2 border-lineStrong p-4 rounded">
+                  <p className="font-semibold text-ink mb-2">{language === 'it' ? 'Distinzione fondamentale' : 'Fundamental distinction'}</p>
+                  <p className="leading-relaxed text-ink/80">
                     {language === 'it'
                       ? <>Il regime della proprietà intellettuale varia in base alla tipologia di servizio: per i <strong>Servizi SaaS</strong> Agentics concede una licenza d'uso; per lo <strong>Sviluppo Software su Commessa</strong> Agentics cede al Cliente i diritti patrimoniali d'autore sul software sviluppato appositamente. I dettagli specifici sono sempre definiti nel Contratto di Servizio.</>
                       : <>The intellectual property regime varies depending on the type of service: for <strong>SaaS Services</strong>, Agentics grants a license of use; for <strong>Bespoke Software Development</strong>, Agentics assigns to the Client the economic copyright on the software specifically developed. Specific details are always defined in the Service Agreement.</>}
@@ -292,7 +273,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '6. Sviluppo Software su Commessa – Disposizioni Specifiche' : '6. Bespoke Software Development – Specific Provisions'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '6. Sviluppo Software su Commessa – Disposizioni Specifiche' : '6. Bespoke Software Development – Specific Provisions'}</h2>
               <div className="space-y-6">
                 <p className="leading-relaxed">{language === 'it' ? 'Le presenti disposizioni si applicano esclusivamente ai contratti aventi ad oggetto lo sviluppo di Software su Commessa, integrando quanto previsto nel Contratto di Servizio specifico.' : 'These provisions apply exclusively to contracts for the development of Bespoke Software, supplementing the provisions of the specific Service Agreement.'}</p>
 
@@ -367,7 +348,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '7. Protezione dei Dati Personali' : '7. Personal Data Protection'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '7. Protezione dei Dati Personali' : '7. Personal Data Protection'}</h2>
               <div className="space-y-4">
                 <div>
                   <p className="leading-relaxed mb-2"><strong>{language === 'it' ? '7.1. Riferimento all\'Informativa Privacy:' : '7.1. Reference to the Privacy Policy:'}</strong></p>
@@ -403,7 +384,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '8. Limitazione di Responsabilità' : '8. Limitation of Liability'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '8. Limitazione di Responsabilità' : '8. Limitation of Liability'}</h2>
               <div className="space-y-4">
                 <div>
                   <p className="leading-relaxed mb-2"><strong>{language === 'it' ? '8.1. Servizi SaaS "as is":' : '8.1. SaaS Services "as is":'}</strong></p>
@@ -435,7 +416,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '9. Servizi di Terze Parti' : '9. Third-Party Services'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '9. Servizi di Terze Parti' : '9. Third-Party Services'}</h2>
               <div className="space-y-4">
                 <p className="leading-relaxed"><strong>9.1.</strong> {language === 'it' ? 'La Piattaforma e i Deliverable possono integrare servizi esterni (cloud providers, API terze, modelli AI di terzi, plugin).' : 'The Platform and Deliverables may integrate external services (cloud providers, third-party APIs, third-party AI models, plugins).'}</p>
                 <div>
@@ -452,7 +433,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '10. Durata, Sospensione e Risoluzione' : '10. Duration, Suspension, and Termination'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '10. Durata, Sospensione e Risoluzione' : '10. Duration, Suspension, and Termination'}</h2>
               <div className="space-y-4">
                 <p className="leading-relaxed"><strong>{language === 'it' ? '10.1. Durata:' : '10.1. Duration:'}</strong> {language === 'it' ? 'come da Contratto di Servizio (o a tempo indeterminato per utilizzo generico del sito).' : 'as per the Service Agreement (or indefinite for general use of the website).'}</p>
                 <div>
@@ -492,7 +473,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '11. Modifiche ai Termini' : '11. Amendments to the Terms'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '11. Modifiche ai Termini' : '11. Amendments to the Terms'}</h2>
               <div className="space-y-4">
                 <p className="leading-relaxed"><strong>11.1.</strong> {language === 'it' ? 'Agentics può modificare i Termini in qualsiasi momento pubblicandoli sul sito.' : 'Agentics may amend the Terms at any time by publishing them on the website.'}</p>
                 <p className="leading-relaxed"><strong>11.2.</strong> {language === 'it' ? 'Le modifiche sostanziali sono comunicate via email con 30 giorni di anticipo.' : 'Substantial changes are communicated via email with 30 days\' advance notice.'}</p>
@@ -503,7 +484,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '12. Disposizioni Generali' : '12. General Provisions'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '12. Disposizioni Generali' : '12. General Provisions'}</h2>
               <div className="space-y-4">
                 <p className="leading-relaxed"><strong>{language === 'it' ? '12.1. Cessione:' : '12.1. Assignment:'}</strong> {language === 'it' ? 'Il Cliente non può cedere il contratto senza consenso scritto di Agentics. Agentics può cedere il contratto a soggetti terzi che acquisiscano il ramo d\'azienda, previa comunicazione al Cliente.' : 'The Client may not assign the contract without Agentics\' written consent. Agentics may assign the contract to third parties acquiring the business unit, with prior notice to the Client.'}</p>
                 <p className="leading-relaxed"><strong>{language === 'it' ? '12.2. Invalidità parziale:' : '12.2. Severability:'}</strong> {language === 'it' ? 'se una clausola è nulla, le altre restano valide. La clausola nulla è sostituita dalla norma di legge applicabile.' : 'if a clause is void, the remaining clauses remain valid. The void clause is replaced by the applicable legal provision.'}</p>
@@ -522,7 +503,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '13. Legge Applicabile e Foro Competente' : '13. Applicable Law and Jurisdiction'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '13. Legge Applicabile e Foro Competente' : '13. Applicable Law and Jurisdiction'}</h2>
               <div className="space-y-4">
                 <p className="leading-relaxed"><strong>13.1.</strong> {language === 'it' ? 'I presenti Termini e i Contratti di Servizio sono regolati dalla legge italiana.' : 'These Terms and Service Agreements are governed by Italian law.'}</p>
                 <p className="leading-relaxed"><strong>13.2.</strong> {language === 'it' ? 'Per controversie con consumatori: foro del luogo di residenza del consumatore (D.Lgs. 206/2005).' : 'For consumer disputes: jurisdiction of the consumer\'s place of residence (Legislative Decree 206/2005).'}</p>
@@ -533,32 +514,32 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="font-display font-bold text-3xl text-graphite border-b-2 border-aiblue pb-3">{language === 'it' ? '14. Contatti' : '14. Contact'}</h2>
+              <h2 className="font-display font-bold text-3xl text-ink border-b-2 border-ink pb-3">{language === 'it' ? '14. Contatti' : '14. Contact'}</h2>
               <div className="grid md:grid-cols-2 gap-6 text-base">
                 <div className="space-y-2">
-                  <p className="font-semibold text-graphite text-lg">Agentics SRL</p>
-                  <p className="leading-relaxed">Via Vincenzo Monti 16<br />04100 Latina (LT) – {language === 'it' ? 'Italia' : 'Italy'}</p>
+                  <p className="font-semibold text-ink text-lg">Agentics SRL</p>
+                  <p className="leading-relaxed">Viale Bruno Buozzi 77<br />00197 Roma (RM) – {language === 'it' ? 'Italia' : 'Italy'}</p>
                   <p className="leading-relaxed"><strong>{language === 'it' ? 'P.IVA:' : 'VAT:'}</strong> 03335160598</p>
                 </div>
                 <div className="space-y-2">
-                  <p className="leading-relaxed"><strong>Email:</strong> <a href="mailto:info@agentics.eu.com" className="text-aiblue hover:underline">info@agentics.eu.com</a></p>
-                  <p className="leading-relaxed"><strong>PEC:</strong> <a href="mailto:agentics@pec.it" className="text-aiblue hover:underline">agentics@pec.it</a></p>
-                  <p className="leading-relaxed"><strong>Web:</strong> <a href="https://agentics.eu.com" className="text-aiblue hover:underline">www.agentics.eu.com</a></p>
+                  <p className="leading-relaxed"><strong>Email:</strong> <a href="mailto:info@agentics.eu.com" className="text-ink hover:underline break-words">info@agentics.eu.com</a></p>
+                  <p className="leading-relaxed"><strong>PEC:</strong> <a href="mailto:agentics@pec.it" className="text-ink hover:underline break-words">agentics@pec.it</a></p>
+                  <p className="leading-relaxed"><strong>Web:</strong> <a href="https://agentics.eu.com" className="text-ink hover:underline break-words">www.agentics.eu.com</a></p>
                 </div>
               </div>
             </section>
           </div>
 
-          <div className="mt-16 pt-8 border-t-2 border-gray-300 text-center space-y-2">
-            <p className="text-sm text-graphite/60">{language === 'it' ? 'Ultimo aggiornamento: 16 marzo 2026' : 'Last updated: March 16, 2026'}</p>
-            <p className="text-sm text-graphite/60">{language === 'it' ? 'Versione: 3.0' : 'Version: 3.0'}</p>
-            <p className="text-sm text-graphite/60">{language === 'it' ? 'Prossima revisione prevista: Marzo 2027' : 'Next scheduled review: March 2027'}</p>
-            <p className="text-sm text-graphite/60 mt-4">{language === 'it' ? '© 2025–2026 Agentics SRL – Tutti i diritti riservati' : '© 2025–2026 Agentics SRL – All rights reserved'}</p>
-            <p className="text-sm text-graphite/60">{language === 'it' ? 'P.IVA: 03335160598' : 'VAT: 03335160598'}</p>
+          <div className="mt-16 pt-8 border-t-2 border-line text-center space-y-2">
+            <p className="text-sm text-ink/60">{language === 'it' ? 'Ultimo aggiornamento: 16 marzo 2026' : 'Last updated: March 16, 2026'}</p>
+            <p className="text-sm text-ink/60">{language === 'it' ? 'Versione: 3.0' : 'Version: 3.0'}</p>
+            <p className="text-sm text-ink/60">{language === 'it' ? 'Prossima revisione prevista: Marzo 2027' : 'Next scheduled review: March 2027'}</p>
+            <p className="text-sm text-ink/60 mt-4">{language === 'it' ? '© 2025–2026 Agentics SRL – Tutti i diritti riservati' : '© 2025–2026 Agentics SRL – All rights reserved'}</p>
+            <p className="text-sm text-ink/60">{language === 'it' ? 'P.IVA: 03335160598' : 'VAT: 03335160598'}</p>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
