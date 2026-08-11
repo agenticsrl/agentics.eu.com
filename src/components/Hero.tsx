@@ -1,13 +1,33 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import RotatingFoldText from './ui/RotatingFoldText';
 import Section from './layout/Section';
 
-const VIDEO_SRC = '/hero-jet.mp4';
-const POSTER_SRC = '/hero-jet-poster.jpg';
-const POSTER_WIDTH = 1920;
-const POSTER_HEIGHT = 1082;
+/** Girato originale in orizzontale: il velivolo è ripreso di profilo e occupa
+ *  il 93% della larghezza del quadro. */
+const LANDSCAPE = {
+  video: '/hero-jet.mp4',
+  poster: '/hero-jet-poster.jpg',
+  width: 1920,
+  height: 1082,
+} as const;
+
+/** Montaggio per il telefono, ricavato dalla sola inquadratura frontale e
+ *  ritagliato stretto sul velivolo. È il massimo ottenibile tenendo l'aereo
+ *  intero: in tutte e tre le inquadrature del girato l'apertura alare copre
+ *  l'89-93% del quadro, quindi oltre il +13% si taglierebbero le ali.
+ *  Andata e ritorno, così l'anello non ha stacco. */
+const PORTRAIT = {
+  video: '/hero-jet-mobile.mp4',
+  poster: '/hero-jet-mobile-poster.jpg',
+  width: 720,
+  height: 452,
+} as const;
+
+/** Stesso valore del breakpoint md di Tailwind. */
+const LANDSCAPE_QUERY = '(min-width: 768px)';
 
 const scrollToId = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -24,35 +44,38 @@ const scrollToId = (id: string) => {
 const Hero: React.FC = () => {
   const { t } = useLanguage();
   const prefersReducedMotion = usePrefersReducedMotion();
+  const isLandscapeViewport = useMediaQuery(LANDSCAPE_QUERY);
+  const source = isLandscapeViewport ? LANDSCAPE : PORTRAIT;
 
   return (
     <>
       <section className="relative overflow-hidden bg-black pt-header md:pt-0 md:min-h-[620px] lg:min-h-[700px]">
-        {/* Su telefono il filmato sta nel flusso al suo rapporto naturale, così
-            si vede per intero: a 375px di larghezza un riquadro alto 560px
-            ritagliava quasi due terzi del fotogramma. Lo spazio in alto è
-            esattamente l'altezza dell'header, che lo copre per intero.
-            Da md in su c'è larghezza a sufficienza e il video torna a riempire
-            la sezione. */}
+        {/* Su telefono il filmato sta nel flusso al rapporto del suo ritaglio,
+            così si vede per intero. Lo spazio in alto è esattamente l'altezza
+            dell'header, che lo copre. Da md in su il filmato orizzontale torna
+            a riempire la sezione. */}
         <div
-          className="relative aspect-[1920/1082] md:aspect-auto md:absolute md:inset-0"
+          className="relative w-full aspect-[720/452] md:aspect-auto md:absolute md:inset-0"
           aria-hidden="true"
         >
           {prefersReducedMotion ? (
             <img
-              src={POSTER_SRC}
+              src={source.poster}
               alt=""
-              width={POSTER_WIDTH}
-              height={POSTER_HEIGHT}
+              width={source.width}
+              height={source.height}
               className="w-full h-full object-cover"
             />
           ) : (
             <video
+              /* La chiave rimonta l'elemento al cambio di sorgente: senza,
+                 il browser tiene il filmato già caricato. */
+              key={source.video}
               className="w-full h-full object-cover"
-              src={VIDEO_SRC}
-              poster={POSTER_SRC}
-              width={POSTER_WIDTH}
-              height={POSTER_HEIGHT}
+              src={source.video}
+              poster={source.poster}
+              width={source.width}
+              height={source.height}
               autoPlay
               muted
               loop
@@ -61,8 +84,10 @@ const Hero: React.FC = () => {
               disablePictureInPicture
             />
           )}
-          {/* Velatura: più marcata al centro, dove sta la scritta */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.68)_0%,rgba(0,0,0,0.4)_45%,rgba(0,0,0,0.22)_100%)]" />
+          {/* Velatura per la scritta. Sul quadro verticale è più leggera: lì il
+              filmato è già scurito ai bordi e una velatura piena spegnerebbe
+              il velivolo. */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.42)_0%,rgba(0,0,0,0.24)_45%,rgba(0,0,0,0.1)_100%)] md:bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.68)_0%,rgba(0,0,0,0.4)_45%,rgba(0,0,0,0.22)_100%)]" />
         </div>
 
         {/* Unica scritta sul video: parte fissa e competenza che ruota.

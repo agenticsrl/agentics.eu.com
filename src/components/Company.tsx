@@ -73,7 +73,7 @@ const Company: React.FC = () => {
             height={TOWER_HEIGHT}
             loading="lazy"
             decoding="async"
-            className="w-full max-w-[320px] lg:max-w-none h-auto mx-auto grayscale"
+            className="w-full max-w-[200px] lg:max-w-none h-auto mx-auto grayscale"
           />
         </div>
       </Section>
