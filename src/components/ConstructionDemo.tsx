@@ -1,7 +1,5 @@
 import React, { useMemo } from 'react';
 import {
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -24,9 +22,6 @@ const IMPREDO = {
   /* Filetti, griglia dei grafici e binario delle barre di avanzamento: deve
      restare più chiaro di ogni grigio della rampa, o le barre spariscono. */
   border: '#E5E5E5',
-  /* Ruolo dato, non filetto: la serie "in corso" accanto alle barre nere.
-     Serve più contrasto di un filetto per restare leggibile sul bianco. */
-  dataMuted: '#C9C9C9',
   textPrimary: '#0A0A0A',
   textSecondary: '#525252',
   textMuted: '#737373',
@@ -42,16 +37,6 @@ const generateSalesData = (variation: number) => [
   { date: 'Lug', vendite: 58900 + variation * 750, obiettivo: 58000 },
   { date: 'Ago', vendite: 52400 + variation * 600, obiettivo: 50000 },
   { date: 'Set', vendite: 67800 + variation * 1100, obiettivo: 62000 },
-];
-
-const generateProductivityData = (variation: number) => [
-  { name: 'Lun', completati: 24 + Math.floor(variation * 0.5), inCorso: 8 },
-  { name: 'Mar', completati: 31 + Math.floor(variation * 0.3), inCorso: 12 },
-  { name: 'Mer', completati: 28 + Math.floor(variation * 0.4), inCorso: 9 },
-  { name: 'Gio', completati: 35 + Math.floor(variation * 0.6), inCorso: 7 },
-  { name: 'Ven', completati: 42 + Math.floor(variation * 0.2), inCorso: 11 },
-  { name: 'Sab', completati: 18 + Math.floor(variation * 0.3), inCorso: 4 },
-  { name: 'Dom', completati: 8 + Math.floor(variation * 0.1), inCorso: 2 },
 ];
 
 /* Grigi in ordine di rilievo: la prima voce è la più marcata. */
@@ -99,6 +84,7 @@ const SALES_VARIATION = 0;
 const CURRENT_SALES = 67.8;
 const TARGET_CLIENTS = 847;
 const TARGET_ORDERS = 1243;
+const WEEKLY_TASKS = 186;
 
 const ConstructionDemo: React.FC = () => {
   const { language } = useLanguage();
@@ -108,7 +94,6 @@ const ConstructionDemo: React.FC = () => {
   const targetOrders = TARGET_ORDERS;
 
   const salesData = useMemo(() => generateSalesData(SALES_VARIATION), []);
-  const productivityData = useMemo(() => generateProductivityData(SALES_VARIATION), []);
 
   const translatedSalesData = useMemo(() => {
     if (language === 'en') {
@@ -129,27 +114,6 @@ const ConstructionDemo: React.FC = () => {
     return salesData;
   }, [language, salesData]);
 
-  const translatedProductivityData = useMemo(() => {
-    if (language === 'en') {
-      return productivityData.map(item => ({
-        ...item,
-        name: item.name
-          .replace('Lun', 'Mon')
-          .replace('Mar', 'Tue')
-          .replace('Mer', 'Wed')
-          .replace('Gio', 'Thu')
-          .replace('Ven', 'Fri')
-          .replace('Sab', 'Sat')
-          .replace('Dom', 'Sun')
-      }));
-    }
-    return productivityData;
-  }, [language, productivityData]);
-
-  const totalTasks = useMemo(() => {
-    return productivityData.reduce((sum, d) => sum + d.completati, 0);
-  }, [productivityData]);
-
   return (
     /* Il cruscotto ha una larghezza minima propria: scorre nel suo
        contenitore invece di essere rimpicciolito con una scala. Su telefono
@@ -163,7 +127,7 @@ const ConstructionDemo: React.FC = () => {
         <div style={{ background: IMPREDO.bg }}>
         {/* Top bar */}
         <div
-          className="px-6 py-3 flex items-center justify-between gap-2"
+          className="px-5 py-2.5 flex items-center justify-between gap-2"
           style={{ borderBottom: `1px solid ${IMPREDO.border}` }}
         >
           <div className="flex items-center gap-3 min-w-0">
@@ -193,33 +157,32 @@ const ConstructionDemo: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-6">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6" style={{ borderBottom: `1px solid ${IMPREDO.border}`, paddingBottom: 16 }}>
-            <div>
-              <h2
-                className="font-semibold uppercase tracking-[.06em]"
-                style={{ color: IMPREDO.textPrimary, fontSize: 15, letterSpacing: '0.06em' }}
-              >
-                {language === 'it' ? 'Dashboard Operativa' : 'Operations Dashboard'}
-              </h2>
-              <p
-                className="uppercase tracking-[.08em] font-semibold mt-1"
-                style={{ color: IMPREDO.textSecondary, fontSize: 11 }}
-              >
-                {language === 'it' ? 'Monitoraggio in tempo reale' : 'Real-time monitoring'}
-              </p>
-            </div>
+        <div className="px-5 pt-4 pb-5">
+          {/* Header: titolo e sottotitolo sulla stessa riga per non rubare
+              altezza. Il filetto lo dà il bordo superiore della griglia sotto. */}
+          <div className="flex items-baseline justify-between gap-4 mb-3">
+            <h2
+              className="font-semibold uppercase"
+              style={{ color: IMPREDO.textPrimary, fontSize: 14, letterSpacing: '0.06em' }}
+            >
+              {language === 'it' ? 'Dashboard Operativa' : 'Operations Dashboard'}
+            </h2>
+            <p
+              className="uppercase tracking-[.08em] font-semibold"
+              style={{ color: IMPREDO.textMuted, fontSize: 10 }}
+            >
+              {language === 'it' ? 'Monitoraggio in tempo reale' : 'Real-time monitoring'}
+            </p>
           </div>
 
           {/* Main grid: Revenue chart + Automated tasks */}
           <div className="grid grid-cols-3 gap-0 mb-0">
             {/* Revenue chart */}
             <div
-              className="col-span-2 p-5 relative overflow-hidden"
+              className="col-span-2 p-4 relative overflow-hidden"
               style={{ background: IMPREDO.cardBg, borderRight: `1px solid ${IMPREDO.border}`, borderTop: `1px solid ${IMPREDO.border}` }}
             >
-              <div className="flex items-start justify-between mb-4 relative z-10">
+              <div className="flex items-start justify-between mb-3 relative z-10">
                 <div>
                   <p
                     className="uppercase tracking-[.08em] font-semibold mb-1"
@@ -232,24 +195,18 @@ const ConstructionDemo: React.FC = () => {
                         key={Math.floor(currentSales * 10)}
 
                         className="font-light tracking-tight"
-                        style={{ color: IMPREDO.textPrimary, fontSize: 32 }}
+                        style={{ color: IMPREDO.textPrimary, fontSize: 26 }}
                       >
                         {currentSales.toFixed(1)}K
                       </span>
                     <span
 
                       className="font-semibold uppercase tracking-[.06em]"
-                      style={{ color: IMPREDO.accent, fontSize: 12 }}
+                      style={{ color: IMPREDO.accent, fontSize: 11 }}
                     >
-                      +12.4%
+                      +12.4% {language === 'it' ? 'vs mese prec.' : 'vs prev. month'}
                     </span>
                   </div>
-                  <p
-                    className="mt-1 uppercase tracking-[.06em]"
-                    style={{ color: IMPREDO.textMuted, fontSize: 10 }}
-                  >
-                    {language === 'it' ? 'vs mese precedente' : 'vs previous month'} (60.3K)
-                  </p>
                 </div>
                 <div className="text-right">
                   <p
@@ -258,18 +215,20 @@ const ConstructionDemo: React.FC = () => {
                   >
                     {language === 'it' ? 'Obiettivo Q4' : 'Q4 Target'}
                   </p>
-                  <p className="font-medium" style={{ color: IMPREDO.textPrimary, fontSize: 18 }}>85K</p>
-                  <p
-                    className="uppercase tracking-[.06em] font-semibold"
-                    style={{ color: IMPREDO.accent, fontSize: 10, opacity: 0.7 }}
-                  >
-                    {language === 'it' ? 'in linea' : 'on track'}
-                  </p>
+                  <div className="flex items-baseline justify-end gap-2">
+                    <p className="font-medium" style={{ color: IMPREDO.textPrimary, fontSize: 16 }}>85K</p>
+                    <p
+                      className="uppercase tracking-[.06em] font-semibold"
+                      style={{ color: IMPREDO.accent, fontSize: 10, opacity: 0.7 }}
+                    >
+                      {language === 'it' ? 'in linea' : 'on track'}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="h-[160px]">
+              <div className="h-[124px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={translatedSalesData}>
+                  <AreaChart data={translatedSalesData} margin={{ top: 4, right: 4, bottom: 0, left: 0 }}>
                     <defs>
                       <linearGradient id="salesGradientImpredo" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor={IMPREDO.accent} stopOpacity={0.2} />
@@ -287,6 +246,7 @@ const ConstructionDemo: React.FC = () => {
                     <YAxis
                       axisLine={false}
                       tickLine={false}
+                      width={34}
                       tick={{ fill: IMPREDO.textMuted, fontSize: 10, fontFamily: 'Montserrat', fontWeight: 600 }}
                       tickFormatter={(value) => `${value / 1000}K`}
                     />
@@ -329,7 +289,7 @@ const ConstructionDemo: React.FC = () => {
 
             {/* Automated tasks */}
             <div
-              className="p-5 relative overflow-hidden"
+              className="p-4 relative overflow-hidden"
               style={{ background: IMPREDO.cardBg, borderTop: `1px solid ${IMPREDO.border}` }}
             >
               <p
@@ -338,8 +298,8 @@ const ConstructionDemo: React.FC = () => {
               >
                 {language === 'it' ? 'Attività Automatizzate' : 'Automated Tasks'}
               </p>
-              <div className="flex items-baseline gap-2 mb-4">
-                <span className="font-light tracking-tight" style={{ color: IMPREDO.textPrimary, fontSize: 32 }}>
+              <div className="flex items-baseline gap-2 mb-3">
+                <span className="font-light tracking-tight" style={{ color: IMPREDO.textPrimary, fontSize: 26 }}>
                   <StaticNumber value={546} />
                 </span>
                 <span
@@ -349,7 +309,7 @@ const ConstructionDemo: React.FC = () => {
                   {language === 'it' ? 'oggi' : 'today'}
                 </span>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {taskCategories.map((item, index) => (
                   <div key={index}>
                     <div className="flex justify-between mb-1">
@@ -381,8 +341,9 @@ const ConstructionDemo: React.FC = () => {
             </div>
           </div>
 
-          {/* KPI row */}
-          <div className="grid grid-cols-4 gap-0 mb-0">
+          {/* KPI row: chiude il cruscotto in una sola fascia, il dato
+              settimanale sta qui invece che in un grafico a sé. */}
+          <div className="grid grid-cols-5 gap-0">
             {[
               {
                 label: language === 'it' ? 'Clienti Attivi' : 'Active Clients',
@@ -397,7 +358,7 @@ const ConstructionDemo: React.FC = () => {
                 sub: `+8.2% ${language === 'it' ? 'vs scorso mese' : 'vs last month'}`
               },
               {
-                label: language === 'it' ? 'Tasso Conversione' : 'Conversion Rate',
+                label: language === 'it' ? 'Conversione' : 'Conversion',
                 value: 34.8,
                 suffix: '%',
                 sub: language === 'it' ? 'da lead a cliente' : 'lead to client',
@@ -409,137 +370,45 @@ const ConstructionDemo: React.FC = () => {
                 suffix: 'min',
                 sub: language === 'it' ? 'media assistita' : 'AI-assisted avg.',
                 isDecimal: true
+              },
+              {
+                label: language === 'it' ? 'Task Settimana' : 'Weekly Tasks',
+                value: WEEKLY_TASKS,
+                suffix: '',
+                sub: `+18% ${language === 'it' ? 'vs scorsa' : 'vs last week'}`
               }
-            ].map((stat, index) => (
+            ].map((stat, index, list) => (
               <div
                 key={index}
 
-                className="p-5 transition-colors duration-300"
+                className="p-4 transition-colors duration-300"
                 style={{
                   background: IMPREDO.cardBg,
                   borderTop: `1px solid ${IMPREDO.border}`,
-                  borderRight: index < 3 ? `1px solid ${IMPREDO.border}` : 'none',
+                  borderRight: index < list.length - 1 ? `1px solid ${IMPREDO.border}` : 'none',
                 }}
               >
                 <p
-                  className="uppercase tracking-[.08em] font-semibold mb-2"
-                  style={{ color: IMPREDO.textSecondary, fontSize: 11 }}
+                  className="uppercase tracking-[.08em] font-semibold mb-1.5"
+                  style={{ color: IMPREDO.textSecondary, fontSize: 10 }}
                 >
                   {stat.label}
                 </p>
-                <p className="font-light tracking-tight" style={{ color: IMPREDO.textPrimary, fontSize: 22 }}>
+                <p className="font-light tracking-tight" style={{ color: IMPREDO.textPrimary, fontSize: 20 }}>
                   {stat.isDecimal ? (
-                    <>{stat.value}<span style={{ color: IMPREDO.textSecondary, fontSize: 14 }}>{stat.suffix}</span></>
+                    <>{stat.value}<span style={{ color: IMPREDO.textSecondary, fontSize: 13 }}>{stat.suffix}</span></>
                   ) : (
                     <StaticNumber value={stat.value} suffix={stat.suffix} />
                   )}
                 </p>
                 <p
-                  className="mt-1 uppercase tracking-[.06em] font-medium"
+                  className="mt-0.5 uppercase tracking-[.06em] font-medium"
                   style={{ color: IMPREDO.textMuted, fontSize: 10 }}
                 >
                   {stat.sub}
                 </p>
               </div>
             ))}
-          </div>
-
-          {/* Weekly tasks bar chart */}
-          <div
-            className="p-5 relative overflow-hidden"
-            style={{ background: IMPREDO.cardBg, borderTop: `1px solid ${IMPREDO.border}` }}
-          >
-            <div className="flex items-center justify-between mb-4 relative z-10">
-              <div>
-                <p
-                  className="uppercase tracking-[.08em] font-semibold mb-1"
-                  style={{ color: IMPREDO.textSecondary, fontSize: 11 }}
-                >
-                  {language === 'it' ? 'Task Completati — Settimana' : 'Completed Tasks — Week'}
-                </p>
-                <div className="flex items-baseline gap-3">
-                  <span
-                      key={totalTasks}
-
-                      className="font-light tracking-tight"
-                      style={{ color: IMPREDO.textPrimary, fontSize: 22 }}
-                    >
-                      {totalTasks}
-                    </span>
-                  <span
-                    className="font-semibold uppercase tracking-[.06em]"
-                    style={{ color: IMPREDO.accent, fontSize: 12 }}
-                  >
-                    +18% {language === 'it' ? 'vs settimana scorsa' : 'vs last week'}
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-2" style={{ background: IMPREDO.accent }} />
-                  <span
-                    className="uppercase tracking-[.06em] font-semibold"
-                    style={{ color: IMPREDO.textSecondary, fontSize: 10 }}
-                  >
-                    {language === 'it' ? 'Completati' : 'Completed'}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-2" style={{ background: IMPREDO.dataMuted }} />
-                  <span
-                    className="uppercase tracking-[.06em] font-semibold"
-                    style={{ color: IMPREDO.textSecondary, fontSize: 10 }}
-                  >
-                    {language === 'it' ? 'In Corso' : 'In Progress'}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="h-[120px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={translatedProductivityData} barGap={2}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={IMPREDO.border} vertical={false} />
-                  <XAxis
-                    dataKey="name"
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fill: IMPREDO.textMuted, fontSize: 10, fontFamily: 'Montserrat', fontWeight: 600 }}
-                  />
-                  <YAxis
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fill: IMPREDO.textMuted, fontSize: 10, fontFamily: 'Montserrat', fontWeight: 600 }}
-                    domain={[0, 50]}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: IMPREDO.cardBg,
-                      border: `1px solid ${IMPREDO.accent}`,
-                      borderRadius: 0,
-                      fontSize: 11,
-                      fontFamily: 'Montserrat',
-                      fontWeight: 600,
-                      textTransform: 'uppercase' as const,
-                      letterSpacing: '0.06em',
-                    }}
-                    formatter={(value: number, name: string) => [
-                      value,
-                      name === 'completati' ? (language === 'it' ? 'Completati' : 'Completed') : (language === 'it' ? 'In Corso' : 'In Progress')
-                    ]}
-                  />
-                  <Bar isAnimationActive={false}
-                    dataKey="inCorso"
-                    fill={IMPREDO.dataMuted}
-                    radius={[0, 0, 0, 0]}
-                  />
-                  <Bar isAnimationActive={false}
-                    dataKey="completati"
-                    fill={IMPREDO.accent}
-                    radius={[0, 0, 0, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
           </div>
         </div>
       </div>
