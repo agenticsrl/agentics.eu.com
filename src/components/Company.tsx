@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import Section from './layout/Section';
 import SectionHeader from './layout/SectionHeader';
 import SpecList, { type SpecItem } from './layout/SpecList';
@@ -10,10 +11,16 @@ import SpecGrid from './layout/SpecGrid';
    caricato quando la sezione entra in pagina. */
 const CompanyBrainGraph = lazy(() => import('./company-brain/CompanyBrainGraph'));
 
-/* Sagoma dell'edificio: PNG trasparente convertito in WebP (1,6 MB -> 126 KB). */
+/* Sagoma dell'edificio: PNG trasparente convertito in WebP (1,6 MB -> 126 KB).
+   Due tagli dello stesso file: il browser sceglie in base alla larghezza
+   effettiva e alla densita' dello schermo, cosi' su retina la facciata non
+   viene ingrandita oltre la sua misura e resta pulita. */
 const TOWER_IMAGE_SRC = '/tower.webp';
+const TOWER_IMAGE_SRCSET = '/tower.webp 760w, /tower-1216.webp 1216w';
 const TOWER_WIDTH = 760;
 const TOWER_HEIGHT = 1140;
+/* Coincide con il breakpoint lg di Tailwind: sopra c'è la colonna, sotto lo sfondo. */
+const TOWER_DESKTOP_QUERY = '(min-width: 1024px)';
 
 const scrollToContact = () => {
   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
@@ -22,6 +29,10 @@ const scrollToContact = () => {
 const Company: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
+  /* Le due collocazioni della torre sono alternative, e la scelta va fatta qui e
+     non con `lg:hidden`: due <img> con srcset diversi si portano a casa due file
+     invece di uno. In pagina ne esiste sempre una sola. */
+  const isDesktopTower = useMediaQuery(TOWER_DESKTOP_QUERY);
 
   const offerings: readonly SpecItem[] = [
     { term: t('company.offering1.title'), description: t('company.offering1.description') },
@@ -60,29 +71,37 @@ const Company: React.FC = () => {
     <>
       {/* Tipologia: blocco di testo con l'edificio accanto.
           Due trattamenti, uno per famiglia di schermi. Fino a tablet la
-          sagoma sta dietro al testo a tutta pagina: in colonna si riduceva a
-          un francobollo. Da lg torna in colonna propria, piena e senza
-          velatura sopra — lì la larghezza c'è, e il grattacielo si deve
-          vedere per quello che è. */}
+          sagoma sta sul fianco destro, dietro il testo; da lg torna in colonna
+          propria, piena e senza velatura sopra — lì la larghezza c'è, e il
+          grattacielo si deve vedere per quello che è. */}
       <Section
         labelledBy="company-title"
         background={
-          <div className="absolute inset-0 lg:hidden" aria-hidden="true">
-            <img
-              src={TOWER_IMAGE_SRC}
-              alt=""
-              width={TOWER_WIDTH}
-              height={TOWER_HEIGHT}
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover object-[50%_30%] grayscale brightness-[0.55]"
-            />
-            {/* Scrim a più fermate, non lineare: resta quasi pieno per tutta
-                l'altezza del testo e si apre solo dove il testo è finito.
-                Con una sfumatura lineare il paragrafo cadeva sulle vetrate
-                chiare e non si leggeva. */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0A0A0A_0%,rgba(10,10,10,0.95)_52%,rgba(10,10,10,0.68)_78%,rgba(10,10,10,0.28)_100%)]" />
-          </div>
+          isDesktopTower ? undefined : (
+            <div className="absolute inset-0" aria-hidden="true">
+              {/* Ancorata a destra e alta quanto la sezione, con la larghezza che
+                  segue le proporzioni: a tutta pagina il file veniva ingrandito
+                  due o tre volte e la facciata si sgranava. Così resta dentro la
+                  sua misura, più piccolo e nitido. */}
+              <img
+                src={TOWER_IMAGE_SRC}
+                srcSet={TOWER_IMAGE_SRCSET}
+                sizes="(min-width: 640px) 42vw, 46vw"
+                alt=""
+                width={TOWER_WIDTH}
+                height={TOWER_HEIGHT}
+                loading="lazy"
+                decoding="async"
+                className="fade-bottom absolute inset-y-0 right-0 h-full w-auto max-w-[46%] sm:max-w-[54%] object-cover object-[62%_30%] grayscale brightness-[0.26]"
+              />
+              {/* Scrim orizzontale: pieno sotto la colonna di testo, si apre solo
+                  sul fianco dove sta l'edificio. Fino a lg il testo occupa
+                  tutta la riga e passa sopra la sagoma, quindi la velatura resta
+                  chiusa e l'edificio sta sotto, a fondale: la leggibilità del
+                  paragrafo viene prima della vetrata. */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#0A0A0A_0%,#0A0A0A_48%,rgba(10,10,10,0.94)_68%,rgba(10,10,10,0.8)_88%,rgba(10,10,10,0.66)_100%)]" />
+            </div>
+          )
         }
       >
         <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-lg lg:gap-xl lg:items-center">
@@ -103,17 +122,21 @@ const Company: React.FC = () => {
             </div>
           </div>
 
-          {/* Solo da lg: sotto quel breakpoint l'edificio è già lo sfondo
-              della sezione, e mostrarlo due volte lo raddoppierebbe. */}
-          <img
-            src={TOWER_IMAGE_SRC}
-            alt=""
-            width={TOWER_WIDTH}
-            height={TOWER_HEIGHT}
-            loading="lazy"
-            decoding="async"
-            className="hidden lg:block w-full h-auto grayscale"
-          />
+          {/* Solo da lg: sotto quel breakpoint l'edificio sta già nello sfondo
+              della sezione. */}
+          {isDesktopTower && (
+            <img
+              src={TOWER_IMAGE_SRC}
+              srcSet={TOWER_IMAGE_SRCSET}
+              sizes="(min-width: 1216px) 400px, 37vw"
+              alt=""
+              width={TOWER_WIDTH}
+              height={TOWER_HEIGHT}
+              loading="lazy"
+              decoding="async"
+              className="fade-bottom w-full h-auto grayscale"
+            />
+          )}
         </div>
       </Section>
 

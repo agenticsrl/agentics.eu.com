@@ -192,6 +192,36 @@
     border-top-color: theme('colors.ink');
   }
 
+  /* ---------------------------------------------------------------
+     Media
+     --------------------------------------------------------------- */
+
+  /* La sagoma dell'edificio è un ritaglio fotografico: l'ultima riga di pixel
+     è piena al 99% e contro il fondo scuro si legge come un taglio netto.
+     La maschera scioglie la base nello sfondo invece di interromperla. Stop
+     ravvicinati verso il fondo per una caduta non lineare: con due soli stop
+     il gradiente lascia una banda visibile. */
+  .fade-bottom {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 62%,
+      rgba(0, 0, 0, 0.86) 74%,
+      rgba(0, 0, 0, 0.54) 85%,
+      rgba(0, 0, 0, 0.22) 93%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 62%,
+      rgba(0, 0, 0, 0.86) 74%,
+      rgba(0, 0, 0, 0.54) 85%,
+      rgba(0, 0, 0, 0.22) 93%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+
   /* Tabella dati: usata dalle pagine legali e dalle schede tecniche */
   .table-data {
     @apply w-full border-collapse text-meta;
