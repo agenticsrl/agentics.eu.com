@@ -1,6 +1,15 @@
 import { useEffect, type RefObject } from 'react';
 import { LIGHT_TRACK, LIGHT_TRACK_STEP } from '../lib/heroLightTrack';
 
+/**
+ * - `track`: il ritaglio insegue la luce, fotogramma per fotogramma.
+ * - `static`: fermo sul soggetto della prima ripresa, per chi ha chiesto di
+ *   ridurre il movimento ma ha comunque un quadro ritagliato stretto.
+ * - `off`: nessun intervento, il ritaglio resta quello predefinito del
+ *   browser. È il caso della scrivania, dove il filmato ci sta quasi intero.
+ */
+export type LightTrackingMode = 'track' | 'static' | 'off';
+
 /** Salto fra due campioni oltre il quale c'è uno stacco di montaggio: lì il
  *  quadro va cambiato di colpo, non attraversato con una panoramica. */
 const CUT_JUMP = 10;
@@ -29,7 +38,7 @@ function lightAt(time: number): readonly [number, number] {
 /**
  * Tiene inquadrato il soggetto illuminato mentre il filmato scorre.
  *
- * A tutto schermo il quadro 16:9 viene ritagliato, e con `object-position`
+ * Su telefono il quadro 16:9 viene ritagliato stretto, e con `object-position`
  * fisso il velivolo esce di campo appena la ripresa cambia. Qui la posizione
  * insegue il baricentro della luce, misurato in anticipo sul filmato: il
  * ritaglio si sposta da solo su dov'è il soggetto.
@@ -39,16 +48,22 @@ function lightAt(time: number): readonly [number, number] {
  */
 export function useLightTracking(
   ref: RefObject<HTMLVideoElement | null>,
-  enabled: boolean
+  mode: LightTrackingMode
 ): void {
   useEffect(() => {
     const video = ref.current;
     if (!video) return undefined;
 
-    if (!enabled) {
-      // Senza movimento resta fermo sul soggetto della prima ripresa.
-      const [x, y] = LIGHT_TRACK[0];
-      video.style.objectPosition = `${x}% ${y}%`;
+    if (mode !== 'track') {
+      if (mode === 'static') {
+        const [x, y] = LIGHT_TRACK[0];
+        video.style.objectPosition = `${x}% ${y}%`;
+      } else {
+        // Si rimuove invece di scriverci un valore: passando da telefono a
+        // scrivania ridimensionando, un residuo in linea terrebbe il ritaglio
+        // spostato invece di tornare al centro.
+        video.style.removeProperty('object-position');
+      }
       return undefined;
     }
 
@@ -111,5 +126,5 @@ export function useLightTracking(
       video.removeEventListener('seeked', apply);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [ref, enabled]);
+  }, [ref, mode]);
 }

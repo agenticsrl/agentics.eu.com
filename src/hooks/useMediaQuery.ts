@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
 /**
- * Segnala se una media query è soddisfatta, e resta allineata ai cambi di
- * larghezza. Serve a scegliere quale sorgente video montare: due elementi
- * nascosti a vicenda con il CSS li farebbero scaricare entrambi.
+ * Segue una media query e si aggiorna quando cambia.
+ *
+ * Serve dove una differenza fra telefono e scrivania non si può esprimere in
+ * CSS perché riguarda il comportamento e non l'aspetto: lì la classe `lg:` non
+ * arriva, e il componente deve sapere davvero su che schermo sta.
  */
 export function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState(
@@ -12,9 +14,9 @@ export function useMediaQuery(query: string): boolean {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(query);
-    const onChange = (event: MediaQueryListEvent) => setMatches(event.matches);
-
     setMatches(mediaQuery.matches);
+
+    const onChange = (event: MediaQueryListEvent) => setMatches(event.matches);
     mediaQuery.addEventListener('change', onChange);
     return () => mediaQuery.removeEventListener('change', onChange);
   }, [query]);

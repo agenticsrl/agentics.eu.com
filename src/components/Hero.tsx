@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-import { useLightTracking } from '../hooks/useLightTracking';
+import { useMediaQuery } from '../hooks/useMediaQuery';
+import { useLightTracking, type LightTrackingMode } from '../hooks/useLightTracking';
 import RotatingFoldText from './ui/RotatingFoldText';
 import Section from './layout/Section';
 
@@ -29,7 +30,19 @@ const Hero: React.FC = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useLightTracking(videoRef, !prefersReducedMotion);
+  /* L'inseguimento serve dove il quadro 16:9 viene ritagliato stretto, cioè
+     sul telefono: lì senza di esso il velivolo esce di campo a ogni stacco.
+     Da `lg` in su il filmato ci sta quasi intero, lo spostamento continuo del
+     ritaglio si nota come un vagare e non porta nulla: lì non si tocca
+     `object-position`, e l'inquadratura resta quella predefinita. */
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+  const trackingMode: LightTrackingMode = isDesktop
+    ? 'off'
+    : prefersReducedMotion
+      ? 'static'
+      : 'track';
+
+  useLightTracking(videoRef, trackingMode);
 
   return (
     <>
