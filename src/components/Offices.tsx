@@ -4,13 +4,16 @@ import Section from './layout/Section';
 import SectionHeader from './layout/SectionHeader';
 
 /**
- * Token pubblico Mapbox. I token `pk.` sono pensati per stare nel client:
- * si proteggono limitando gli URL consentiti dal pannello Mapbox, non
- * nascondendoli. Sovrascrivibile con VITE_MAPBOX_TOKEN.
+ * Token Mapbox: solo da environment, mai in repo. Un `pk.` finisce comunque
+ * nel bundle servito al browser, quindi la protezione vera sono le
+ * restrizioni per URL nel pannello Mapbox — ma in chiaro nel codice lo blocca
+ * la push protection di GitHub, che segnala anche i token pubblici.
+ * Vedi .env.example.
  */
-const MAPBOX_TOKEN =
-  import.meta.env.VITE_MAPBOX_TOKEN ??
-  '';
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN ?? '';
+/* Senza token la mappa non viene nemmeno richiesta: la chiamata tornerebbe
+   401 e la scheda mostrerebbe un riquadro rotto. L'indirizzo resta. */
+const hasMapboxToken = MAPBOX_TOKEN.length > 0;
 
 /* Stile monocromatico, coerente con il resto del sito. */
 const MAP_STYLE = 'mapbox/dark-v11';
@@ -83,18 +86,20 @@ const Offices: React.FC = () => {
             {/* Rapporto d'aspetto dichiarato: nessuno spostamento al caricamento.
                 Più basso su telefono: a tutta larghezza in colonna singola la
                 mappa prendeva più spazio dell'indirizzo che deve accompagnare. */}
-            <div className="aspect-[16/7] sm:aspect-[16/10] w-full overflow-hidden border-b border-line bg-surface2">
-              <img
-                src={buildMapUrl(office)}
-                alt={t(
-                  office.kind === 'legal' ? 'offices.mapAltLegal' : 'offices.mapAltOperational'
-                )}
-                width={MAP_WIDTH}
-                height={MAP_HEIGHT}
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            {hasMapboxToken && (
+              <div className="aspect-[16/7] sm:aspect-[16/10] w-full overflow-hidden border-b border-line bg-surface2">
+                <img
+                  src={buildMapUrl(office)}
+                  alt={t(
+                    office.kind === 'legal' ? 'offices.mapAltLegal' : 'offices.mapAltOperational'
+                  )}
+                  width={MAP_WIDTH}
+                  height={MAP_HEIGHT}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
 
             <div className="p-lg">
               <p className="label mb-sm">
