@@ -8,7 +8,6 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Company from './components/Company';
 import Features from './components/Features';
-import FiscalIncentives from './components/FiscalIncentives';
 import Contact from './components/Contact';
 import Offices from './components/Offices';
 import Footer from './components/Footer';
@@ -51,7 +50,6 @@ const HomePage: React.FC = () => {
           schermata e mezza senza essere ciò che si cerca da lì. Resta nel
           documento — è contenuto, non decorazione — ma non viene mostrato. */}
       <div className="hidden lg:block">
-        <FiscalIncentives />
       </div>
       <Contact />
       <Offices />

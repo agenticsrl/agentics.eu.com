@@ -21,61 +21,6 @@ const CYBER_LOGOS = [
   { file: 'Cloudflare-Logo.wine.png', title: 'Cloudflare', height: 'h-20', width: 3000, intrinsicHeight: 2000 },
 ] as const;
 
-interface ClientCase {
-  logoSrc: string;
-  logoAlt: string;
-  name: string;
-  subtitle: string;
-  paragraphs: readonly string[];
-  screenshotSrc: string;
-  screenshotAlt: string;
-}
-
-/** Scheda cliente: un'unica impaginazione riusata per ogni caso. */
-const ClientCaseBlock: React.FC<{ item: ClientCase }> = ({ item }) => (
-  <article className="panel">
-    <div className="px-lg py-md border-b border-line">
-      {/* Fondo chiaro: i marchi dei clienti sono scuri su trasparente */}
-      <div className="bg-plate border border-line px-3 py-2 inline-block">
-        <img
-          src={item.logoSrc}
-          alt={item.logoAlt}
-          width={160}
-          height={40}
-          loading="lazy"
-          className="h-8 w-auto object-contain"
-        />
-      </div>
-    </div>
-
-    <div className="grid grid-cols-1 lg:grid-cols-2">
-      <div className="p-lg space-y-md lg:border-r lg:border-line">
-        <h3 className="title-block">{item.name}</h3>
-        <p className="label">{item.subtitle}</p>
-        {item.paragraphs.map((paragraph) => (
-          <p key={paragraph.slice(0, 32)} className="text-body-muted">
-            {paragraph}
-          </p>
-        ))}
-      </div>
-
-      <div className="border-t border-line lg:border-t-0">
-        {/* Rapporto d'aspetto dichiarato: nessuno spostamento al caricamento */}
-        <div className="aspect-[4/3] w-full overflow-hidden">
-          <img
-            src={item.screenshotSrc}
-            alt={item.screenshotAlt}
-            width={1200}
-            height={900}
-            loading="lazy"
-            className="w-full h-full object-cover object-top"
-          />
-        </div>
-      </div>
-    </div>
-  </article>
-);
-
 const CustomGPTs: React.FC = () => {
   const { t, language } = useLanguage();
 
@@ -117,27 +62,6 @@ const CustomGPTs: React.FC = () => {
     { value: t('customGPTs.stat1.value'), label: t('customGPTs.stat1.label') },
     { value: t('customGPTs.stat2.value'), label: t('customGPTs.stat2.label') },
     { value: t('customGPTs.stat3.value'), label: t('customGPTs.stat3.label') },
-  ];
-
-  const clientCases: readonly ClientCase[] = [
-    {
-      logoSrc: `${ASSET_BASE}/idrotec%20logo%201%20(1).png`,
-      logoAlt: 'Idrotec Solution',
-      name: t('customGPTs.idrotec.name'),
-      subtitle: t('customGPTs.idrotec.subtitle'),
-      paragraphs: [t('customGPTs.idrotec.desc1'), t('customGPTs.idrotec.desc2')],
-      screenshotSrc: `${ASSET_BASE}/Screenshot%202026-03-16%20at%2020.03.11%201.png`,
-      screenshotAlt: 'Idrotec Solution — piattaforma gestionale',
-    },
-    {
-      logoSrc: `${ASSET_BASE}/netsin%20logo.png`,
-      logoAlt: 'Netsin',
-      name: t('customGPTs.netsin.name'),
-      subtitle: t('customGPTs.netsin.subtitle'),
-      paragraphs: [t('customGPTs.netsin.desc1'), t('customGPTs.netsin.desc2')],
-      screenshotSrc: `${ASSET_BASE}/Screenshot%202026-03-16%20at%2020.30.14.png`,
-      screenshotAlt: 'Netsin — certificazioni ISO 9001',
-    },
   ];
 
   return (
@@ -252,16 +176,6 @@ const CustomGPTs: React.FC = () => {
               ariaLabel={t('customGPTs.cyberPartners')}
             />
           </div>
-        </div>
-      </Section>
-
-      {/* Tipologia: elenco di schede */}
-      <Section labelledBy="clients-title">
-        <SectionHeader title={t('customGPTs.clientsTitle')} titleId="clients-title" />
-        <div className="space-y-lg">
-          {clientCases.map((item) => (
-            <ClientCaseBlock key={item.name} item={item} />
-          ))}
         </div>
       </Section>
 
